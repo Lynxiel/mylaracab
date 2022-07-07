@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Cable;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class CableController extends Controller
 {
@@ -32,14 +33,15 @@ class CableController extends Controller
         return view('cables',compact('cables'));
     }
 
-    /**
+
+      /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function create()
     {
-        //
+        return view('cablesadmin');
     }
 
     /**
@@ -50,7 +52,22 @@ class CableController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $cable = new Cable();
+        $cable->title = $request->title;
+        $cable-> cable_group_id  = $request->cable_group_id;
+        $cable->footage = $request->footage;
+        $cable->coresize= $request->coresize;
+        $cable->corecount = $request->corecount;
+        $cable->capacity = $request->capacity;
+        $cable->instock = $request->instock;
+        $cable->price = $request->price;
+        if ($request->file('img')){
+            $path = Storage::putFile('public',$request->file('img'));
+            $url = Storage::url($path);
+            $cable->file =$url;
+        }
+
+        $cable->save();
     }
 
     /**

@@ -14,3 +14,5 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [\App\Http\Controllers\CableController::class,'index']);
+Route::get('admin', [\App\Http\Controllers\CableController::class,'create']);
+Route::post('admin', [\App\Http\Controllers\CableController::class,'store']);
