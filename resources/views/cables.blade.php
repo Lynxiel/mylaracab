@@ -1,61 +1,57 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <title>{{ $_ENV['APP_NAME'] }}</title>
-    <link rel="stylesheet" href="/vendor/twbs/bootstrap/dist/css/bootstrap.css">
-    <link rel="stylesheet" href="/vendor/twbs/bootstrap/dist/js/bootstrap.js">
-    <link rel="stylesheet" href="/resources/css/style.css">
-
-
-</head>
-<body class="antialiased">
-<header class="p-3 bg-dark text-white">
-    <div class="container">
-        <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-            <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
-                <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap"><use xlink:href="#bootstrap"></use></svg>
-            </a>
-
-            <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-                <li><a href="#" class="nav-link px-2 text-secondary">Home</a></li>
-                <li><a href="#" class="nav-link px-2 text-white">Pricing</a></li>
-                <li><a href="#" class="nav-link px-2 text-white">FAQs</a></li>
-                <li><a href="#" class="nav-link px-2 text-white">About</a></li>
-            </ul>
-
-            <div class="text-end">
-                <button type="button" class="btn btn-outline-light me-2">Login</button>
-                <button type="button" class="btn btn-warning">Sign-up</button>
-            </div>
-        </div>
-    </div>
-</header>
-
-
+@extends('layouts.layout')
+@section('content')
 <div class="px-4 py-5 my-5 text-center container">
-    <h1 class="display-5 fw-bold">Centered hero</h1>
+    <h1 class="display-5 fw-bold">Кабель оптом</h1>
     <div class="col-lg-6 mx-auto">
-        <p class="lead mb-4">Quickly design and customize responsive mobile-first sites with Bootstrap, the world’s most popular front-end open source toolkit, featuring Sass variables and mixins, responsive grid system, extensive prebuilt components, and powerful JavaScript plugins.</p>
+        <p class="lead mb-4">Приветствуем на сайте по оптовой продаже кабеля по Тульской областити. Мы небольшой семейный магазин
+             электротехнической продукции в городе Новомосковск. Оставляйте заявку через
+        сайт и наши менеджеры свяжутся с Вами для подтверждения заказа и деталей доставки. Ведем свою деятельность с 1993г. и всегда обеспечиваем
+        наших клиентов низкими ценами,отличным сервисом и быстрым обслуживанием.</p>
         <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
         </div>
     </div>
 </div>
 
+
 <div class="container">
-    <div class="row">
-        @foreach($cables as $cable)
-            <div class="col-lg-4 col-sm-6 col-xs-6 col-md-4">
-                <div class="card">
-                    <div class="card-header">{{$cable['title']}}</div>
+    <div class="list-group w-auto">
+        @foreach($cables as $key=>$cable)
+            @if (!isset($prevCableGroup) || $prevCableGroup!=$cable->group_id)
+            <div class="row group-container">
+                <div class="col-md-4">
+                    <h3 class="group-title">{{$cable->group_title}}</h3>
+                    <p class="group-description">{{$cable->description}}</p>
+                    <img class="group-image"  src="{{ $cable->image?$cable->image:asset('images/default.jpg') }}">
+                </div>
+                <div class="col-md-8">
+                @endif
+                    <a href="#" class="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
+                        <div class="d-flex gap-2 w-100 justify-content-between">
+                            <div>
+                                <h6 class="mb-0">{{$cable->cable_title}} </h6>
+                                <p class="mb-0 opacity-75">В наличии: {{$cable->instock}}м</p>
+                            </div>
+                            <small class="opacity-50 text-nowrap cable-price">{{$cable->price}}₽</small>
+                            <button type="button" class="btn btn-warning">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart" viewBox="0 0 16 16">
+                                    <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"></path>
+                                </svg>
+
+                            </button>
+                        </div>
+                    </a>
+            @if (!isset($cables[$key+1]->group_id) || $cables[$key+1]->group_id!=$cable->group_id)
                 </div>
             </div>
+                <div class="clearfix"></div>
+            @endif
+
+                <?php $prevCableGroup =  $cable->group_id ?>
+
         @endforeach
     </div>
 </div>
+@endsection('content')
 
 
-</body>
-</html>
+

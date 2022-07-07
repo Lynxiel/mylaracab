@@ -1,3 +1,32 @@
 .py-5{
     padding:0!important;
 }
+.group-container{
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px dotted #aaa;
+}
+.group-container .list-group-item {
+    padding-bottom: 5px!important;
+    padding-top: 5px!important;
+}
+.group-image{
+    width: 100%;
+    max-height: 150px;
+}
+.cable-price{
+    padding-top:10px;
+}
+
+
+/*--FOOTER*/
+footer .company-name{
+    margin: 0 0 10px 0;
+    padding: 5px 0 0 0;
+    border-top:1px dotted #aaa;
+}
+footer .company-contacts, footer .footer-menu{
+}
+footer .mb-2{
+    margin: 0!important;
+}
