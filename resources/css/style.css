@@ -10,12 +10,23 @@
     padding-bottom: 5px!important;
     padding-top: 5px!important;
 }
+.group-container .order_count_input{
+    height: 38px;
+    width: 55px;
+    background: #fff;
+}
+.group-container .control-count{
+    width: 32px;
+    height: 20px;
+    line-height: 0;
+}
 .group-image{
     width: 100%;
     max-height: 150px;
 }
 .cable-price{
-    padding-top:10px;
+    display: block;
+    margin-top: 10px;
 }
 
 
@@ -32,4 +43,10 @@ footer .company-contacts, footer .footer-menu{
 }
 footer .mb-2{
     margin: 0!important;
+}
+
+@media (max-width: 575px) {
+    footer #map-container{
+        margin-top: 30px;
+    }
 }

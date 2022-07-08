@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [\App\Http\Controllers\CableController::class,'index']);
+Route::get('/', [\App\Http\Controllers\CableController::class,'index'])->name('index');
 Route::get('admin', [\App\Http\Controllers\CableController::class,'create']);
-Route::post('admin', [\App\Http\Controllers\CableController::class,'store']);
+Route::post('admin/cable_create', [\App\Http\Controllers\CableController::class,'store']);
+Route::post('admin/group_create', [\App\Http\Controllers\CableGroupController::class,'store']);

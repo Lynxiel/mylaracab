@@ -18,7 +18,7 @@ class CableController extends Controller
     {
         $cables= DB::table('cables')
             ->select('cables.title as cable_title', 'footage', 'coresize', 'corecount', 'cable_groups.title as group_title', 'description', 'price','image'
-            ,'cable_groups.cable_group_id as group_id', 'instock')
+            ,'cable_groups.cable_group_id as group_id', 'instock', 'cable_id')
             ->join('cable_groups', 'cables.cable_group_id', '=', 'cable_groups.cable_group_id')
             ->orderBy('cables.cable_group_id', 'asc')
             ->get();
@@ -53,7 +53,7 @@ class CableController extends Controller
     public function store(Request $request)
     {
         $cable = new Cable();
-        $cable->title = $request->title;
+        $cable->title = $request->title  ;
         $cable-> cable_group_id  = $request->cable_group_id;
         $cable->footage = $request->footage;
         $cable->coresize= $request->coresize;
@@ -68,6 +68,7 @@ class CableController extends Controller
         }
 
         $cable->save();
+        return redirect()->action([CableController::class, 'create'])->with('success', 'Успешно создано');
     }
 
     /**

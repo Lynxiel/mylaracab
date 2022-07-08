@@ -1,7 +1,7 @@
 @extends('layouts.layout')
 @section('content')
     <h3>Админская страничка</h3>
-    <form action="" method="post" enctype="multipart/form-data">
+    <form action="admin/cable_create" method="post" enctype="multipart/form-data">
         @csrf
         <h3>Cоздать кабель</h3>
         <div class="form-group">
@@ -49,7 +49,7 @@
 
 
 
-    <form action="" method="post" enctype="multipart/form-data">
+    <form action="admin/group_create" method="post" enctype="multipart/form-data">
         @csrf
         <h3>Cоздать группу</h3>
         <div class="form-group">
@@ -62,15 +62,17 @@
             <textarea type="text" class="form-control" name="description" required> </textarea>
         </div>
 
-        <div class="form-group">
-            <label>Сертификат</label>
-            <input type="file" class="form-control" name="file" >
-        </div>
 
         <div class="form-group">
             <label>Изображение</label>
-            <input type="file" class="form-control" name="img" >
+            <input type="file" class="form-control" name="image" >
         </div>
+
+        <div class="form-group">
+            <label>Сертификат</label>
+            <input type="file" class="form-control" name="files" >
+        </div>
+
 
         <input type="submit" value="Создать группу" class="btn btn-outline-success">
     </form>

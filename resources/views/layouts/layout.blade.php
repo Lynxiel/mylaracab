@@ -6,7 +6,6 @@
 
     <title>{{ $_ENV['APP_NAME'] }}</title>
     <link rel="stylesheet" href="/vendor/twbs/bootstrap/dist/css/bootstrap.css">
-    <link rel="stylesheet" href="/vendor/twbs/bootstrap/dist/js/bootstrap.js">
     <link rel="stylesheet" href="/resources/css/style.css">
 
 
@@ -28,23 +27,39 @@
             <div class="text-end">
                 <button type="button" class="btn btn-outline-light me-2">Вход</button>
                 <button type="button" class="btn btn-warning">Регистрация</button>
+                <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#CartModal" >
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart" viewBox="0 0 16 16">
+                        <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"></path>
+                    </svg>
+                </button>
+                @yield('cart_content')
             </div>
         </div>
     </div>
 </header>
+@if (session('success'))
+    <div class="alert alert-success alert-dismissible" role="alert">   <div>{{ session('success') }}</div>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+@endif
 <div class="container">
     @yield('content')
 </div>
 
-
 </body>
 <div class="container">
     <footer class="row row-cols-1">
-        <div class="col-lg-6 ">
-            <div id="map-container"><script type="text/javascript" charset="utf-8" async src="https://api-maps.yandex.ru/services/constructor/1.0/js/?um=constructor%3A2aecac75b358a6d10ac59051e500a2345a3538f1563e36dd85f799fdc16535f9&amp;width=100%25&amp;height=200&amp;lang=ru_RU&amp;scroll=true"></script></div>
+
+        <div class="col-lg-2  col-sm-4 col-6  footer-menu">
+            <h5>Меню</h5>
+            <ul class="nav flex-column justify-content-between">
+                <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Главная</a></li>
+                <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Доставка и оплата</a></li>
+                <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">О Нас</a></li>
+            </ul>
         </div>
 
-        <div class="col-lg-4 col-sm-6 col-6 company-contacts">
+        <div class="col-lg-2 col-sm-4 col-6 company-contacts">
             <h5>Контакты</h5>
             <ul class="nav flex-column ">
                 <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">+7-953-954-20-16</a></li>
@@ -54,19 +69,18 @@
             </ul>
         </div>
 
-        <div class="col-lg-2  col-sm-6 col-6 footer-menu">
-            <h5>Меню</h5>
-            <ul class="nav flex-column justify-content-between">
-                <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Главная</a></li>
-                <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Доставка и оплата</a></li>
-                <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">О Нас</a></li>
-            </ul>
+
+
+        <div class="col-lg-8 col-sm-4 ">
+            <div id="map-container"><script type="text/javascript" charset="utf-8" async src="https://api-maps.yandex.ru/services/constructor/1.0/js/?um=constructor%3A2aecac75b358a6d10ac59051e500a2345a3538f1563e36dd85f799fdc16535f9&amp;width=100%25&amp;height=200&amp;lang=ru_RU&amp;scroll=true"></script></div>
         </div>
+
         <div class="justify-content-center text-center text-muted company-name">
             © 2022 ИП Кондратьев А.С.
         </div>
 
     </footer>
 </div>
+<script src="/vendor/twbs/bootstrap/dist/js/bootstrap.js"></script>
 
 </html>
