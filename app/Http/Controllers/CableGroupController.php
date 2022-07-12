@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CableGroupRequest;
 use App\Models\CableGroup;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -35,7 +36,7 @@ class CableGroupController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CableGroupRequest $request)
     {
         $cableGroup = new CableGroup();
         $cableGroup->title = $request->title;
@@ -85,7 +86,7 @@ class CableGroupController extends Controller
      * @param  \App\Models\CableGroup  $cableGroup
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, CableGroup $cableGroup)
+    public function update(CableGroupRequest $request, CableGroup $cableGroup)
     {
         //
     }

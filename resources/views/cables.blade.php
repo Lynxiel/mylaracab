@@ -26,7 +26,7 @@
                 </div>
                 <div class="col-md-8">
                 @endif
-                    <a href="#" class="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
+                    <div  class="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
                         <div class="d-flex gap-2 w-100 justify-content-between">
                             <div>
                                 <h6 class="mb-0">{{$cable->cable_title}} </h6>
@@ -43,7 +43,7 @@
 
                         </div>
 
-                    </a>
+                    </div>
             @if (!isset($cables[$key+1]->group_id) || $cables[$key+1]->group_id!=$cable->group_id)
                 </div>
             </div>
