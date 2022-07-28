@@ -29,7 +29,10 @@
     margin-top: 10px;
 }
 
-
+/*--- MODAL -----*/
+.modal-title{
+    color:#333;
+}
 /*--FOOTER*/
 footer{
     margin-top: 30px;

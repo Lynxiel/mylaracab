@@ -7,6 +7,7 @@ use App\Models\Cable;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
 
 class CableController extends Controller
 {
@@ -42,7 +43,10 @@ class CableController extends Controller
      */
     public function create()
     {
-        return view('cablesadmin');
+        if (Auth::check()) {
+            return view('cablesadmin');
+        } else  return view('cablesadminerror');
+
     }
 
     /**

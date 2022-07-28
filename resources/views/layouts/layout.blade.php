@@ -25,7 +25,48 @@
             </ul>
 
             <div class="text-end">
-                <button type="button" class="btn btn-outline-light me-2">Вход</button>
+                <button type="button" class="btn btn-outline-light me-2" data-bs-toggle="modal" data-bs-target="#exampleModal">Вход</button>
+
+                <!-- Modal -->
+                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content rounded-4 shadow">
+                            <div class="modal-header p-5 pb-4 border-bottom-0">
+                                <h2 class="modal-title fw-bold mb-0">Войти</h2>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+
+                            <div class="modal-body p-5 pt-0">
+                                <form class="">
+                                    <div class="form-floating mb-3">
+                                        <input type="email" class="form-control rounded-3" id="floatingInput" placeholder="name@example.com">
+                                        <label for="floatingInput">Email address</label>
+                                    </div>
+                                    <div class="form-floating mb-3">
+                                        <input type="password" class="form-control rounded-3" id="floatingPassword" placeholder="Password">
+                                        <label for="floatingPassword">Password</label>
+                                    </div>
+                                    <button class="w-100 mb-2 btn btn-lg rounded-3 btn-primary" type="submit">Войти</button>
+                                    <small class="text-muted">Нажимая "Войти", Вы соглашаетесь с <a href="###">условиями использования</a></small>
+                                    <hr class="my-4">
+                                    <h2 class="fs-5 fw-bold mb-3">Or use a third-party</h2>
+                                    <button class="w-100 py-2 mb-2 btn btn-outline-dark rounded-3" type="submit">
+                                        <svg class="bi me-1" width="16" height="16"><use xlink:href="#twitter"></use></svg>
+                                        Sign up with Twitter
+                                    </button>
+                                    <button class="w-100 py-2 mb-2 btn btn-outline-primary rounded-3" type="submit">
+                                        <svg class="bi me-1" width="16" height="16"><use xlink:href="#facebook"></use></svg>
+                                        Sign up with Facebook
+                                    </button>
+                                    <button class="w-100 py-2 mb-2 btn btn-outline-secondary rounded-3" type="submit">
+                                        <svg class="bi me-1" width="16" height="16"><use xlink:href="#github"></use></svg>
+                                        Sign up with GitHub
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <button type="button" class="btn btn-warning">Регистрация</button>
                 <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#CartModal" >
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart" viewBox="0 0 16 16">
