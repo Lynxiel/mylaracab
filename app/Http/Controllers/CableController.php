@@ -16,8 +16,9 @@ class CableController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        //Catalog
         $cables= DB::table('cables')
             ->select('cables.title as cable_title', 'footage', 'coresize', 'corecount', 'cable_groups.title as group_title', 'description', 'price','image'
             ,'cable_groups.cable_group_id as group_id', 'instock', 'cable_id')
@@ -25,14 +26,25 @@ class CableController extends Controller
             ->orderBy('cables.cable_group_id', 'asc')
             ->get();
 
+        //Cart
+        //session()->flush();
+        //dd(session()->get('cable_id'));
+        $cart=array();
+        $ids = CartController::getCartList($request);
+        if ($ids) $cart = $this->getCablesList($ids);
 
-        //dd($cables);
+        return view('cables',compact('cables', 'cart'));
+    }
 
-
-//        $cables = Cable::join('cable_groups','cables.cable_group_id', '=', 'cable_groups.cable_group_id')
-//            ->orderBy('cable_groups.title','desc')
-//            ->paginate('60');
-        return view('cables',compact('cables'));
+    /** Get cables for ids
+     * @param  $ids
+     */
+    public function getCablesList( $ids){
+        $cables= DB::table('cables')
+            ->select('*')
+            ->whereIN('cable_id' ,$ids)
+            ->get();
+        return $cables;
     }
 
 

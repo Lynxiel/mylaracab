@@ -30,12 +30,50 @@
 }
 
 /*--- MODAL -----*/
-.modal-title{
-    color:#333;
+#regModal .modal-header, #loginModal .modal-header{
+    padding-top: 15px!important;
 }
+
+#loginModal .modal-title{
+    color:#666;
+}
+#loginModal, #CartModal, #regModal {
+    color: #666;
+}
+#regModal small, #loginModal small{
+    padding: 0 5px 0 0px;
+}
+
+#cart-container{
+    text-align: left;
+}
+#cart-container .btn-remove-cart{
+    color: #1a202c;
+}
+#cart-container .btn-remove-cart:hover{
+    background-color: #dc3545;
+}
+#cart-container #quantity{
+    width: 58px;
+    height: 35px;
+    padding: 5px 0px 2px 10px;
+    border: 1px solid #333;
+    border-radius: 5px;
+}
+#cart-container p{
+    font-size: 12px;
+}
+
+#loginModal .alert-danger, #regModal .alert-danger{
+    text-align: center;
+    font-size: 12px;
+    padding: 5px 0 5px 0;
+    margin-bottom: 5px;
+}
+
 /*--FOOTER*/
 footer{
-    margin-top: 30px;
+    margin-top: 40px!important;
 }
 footer .company-name{
     margin: 0 0 10px 0;

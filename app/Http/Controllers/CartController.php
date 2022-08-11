@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use http\Env\Response;
 use Illuminate\Http\Request;
 
 class CartController extends Controller
 {
+
     /**
      * Display a listing of the resource.
      *
@@ -81,5 +83,51 @@ class CartController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    /**
+     * Add product to cart and store it in session
+     * @param Request $request
+     * @param int $id
+     * @return \Illuminate\Http\Response
+     */
+    public function  addToCart(Request $request){
+
+        $cart_list = array();
+        $cable_id = $request->input("cable_id");
+
+        if ($cable_id){
+            $current_list = $this->getCartList($request);
+            if ($current_list) $cart_list = $current_list;
+            $cart_list[] = $cable_id;
+           // dd($cart_list);
+            $request->session()->put('cable_id',$cart_list);
+            //dd($request->session()->get('cable_id'));
+            session()->flash('success', 'Успешно добавлено в корзину!');
+            return redirect()->intended('/');
+        }
+
+    }
+
+    static  function getCartList(Request $request){
+        $cart_list = $request->session()->get('cable_id');
+        return $cart_list;
+    }
+
+    public function removeFromCart(Request $request){
+        $cart_list = array();
+        $cable_id = $request->input("cable_id");
+
+        if ($cable_id){
+            $cart_list = $this->getCartList($request);
+            if (($key = array_search($cable_id, $cart_list)) !== false) {
+                unset($cart_list[$key]);
+            }
+            $request->session()->remove('cable_id');
+            $request->session()->put('cable_id',$cart_list);
+            //dd($request->session()->get('cable_id'));
+            session()->flash('success', 'Успешно удалено из корзины!');
+            return redirect()->intended('/');
+        }
     }
 }
