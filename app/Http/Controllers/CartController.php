@@ -99,8 +99,8 @@ class CartController extends Controller
         if ($cable_id){
             $current_list = $this->getCartList($request);
             if ($current_list) $cart_list = $current_list;
-            $cart_list[] = $cable_id;
-           // dd($cart_list);
+            $cart_list[$cable_id] = 100; //initial quantity
+            //dd($cart_list);
             $request->session()->put('cable_id',$cart_list);
             //dd($request->session()->get('cable_id'));
             session()->flash('success', 'Успешно добавлено в корзину!');

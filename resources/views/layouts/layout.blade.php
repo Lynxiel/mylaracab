@@ -48,7 +48,9 @@
                             <div class="modal-body" id="cart-container">
 
                                 @if (!empty($cart))
+                                    <?php $sum=0; ?>
                                         @foreach ($cart as $item)
+                                            <?php $sum =$sum +$item->price*100; ?>
                                             <div class="list-group w-auto">
                                                         <div class="row ">
                                                             <div class="col-md-12">
@@ -80,9 +82,14 @@
                                                             </div>
                                                         </div>
                                                         <div class="clearfix"></div>
+
                                             </div>
                                         @endforeach
-                                @else
+                                        <div class="mt-1">
+                                            <small class="col-3">Ожидаемая дата доставки: {{date('d.m.y', strtotime(date('d.m.y').'+2 day'))}}</small>
+                                            <strong id="order-sum" class="col-3">Итого:{{$sum}}₽</strong>
+                                        </div>
+                                            @else
                                 В корзине пока пусто
                                 @endforelse
 
@@ -155,6 +162,8 @@
 <script src="/vendor/twbs/bootstrap/dist/js/bootstrap.js"></script>
 @yield('scripts')
 <script src="/resources/js/app.js"></script>
+<script>
 
+</script>
 
 </html>

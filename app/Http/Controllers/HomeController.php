@@ -16,7 +16,7 @@ class HomeController extends Controller
         //Cart
         $cart=array();
         $ids = CartController::getCartList($request);
-        if ($ids) $cart = Cable::getCablesList($ids);
+        if ($ids) $cart = Cable::getCablesList(array_keys($ids));
 
         return view('home',compact('cables', 'cart'));
     }

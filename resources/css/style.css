@@ -63,6 +63,12 @@
 #cart-container p{
     font-size: 12px;
 }
+#cart-container strong{
+    display: inline-block;
+    text-align: right;
+    width: 50%;
+
+}
 
 #loginModal .alert-danger, #regModal .alert-danger{
     text-align: center;
