@@ -16,10 +16,8 @@ class AccountController extends Controller
 
     public function index(AccountRequest $request)
     {
-        //cart
-        $cart=array();
-        $ids = CartController::getCartList($request);
-        if ($ids) $cart = Cable::getCablesList($ids);
+        //Cart
+        $cart=CartController::init($request);
 
         return view('account.index',compact('cart'));
     }

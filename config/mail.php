@@ -92,9 +92,10 @@ return [
     */
 
     'from' => [
-        'address' => env('MAIL_FROM_ADDRESS', 'hello@example.com'),
-        'name' => env('MAIL_FROM_NAME', 'Example'),
+        'address' => env('MAIL_FROM_ADDRESS', 'postmaster@kabelopt71.ru'),
+        'name' => env('MAIL_FROM_NAME', 'КабельОпт71'),
     ],
+    'reply_to' => ['address' => 'postmaster@kabelopt71.ru', 'name' => 'КабельОпт71'],
 
     /*
     |--------------------------------------------------------------------------

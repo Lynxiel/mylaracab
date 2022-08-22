@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\OrderConfirm;
+use App\Models\Cable;
 use http\Env\Response;
 use Illuminate\Http\Request;
 
@@ -9,13 +11,16 @@ class CartController extends Controller
 {
 
     /**
-     * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * Return cart data for view
+     *
      */
-    public function index()
+    public static function init(Request $request)
     {
-
+        $cart=array();
+        $ids = self::getCartList($request);
+        if ($ids)
+            return  Cable::getCablesList(array_keys($ids));
     }
 
     /**
@@ -109,20 +114,34 @@ class CartController extends Controller
 
     }
 
-    static  function getCartList(Request $request){
+    protected static function  getCartList(Request $request){
         $cart_list = $request->session()->get('cable_id');
+        //dd($cart_list);
         return $cart_list;
+    }
+
+    public function updateQuantity(Request $request){
+
+        $cable_id = (int)$request->input("cable_id");
+        $quantity = (int)$request->input("quantity");
+
+        $cart_list = $request->session()->get('cable_id');
+        $cart_list[$cable_id] = $quantity;
+        //dd($cart_list);
+        $request->session()->remove('cable_id');
+        $request->session()->put('cable_id',$cart_list);
+
+        session()->flash('success', 'Успешно изменено количество!');
+        return redirect()->intended('/');
+
     }
 
     public function removeFromCart(Request $request){
         $cart_list = array();
         $cable_id = $request->input("cable_id");
-
         if ($cable_id){
             $cart_list = $this->getCartList($request);
-            if (($key = array_search($cable_id, $cart_list)) !== false) {
-                unset($cart_list[$key]);
-            }
+            unset($cart_list[$cable_id]);
             $request->session()->remove('cable_id');
             $request->session()->put('cable_id',$cart_list);
             //dd($request->session()->get('cable_id'));
@@ -130,4 +149,6 @@ class CartController extends Controller
             return redirect()->intended('/');
         }
     }
+
+
 }

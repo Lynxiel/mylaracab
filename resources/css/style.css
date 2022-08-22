@@ -69,6 +69,21 @@
     width: 50%;
 
 }
+@media (max-width: 400px) {
+    #cart-container .cable-title{
+        font-size: 14px;
+    }
+    #cart-container .cable-summ{
+        font-size: 12px;
+    }
+    #cart-container .btn-remove-cart{
+
+    }
+}
+
+#cart-btn svg{
+    margin-top: -6px;
+}
 
 #loginModal .alert-danger, #regModal .alert-danger{
     text-align: center;

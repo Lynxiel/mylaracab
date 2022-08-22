@@ -12,29 +12,6 @@
             </div>
         </div>
 
-        <div class="row g-4 py-5 row-cols-1 row-cols-lg-3">
-            <div class="feature col">
-                <div class="feature-icon d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-2 mb-3">
-                    <svg class="bi" width="1em" height="1em"><use xlink:href="#collection"></use></svg>
-                </div>
-                <h2>Featured title</h2>
-                <p>Paragraph of text beneath the heading to explain the heading. We'll add onto it with another sentence and probably just keep going until we run out of words.</p>
-            </div>
-            <div class="feature col">
-                <div class="feature-icon d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-2 mb-3">
-                    <svg class="bi" width="1em" height="1em"><use xlink:href="#people-circle"></use></svg>
-                </div>
-                <h2>Featured title</h2>
-                <p>Paragraph of text beneath the heading to explain the heading. We'll add onto it with another sentence and probably just keep going until we run out of words.</p>
-            </div>
-            <div class="feature col">
-                <div class="feature-icon d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-2 mb-3">
-                    <svg class="bi" width="1em" height="1em"><use xlink:href="#toggles2"></use></svg>
-                </div>
-                <h2>Featured title</h2>
-                <p>Paragraph of text beneath the heading to explain the heading. We'll add onto it with another sentence and probably just keep going until we run out of words.</p>
-            </div>
-        </div>
     </div>
 
 
@@ -61,7 +38,7 @@
                                         @csrf
                                         <input  required name="cable_id" readonly value="{{$cable->cable_id}}" hidden>
 
-                                        @if ( session()->get('cable_id')!=null && in_array($cable->cable_id,session()->get('cable_id')) )
+                                        @if ( session()->get('cable_id')!=null && key_exists($cable->cable_id,session()->get('cable_id')) )
                                             <button  type="button" disabled class="btn btn-success" id="cart_{{$cable->cable_id}}">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart-check" viewBox="0 0 16 16">
                                                     <path d="M11.354 6.354a.5.5 0 0 0-.708-.708L8 8.293 6.854 7.146a.5.5 0 1 0-.708.708l1.5 1.5a.5.5 0 0 0 .708 0l3-3z"/>
