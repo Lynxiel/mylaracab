@@ -67,7 +67,7 @@
                     <label class="form-check-label" for="order-confirm">
                         Подтвердить заказ
                     </label>
-                    <form method="post" action="{{route('orderSend')}}">
+                    <form method="post" action="{{route('createOrder')}}">
                         @csrf
                         <button id="btn-confirm-order" type="submit" class="btn btn-primary disabled" disabled>Отправить</button>
                     </form>

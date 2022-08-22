@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Mail;
 
 class MailController extends Controller
 {
-    public function orderSend(Request $request){
+    public static function orderSend(Request $request){
         Mail::to($request->user())->send(new OrderConfirm());
         session()->flash('success', 'Заказ успешно отправлен на почту');
         return redirect()->intended('/');

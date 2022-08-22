@@ -17,7 +17,7 @@ Route::get('/', [\App\Http\Controllers\HomeController::class,'index'])->name('in
 Route::post('addToCart', [\App\Http\Controllers\CartController::class,'addToCart'])->name('addToCart');
 Route::post('removeFromCart', [\App\Http\Controllers\CartController::class,'removeFromCart'])->name('removeFromCart');
 Route::post('updateQuantity', [\App\Http\Controllers\CartController::class,'updateQuantity'])->name('updateQuantity');
-Route::post('orderSend', [\App\Http\Controllers\MailController::class,'orderSend'])->name('orderSend');
+Route::post('createOrder', [\App\Http\Controllers\OrderController::class,'createOrder'])->name('createOrder');
 
 
 

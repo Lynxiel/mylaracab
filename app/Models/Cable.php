@@ -8,6 +8,15 @@ use Illuminate\Support\Facades\DB;
 
 class Cable extends Model
 {
+    private $cable_id;
+    private $quantity;
+    private $price;
+
+    public function __construct(array $attributes = [])
+    {
+        parent::__construct($attributes);
+    }
+
     use HasFactory;
 
     /** get all cables with groups and titles
