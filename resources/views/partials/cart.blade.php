@@ -50,38 +50,60 @@
                             <small class="col-3">Ожидаемая дата доставки: {{date('d.m.y', strtotime(date('d.m.y').'+2 day'))}}</small>
                             <strong id="order-sum" class="col-3">Итого:{{$sum}}₽</strong>
                         </div>
+
+                            <div class="modal-footer">
+                                <form method="post" action="{{route('createOrder')}}">
+
+                                        @if (auth()->user())
+                                            <div class="row">
+                                                <div class="col-6 mt-1">
+                                                    <p>Заказ будет отправлен на
+                                                        <strong>{{auth()->user()->email}}</strong></p>
+                                                </div>
+                                                <div class="col-6 section-confirm">
+                                                    <input class="form-check-input" type="checkbox" value="" id="order-confirm">
+                                                    <label class="form-check-label" for="order-confirm">
+                                                        Подтвердить заказ
+                                                    </label>
+                                                    <button id="btn-confirm-order" type="submit" class="btn btn-primary disabled" disabled >Отправить</button>
+                                                </div>
+                                            </div>
+                                        @else
+                                            <div class="row mt-1 unauthorized-order">
+                                                <div class="col-6">
+                                                    <div class="form-floating mb-3 mt-1">
+                                                        <input  name="order_contact"  type="email" required class="form-control rounded-3" id="order-contact" placeholder="name@example.com">
+                                                        <label for="email">Email</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-6">
+                                                    <button id="btn-confirm-order" type="submit" class="btn btn-primary mt-1" >Отправить</button>
+
+                                                </div>
+
+                                            </div>
+                                        @endif
+
+                                    @csrf
+                                </form>
+                            </div>
+                                @if (session('success')=='Успешно удалено из корзины!' ||  session('success')=='Успешно изменено количество!')
+
+                                    <script>
+                                        $(function() {
+                                            $('#cart-btn').click();
+                                        });
+                                    </script>
+                                @endif
+                            </div>
                     @else
                         В корзине пока пусто
+                        <div class="modal-footer"></div>
                         @endforelse
 
 
                 </div>
-                <div class="modal-footer">
-                    <div class="col">
-                        @if (auth()->user())
-                            <p>Заказ будет отправлен на
-                                <strong>{{auth()->user()->email}}</strong></p>
-                        @endif
-                    </div>
-                    <input class="form-check-input" type="checkbox" value="" id="order-confirm">
-                    <label class="form-check-label" for="order-confirm">
-                        Подтвердить заказ
-                    </label>
-                    <form method="post" action="{{route('createOrder')}}">
-                        @csrf
-                        <button id="btn-confirm-order" type="submit" class="btn btn-primary disabled" disabled>Отправить</button>
-                    </form>
-                    @if (session('success')=='Успешно удалено из корзины!' ||  session('success')=='Успешно изменено количество!')
 
-                        <script>
-                            $(function() {
-                                $('#cart-btn').click();
-                            });
-                        </script>
-                    @endif
-                </div>
             </div>
         </div>
     </div>
-
-

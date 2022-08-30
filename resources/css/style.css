@@ -69,6 +69,19 @@
     width: 50%;
 
 }
+#cart-container #btn-confirm-order{
+    width: 160px;
+}
+#cart-container .section-confirm{
+    text-align: right;
+}
+#cart-container .modal-footer p{
+    font-size: 16px;
+}
+
+#cart-container .unauthorized-order button{
+    height: 56px;
+}
 @media (max-width: 400px) {
     #cart-container .cable-title{
         font-size: 14px;

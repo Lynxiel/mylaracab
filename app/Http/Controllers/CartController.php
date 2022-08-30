@@ -125,6 +125,10 @@ class CartController extends Controller
         $cable_id = (int)$request->input("cable_id");
         $quantity = (int)$request->input("quantity");
 
+        if ($quantity==0) {
+            $this->removeFromCart($request);
+        }
+
         $cart_list = $request->session()->get('cable_id');
         $cart_list[$cable_id] = $quantity;
         //dd($cart_list);
@@ -139,6 +143,7 @@ class CartController extends Controller
     public function removeFromCart(Request $request){
         $cart_list = array();
         $cable_id = $request->input("cable_id");
+
         if ($cable_id){
             $cart_list = $this->getCartList($request);
             unset($cart_list[$cable_id]);
