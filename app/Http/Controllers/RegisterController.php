@@ -37,4 +37,6 @@ class RegisterController extends Controller
         auth()->login($user, true);
         return redirect()->intended('/');
     }
+
+
 }

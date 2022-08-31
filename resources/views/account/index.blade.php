@@ -1,86 +1,116 @@
 @extends('layouts.layout')
 @section('content')
 
+    <div class="container" id="account">
+        <h2 class="mt-4">Личный кабинет</h2>
+        <h4>История заказов</h4>
 
-    <div class="container">
-        <h2>Личный кабинет</h2>
 
+        <div class="list-group w-auto">
+            @php  $summ = 0; $i=1; @endphp
+            @if (isset($orders[0]->order_id))
+                @foreach($orders as $key=>$order)
+                    @if (!isset($prevOrderId) || $prevOrderId!=$order->order_id)
+                        @php  $summ = 0;  @endphp
 
-        <div class="accordion" id="accordionExample">
+        <div class="accordion" >
             <div class="accordion-item">
-                <h2 class="accordion-header" id="headingOne">
-                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                        <h4>История заказов</h4>
+                <h2 class="accordion-header" id="panelsStayOpen-heading{{$i}}">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapse{{$i}}" aria-expanded="true" aria-controls="panelsStayOpen-collapse{{$i}}">
+                        <h6 class="group-title">№{{$order->order_id}} от {{$order->created_at}} -  @switch($order->status)
+                                @case(0)
+                                Создан
+                                @break
+
+                                @case(1)
+                                Подтвержден
+                                @break
+
+                                @case(2)
+                                Оплачен
+                                @break
+
+                                @case(3)
+                                Завершен
+                                @break
+
+                            @endswitch </h6>
                     </button>
                 </h2>
-                <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                <div id="panelsStayOpen-collapse{{$i}}" class="accordion-collapse collapse {{ ($i==1?'show':'') }}" aria-labelledby="panelsStayOpen-heading{{$i}}">
                     <div class="accordion-body">
-                        <strong>This is the first item's accordion body.</strong> It is shown by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+                        <div class="row ">
+                            <p>
+
+                                <a class="px-4" href="{{route('formInvoice', ['order_id' => $order->order_id])}}">Сформировать счет</a>
+                                <a class="px-4" href="{{route('formQr', ['order_id' => $order->order_id])}}">Сформировать QR-код</a>
+
+                            @if ($order->status==0)
+                                    <a class="px-2" href="{{route('cancelOrder', ['order_id' => $order->order_id])}}">Отменить заказ</a>
+                                @endif
+                            </p>
+
+                            @endif
+                            <div  class="list-group-item list-group-item-action d-flex gap-3 py-1" aria-current="true">
+                                <div class="d-flex gap-2 w-100 justify-content-between">
+                                    <div>
+                                        <h6 class="mb-0">{{$order->title}} </h6>
+                                    </div>
+                                    <small class="opacity-50 text-nowrap cable-price">{{$order->quantity}}м х {{$order->price}}₽</small>
+                                    <small class="opacity-50 text-nowrap cable-price">{{($order->quantity*$order->price)}}₽</small>
+                                    @php  $summ += $order->price*$order->quantity;  @endphp
+                                </div>
+
+                            </div>
+                            @if (!isset($orders[$key+1]->order_id) || $orders[$key+1]->order_id!=$order->order_id)
+                                <strong class="summ mt-3 text-end">Сумма: {{$summ}}₽</strong>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="accordion-item">
-                <h2 class="accordion-header" id="headingTwo">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                        <h4>Документы</h4>
-                    </button>
-                </h2>
-                <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
-                    <div class="accordion-body">
-                        <strong>This is the second item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
-                    </div>
-                </div>
-            </div>
-            <div class="accordion-item">
-                <h2 class="accordion-header" id="headingThree">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                        <h4>Личные данные</h4>
-                    </button>
-                </h2>
-                <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
-                    <div class="accordion-body">
-                        <form class="row g-3">
-                            <div class="col-md-6">
-                                <label for="inputEmail4" class="form-label">Email</label>
-                                <input type="email" readonly class="form-control" id="inputEmail4" value="{{auth()->user()->email}}">
-                            </div>
-                            <div class="col-md-6">
-                                <label for="inputPassword4" class="form-label">Password</label>
-                                <input type="password" class="form-control" id="inputPassword4">
-                            </div>
-                            <div class="col-12">
-                                <label for="inputAddress" class="form-label">Address</label>
-                                <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
-                            </div>
-                            <div class="col-12">
-                                <label for="inputAddress2" class="form-label">Address 2</label>
-                                <input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor">
-                            </div>
-                            <div class="col-md-6">
-                                <label for="inputCity" class="form-label">City</label>
-                                <input type="text" class="form-control" id="inputCity">
-                            </div>
-                            <div class="col-md-4">
-                                <label for="inputState" class="form-label">State</label>
-                                <select id="inputState" class="form-select">
-                                    <option selected>Choose...</option>
-                                    <option>...</option>
-                                </select>
-                            </div>
-                            <div class="col-md-2">
-                                <label for="inputZip" class="form-label">Zip</label>
-                                <input type="text" class="form-control" id="inputZip">
-                            </div>
 
-                            <div class="col-12">
-                                <button type="submit" class="btn btn-primary">Сохранить</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
         </div>
 
+
+
+                    @endif
+
+                    @php $prevOrderId =  $order->order_id ; $i++; @endphp
+
+                @endforeach
+
+            @else
+                <p>Заказов пока нет</p>
+            @endif
+
+
+        <h4 class="mt-4">Личные данные</h4>
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                Удалить аккаунт
+            </button>
+
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Вот так собака...</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <h4>Действительно удалить аккаунт?</h4>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Ние</button>
+                            <a href="{{route('deleteAccount')}}"><button type="button" class="btn btn-primary">Дыа</button></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+    </div>
     </div>
 
 

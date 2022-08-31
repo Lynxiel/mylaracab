@@ -33,11 +33,27 @@ class Order extends Model
             ->get();
     }
 
-    public static function GetUserOrders(int $user_id){
-        return DB::table('orders')
+    public static function getOrderContents(int $order_id){
+        return $result =  DB::table('cables_order')
             ->select('*')
-            ->where('user_id' ,'=',$user_id)
+            ->join('cables', 'cables.cable_id', '=', 'cables_order.cable_id')
+            ->where('cables_order.order_id' ,'=',$order_id)
             ->get();
+
+    }
+
+    public static function GetUserOrders(int $user_id){
+        $result =  DB::table('orders')
+            ->select('orders.order_id', 'cables.title as title', 'orders.created_at', 'cables_order.quantity', 'cables_order.price', 'status')
+            ->join('cables_order', 'orders.order_id', '=', 'cables_order.order_id')
+            ->join('cables', 'cables.cable_id', '=', 'cables_order.cable_id')
+            ->where('orders.user_id' ,'=',$user_id)
+            ->orderBy('orders.order_id','desc')
+            ->get();
+
+        //dd($result);
+        return $result;
+
     }
 
     public function AddOrder(){
@@ -47,13 +63,24 @@ class Order extends Model
     }
 
     public function AddCablesToOrder( $cables){
-        foreach ($cables as $cable)
-        DB::table('cables_order')->insert([
-            'order_id'=> $this->order_id,
-            'price' => $cable->price,
-            'quantity'=>session()->get('cable_id')?session()->get('cable_id')[$cable->cable_id]:100,
-            'cable_id'=>$cable->cable_id
+        foreach ($cables as $cable) {
+            if (session()->get('cable_id')[$cable->cable_id]==0) continue;
+            DB::table('cables_order')->insert([
+                'order_id' => $this->order_id,
+                'price' => $cable->price,
+                'quantity' => session()->get('cable_id') ? session()->get('cable_id')[$cable->cable_id] : 100,
+                'cable_id' => $cable->cable_id
 
-        ]);
+            ]);
+        }
     }
+
+    public function cancelOrder(int $order_id){
+
+        DB::table('cables_order')->where('order_id', '=', $order_id)->delete();
+        DB::table('orders')->where('order_id', '=', $order_id)->delete();
+
+    }
+
+
 }

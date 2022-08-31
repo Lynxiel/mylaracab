@@ -82,6 +82,13 @@
 #cart-container .unauthorized-order button{
     height: 56px;
 }
+
+/*-------------- ACCOUNT --------------*/
+#account .accordion-button{
+    background: #666;
+    color: white;
+}
+
 @media (max-width: 400px) {
     #cart-container .cable-title{
         font-size: 14px;

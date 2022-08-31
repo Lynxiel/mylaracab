@@ -19,6 +19,9 @@ Route::post('removeFromCart', [\App\Http\Controllers\CartController::class,'remo
 Route::post('updateQuantity', [\App\Http\Controllers\CartController::class,'updateQuantity'])->name('updateQuantity');
 Route::post('createOrder', [\App\Http\Controllers\OrderController::class,'createOrder'])->name('createOrder');
 
+Route::get('cancelOrder/{order_id}', [\App\Http\Controllers\OrderController::class,'cancelOrder'])->name('cancelOrder');
+Route::get('formInvoice/{order_id}', [\App\Http\Controllers\InvoiceController::class,'index'])->name('formInvoice');
+Route::get('formQr/{order_id}', [\App\Http\Controllers\InvoiceController::class,'formQr'])->name('formQr');
 
 
 
@@ -32,3 +35,4 @@ Route::post('login', [\App\Http\Controllers\LoginController::class,'login'])->na
 Route::post('register', [\App\Http\Controllers\RegisterController::class,'register'])->name('register');
 Route::get('logout', [\App\Http\Controllers\LogoutController::class,'perform'])->name('logout');
 Route::get('account', [\App\Http\Controllers\AccountController::class,'index'])->name('account');
+Route::get('deleteAccount', [\App\Http\Controllers\AccountController::class,'deleteAccount'])->name('deleteAccount');

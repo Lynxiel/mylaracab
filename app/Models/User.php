@@ -69,4 +69,11 @@ class User extends Authenticatable
 
         return $this->user_id;
     }
+
+    public function DeleteUser(int $user_id){
+
+        DB::table('users')->where('id', '=', $user_id)->delete();
+        session()->flash('success', 'AccountDeleted');
+        return redirect()->intended('/');
+    }
 }
