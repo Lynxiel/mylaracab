@@ -8,20 +8,23 @@ use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Auth\Events\Registered;
 
 
 class OrderController extends Controller
 {
     public function createOrder(Request $request){
-
-
         $email = $request->order_contact;
+
         $order = new Order();
         if  (!isset(auth()->user()->id)){
             $user_id = User::getUserIdByEmail($email);
             if (!$user_id) {
-                $user_id = new User();
-                $user_id->addNewUser($email);
+                $user = new User();
+                $user->addNewUser($email);
+                $user_id = $user->user_id;
+                MailController::accountRegister($user->email, $user->password);
+               // event(new Registered($user));
             }
         }else $user_id = auth()->user()->id;
 

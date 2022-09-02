@@ -82,5 +82,15 @@ class Order extends Model
 
     }
 
+    public  static function isUserOrder(int $order_id, int $user_id):bool{
+        $result =  DB::table('orders')
+            ->select('*')
+            ->where('user_id' ,'=',$user_id)
+            ->where('order_id' ,'=',$order_id)
+            ->get();
+        if (isset($result[0])) return true;
+        else return false;
+    }
+
 
 }

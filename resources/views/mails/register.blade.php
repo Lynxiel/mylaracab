@@ -7,10 +7,10 @@
     <title>Учетные данные для входа Kabelopt71.ru</title>
 </head>
 <body class="antialiased">
-<div>Спасибо за регистрацию на сайте.</div>
-<div>Учетные данные для авторизации:</div>
+<div>Для доступа в Ваш личный кабинет используйте учетные данные:</div>
 <div>Email: {{$email}}</div>
 <div>Пароль: {{$password}}</div>
+
 
 <div class="container">
     <footer class="row row-cols-1">

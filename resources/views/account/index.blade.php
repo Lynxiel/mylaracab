@@ -42,7 +42,7 @@
                         <div class="row ">
                             <p>
 
-                                <a class="px-4" href="{{route('formInvoice', ['order_id' => $order->order_id])}}">Сформировать счет</a>
+                                <a class="px-4" target="_blank" href="{{route('formInvoice', ['order_id' => $order->order_id])}}">Сформировать счет</a>
                                 <a class="px-4" href="{{route('formQr', ['order_id' => $order->order_id])}}">Сформировать QR-код</a>
 
                             @if ($order->status==0)
@@ -84,9 +84,67 @@
             @endif
 
 
-        <h4 class="mt-4">Личные данные</h4>
+            <div class="row panel-heading">
+                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                    <h4 class="mt-4">Личные данные</h4>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-6 col-xs-6 mt-4">
+                    @if (!$user->email_verified_at)
+                        <a  href="###"><button type="button" class="btn btn-warning">Подтвердить Email</button></a>
+                    @endif
+                </div>
+
+                <div class="col-lg-4 col-md-4 col-sm-6 col-xs-6 mt-4">
+                    <a  href="###"><button type="button" class="btn btn-success">Сохранить изменения</button></a>
+                </div>
+
+            </div>
+
+
+            <form method="post" action="" class="mt-4">
+                @csrf
+                <div class="row">
+                    <div class="form-floating mb-3 col-lg-4 col-md-4 col-sm-12">
+                        <input type="email" name="email" required class="form-control rounded-3" id="email" value="{{$user->email }}" readonly>
+                        <label class="px-4" for="floatingInput">Email {{$user->email_verified_at?'подтвержден':'не подтвержден'}}</label>
+
+
+                    </div>
+
+                    <div class="form-floating mb-3 col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                        <input type="text" name="name" required class="form-control rounded-3" id="name" value="{{$user->name }}">
+                        <label class="px-4" for="floatingInput">Имя контактного лица</label>
+                    </div>
+
+                    <div class="form-floating mb-3  col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                        <input type="text" name="phone" required class="form-control rounded-3" id="phone" value="">
+                        <label class="px-4" for="floatingInput">Телефон</label>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-floating mb-3 col-8">
+                        <input type="text" name="company_name" required class="form-control rounded-3" id="company_name" value="">
+                        <label class="px-4" for="floatingInput">Название компании</label>
+                    </div>
+                    <div class="form-floating mb-3 col-4">
+                        <input type="text" name="postcode" required class="form-control rounded-3" id="postcode" value="">
+                        <label class="px-4" for="floatingInput">Индекс</label>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-floating mb-3 col-12">
+                        <textarea  name="address" required class="form-control rounded-3" id="address" value=""></textarea>
+                        <label class="px-4" for="floatingInput">Адрес</label>
+                    </div>
+
+                </div>
+
+
+            </form>
             <!-- Button trigger modal -->
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            <button type="button" class="btn btn-secondary mt-4" data-bs-toggle="modal" data-bs-target="#exampleModal">
                 Удалить аккаунт
             </button>
 
@@ -110,7 +168,7 @@
             </div>
 
 
-    </div>
+    </form>
     </div>
 
 

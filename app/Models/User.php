@@ -13,9 +13,10 @@ use phpDocumentor\Reflection\Types\Integer;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail
 {
     use HasApiTokens, HasFactory, Notifiable;
+
 
     /**
      * The attributes that are mass assignable.
@@ -56,24 +57,29 @@ class User extends Authenticatable
         else return null;
     }
 
-    public function addNewUser(string $email ) :int{
-        $password = Str::random(8);
+    public function addNewUser(string $email ) :static{
+        $this->password = Str::random(8);
+        $this->email = $email;
         $this->user_id = DB::table('users')->insertGetId(
             ['email' => $email,
-                'password'=> Hash::make($password),
+                'password'=> Hash::make($this->password),
                 'created_at'=>date('Y-m-d H:i:s')],
         );
-
-        //Send registration email
-        if ( $this->user_id) MailController::accountRegister($email, $password);
-
-        return $this->user_id;
+        return $this;
     }
 
     public function DeleteUser(int $user_id){
 
         DB::table('users')->where('id', '=', $user_id)->delete();
-        session()->flash('success', 'AccountDeleted');
-        return redirect()->intended('/');
+
+    }
+
+    public static function GetUser(int $user_id){
+        $result = DB::table('users')
+            ->select('*')
+            ->where('id' ,'=',$user_id)
+            ->get();
+        if (isset($result[0])) return $result[0];
+        else return null;
     }
 }

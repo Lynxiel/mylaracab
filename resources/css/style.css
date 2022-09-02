@@ -83,11 +83,8 @@
     height: 56px;
 }
 
-/*-------------- ACCOUNT --------------*/
-#account .accordion-button{
-    background: #666;
-    color: white;
-}
+
+
 
 @media (max-width: 400px) {
     #cart-container .cable-title{
@@ -110,6 +107,17 @@
     font-size: 12px;
     padding: 5px 0 5px 0;
     margin-bottom: 5px;
+}
+
+
+
+/*-------------- ACCOUNT --------------*/
+#account .accordion-button{
+    background: #666;
+    color: white;
+}
+#account .panel-heading button{
+    width: 100%;
 }
 
 /*--FOOTER*/

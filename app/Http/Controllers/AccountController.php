@@ -18,12 +18,14 @@ class AccountController extends Controller
 
     public function index(AccountRequest $request)
     {
+        //User
+        $user = User::GetUser(auth()->user()->id);
         //Cart
         $cart=CartController::init($request);
         //Orders
         $orders = Order::GetUserOrders(auth()->user()->id);
 
-        return view('account.index',compact('cart', 'orders'));
+        return view('account.index',compact('cart', 'orders', 'user'));
     }
 
     public function deleteAccount(){
