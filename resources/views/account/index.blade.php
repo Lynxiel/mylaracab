@@ -121,22 +121,27 @@
                         <label class="px-4" for="floatingInput">Телефон</label>
                     </div>
                 </div>
-
+                @if (!isset($user->company_name))
+                <div class=" alert alert-success">
+                    <h6>Для формирования счета с корректными реквизитами плательщика заполните поля ниже:</h6>
+                </div>
+                @endif
                 <div class="row">
                     <div class="form-floating mb-3 col-8">
                         <input type="text" name="company_name" required class="form-control rounded-3" id="company_name" value="">
-                        <label class="px-4" for="floatingInput">Название компании</label>
+                        <label class="px-4" for="floatingInput">Название компании </label>
                     </div>
                     <div class="form-floating mb-3 col-4">
                         <input type="text" name="postcode" required class="form-control rounded-3" id="postcode" value="">
-                        <label class="px-4" for="floatingInput">Индекс</label>
+                        <label class="px-4" for="floatingInput">Индекс </label>
                     </div>
                 </div>
 
                 <div class="row">
+
                     <div class="form-floating mb-3 col-12">
                         <textarea  name="address" required class="form-control rounded-3" id="address" value=""></textarea>
-                        <label class="px-4" for="floatingInput">Адрес</label>
+                        <label class="px-4" for="floatingInput">Юридический адрес </label>
                     </div>
 
                 </div>
