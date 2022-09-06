@@ -1,6 +1,4 @@
-.py-5{
-    padding:0!important;
-}
+
 .group-container{
     margin-bottom: 20px;
     padding-bottom: 20px;
@@ -92,9 +90,19 @@
     }
     #cart-container .cable-summ{
         font-size: 12px;
+        text-align: right!important;
+        padding-left:5px;
     }
     #cart-container .btn-remove-cart{
 
+    }
+
+    #cart-container h6{
+        font-size: 12px;
+    }
+
+    #cart-container p {
+        font-size: 9px;
     }
 }
 
