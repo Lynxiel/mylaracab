@@ -81,7 +81,9 @@
     </tr>
     <tr>
         <td>Покупатель:</td>
-        <th>        </th>
+        <th>
+            {{$user->company_name}}    {{$user->postcode}}  {{$user->address}}
+        </th>
     </tr>
     </tbody>
 </table>

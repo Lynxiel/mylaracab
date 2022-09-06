@@ -26,7 +26,7 @@ class AccountRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+
         ];
     }
 }

@@ -98,7 +98,7 @@ return [
     ],
     'multiple_of' => 'The :attribute must be a multiple of :value.',
     'not_in' => 'The selected :attribute is invalid.',
-    'not_regex' => 'The :attribute format is invalid.',
+    'not_regex' => 'Поле ":attribute" имеет некорректные символы',
     'numeric' => 'The :attribute must be a number.',
     'password' => [
         'letters' => 'The :attribute must contain at least one letter.',
@@ -112,7 +112,7 @@ return [
     'prohibited_if' => 'The :attribute field is prohibited when :other is :value.',
     'prohibited_unless' => 'The :attribute field is prohibited unless :other is in :values.',
     'prohibits' => 'The :attribute field prohibits :other from being present.',
-    'regex' => 'The :attribute format is invalid.',
+    'regex' => 'Поле ":attribute" имеет некорректные символы',
     'required' => 'Поле ":attribute" обязательно к заполнению',
     'required_array_keys' => 'The :attribute field must contain entries for: :values.',
     'required_if' => 'The :attribute field is required when :other is :value.',
@@ -169,6 +169,11 @@ return [
         'title'=> 'Название',
         'password'=> 'Пароль',
         'password_confirmation'=> 'Подверждение пароля',
+        'postcode'=> 'Индекс',
+        'contact_name'=> 'Имя контактного лица',
+        'phone'=> 'Телефон',
+        'company_name'=> 'Название компании',
+        'address'=> 'Юридический адрес',
     ],
 
 ];

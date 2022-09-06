@@ -23,6 +23,7 @@ Route::get('account', [\App\Http\Controllers\AccountController::class,'index'])-
 Route::get('account/cancelOrder/{order_id}', [\App\Http\Controllers\OrderController::class,'cancelOrder'])->name('cancelOrder');
 Route::get('account/formInvoice/{order_id}', [\App\Http\Controllers\InvoiceController::class,'formInvoice'])->name('formInvoice');
 Route::get('account/formQr/{order_id}', [\App\Http\Controllers\InvoiceController::class,'formQr'])->name('formQr');
+Route::post('account/saveUserData', [\App\Http\Controllers\AccountController::class,'saveUserData'])->name('saveUserData');
 
 
 

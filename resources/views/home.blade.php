@@ -1,7 +1,7 @@
 @extends('layouts.layout')
 @section('content')
 
-    <div class="px-4 py-5 my-5 text-center container">
+    <div class="px-4 py-5 text-center container">
         <h1 class="display-5 fw-bold">Кабель оптом</h1>
         <div class="col-lg-12 mx-auto">
             <p class="lead mb-4">Приветствуем на сайте по оптовой продаже кабеля по Тульской области. Мы небольшой семейный магазин

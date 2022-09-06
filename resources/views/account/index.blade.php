@@ -2,7 +2,7 @@
 @section('content')
 
     <div class="container" id="account">
-        <h2 class="mt-4">Личный кабинет</h2>
+        <h2 class="mt-4 text-center">Личный кабинет</h2>
         <h4>История заказов</h4>
 
 
@@ -85,39 +85,36 @@
 
 
             <div class="row panel-heading">
-                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 offset-md-4">
                     <h4 class="mt-4">Личные данные</h4>
                 </div>
+
                 <div class="col-lg-4 col-md-4 col-sm-6 col-xs-6 mt-4">
                     @if (!$user->email_verified_at)
                         <a  href="###"><button type="button" class="btn btn-warning">Подтвердить Email</button></a>
                     @endif
                 </div>
 
-                <div class="col-lg-4 col-md-4 col-sm-6 col-xs-6 mt-4">
-                    <a  href="###"><button type="button" class="btn btn-success">Сохранить изменения</button></a>
-                </div>
+
 
             </div>
 
 
-            <form method="post" action="" class="mt-4">
+            <form method="post" action="{{route('saveUserData')}}" class="mt-4">
                 @csrf
                 <div class="row">
                     <div class="form-floating mb-3 col-lg-4 col-md-4 col-sm-12">
                         <input type="email" name="email" required class="form-control rounded-3" id="email" value="{{$user->email }}" readonly>
                         <label class="px-4" for="floatingInput">Email {{$user->email_verified_at?'подтвержден':'не подтвержден'}}</label>
-
-
                     </div>
 
                     <div class="form-floating mb-3 col-lg-4 col-md-4 col-sm-6 col-xs-12">
-                        <input type="text" name="name" required class="form-control rounded-3" id="name" value="{{$user->name }}">
+                        <input type="text" name="contact_name" required class="form-control rounded-3" id="name" value="{{$user->contact_name?:old('contact_name') }}">
                         <label class="px-4" for="floatingInput">Имя контактного лица</label>
                     </div>
 
                     <div class="form-floating mb-3  col-lg-4 col-md-4 col-sm-6 col-xs-12">
-                        <input type="text" name="phone" required class="form-control rounded-3" id="phone" value="">
+                        <input type="number" name="phone"  required class="form-control rounded-3" id="phone" value="{{$user->phone?:old('phone')}}">
                         <label class="px-4" for="floatingInput">Телефон</label>
                     </div>
                 </div>
@@ -128,11 +125,11 @@
                 @endif
                 <div class="row">
                     <div class="form-floating mb-3 col-8">
-                        <input type="text" name="company_name" required class="form-control rounded-3" id="company_name" value="">
+                        <input type="text" name="company_name"  class="form-control rounded-3" id="company_name" value="{{$user->company_name?:old('company_name')}}">
                         <label class="px-4" for="floatingInput">Название компании </label>
                     </div>
                     <div class="form-floating mb-3 col-4">
-                        <input type="text" name="postcode" required class="form-control rounded-3" id="postcode" value="">
+                        <input type="number" name="postcode"  class="form-control rounded-3" id="postcode" value="{{$user->postcode?:old('postcode')}}">
                         <label class="px-4" for="floatingInput">Индекс </label>
                     </div>
                 </div>
@@ -140,14 +137,27 @@
                 <div class="row">
 
                     <div class="form-floating mb-3 col-12">
-                        <textarea  name="address" required class="form-control rounded-3" id="address" value=""></textarea>
+                        <textarea  name="address"  class="form-control rounded-3" id="address" >{{$user->address?:old('address')}}</textarea>
                         <label class="px-4" for="floatingInput">Юридический адрес </label>
                     </div>
 
                 </div>
 
+                <div class="col-12">
+                    <input type="submit" class="btn btn-success" value="Сохранить изменения">
+                </div>
 
             </form>
+
+            @if ($errors->any() && !$errors->has('action')  )
+                @foreach($errors->all() as $error)
+                    <div class="alert alert-danger alert-dismissible mt-1" role="alert">
+                        <div>{{ $error }}</div>
+                    </div>
+                @endforeach
+            @endif
+
+
             <!-- Button trigger modal -->
             <button type="button" class="btn btn-secondary mt-4" data-bs-toggle="modal" data-bs-target="#exampleModal">
                 Удалить аккаунт

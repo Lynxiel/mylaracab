@@ -6,7 +6,9 @@ use App\Models\Cable;
 use App\Models\Order;
 use App\Models\User;
 use Illuminate\Http\Request;
+use App\Http\Requests\SaveUserDataRequest;
 use App\Http\Requests\AccountRequest;
+use Illuminate\Support\Facades\Hash;
 
 class AccountController extends Controller
 {
@@ -45,5 +47,18 @@ class AccountController extends Controller
         $user->DeleteUser($user_id);
 
         return redirect('/');
+    }
+
+    public function saveUserData(SaveUserDataRequest $request){
+        $data = $request->validated();
+        User::where('id', auth()->user()->id)
+            ->update([
+            'contact_name' => $data['contact_name'],
+            'phone' => $data['phone'],
+            'company_name' => $data['company_name'],
+            'address' => $data['address'],
+            'postcode' => $data['postcode'],
+        ]);
+        return redirect('account/');
     }
 }

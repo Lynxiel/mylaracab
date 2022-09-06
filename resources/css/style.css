@@ -127,7 +127,16 @@
 #account .panel-heading button{
     width: 100%;
 }
-
+#account .btn-success{
+    width: 100%;
+}
+#account input[type='number'] {
+    -moz-appearance:textfield;
+}
+#account input::-webkit-outer-spin-button,
+#account input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+}
 /*--FOOTER*/
 footer{
     margin-top: 40px!important;
