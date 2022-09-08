@@ -29,7 +29,7 @@ class SaveUserDataRequest extends FormRequest
             'contact_name'=>['required', 'min:3', 'max:40',
                 'not_regex:/[^(\w)|(\x7F-\xFF)|(\s)]/'],
             'phone'=>['required','min:5','max:20', 'regex:/[0-9]/'],
-            'company_name'=>['nullable','max:100', 'not_regex:/[^(\w)|(\x7F-\xFF)|(\s)"]/'],
+            'company_name'=>['nullable','max:100', 'not_regex:/[^(\w)|(\x7F-\xFF)|(\s)"-]/'],
             'address'=>['nullable','max:200', 'not_regex:/[^(\w)|(\x7F-\xFF)|(\s)".,]/'],
             'postcode'=>['nullable','max:6', 'regex:/[0-9]/'],
         ];

@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 use App\Http\Requests\RegisterRequest;
+use Illuminate\Auth\Events\Registered;
 
 class RegisterController extends Controller
 {
@@ -36,6 +37,7 @@ class RegisterController extends Controller
         auth()->login($user, true);
         //Send registration email
         MailController::accountRegister($data['email'], $data['password']);
+       // event(new Registered($user));
         return redirect()->intended('/');
     }
 

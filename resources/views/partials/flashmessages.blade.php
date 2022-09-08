@@ -11,3 +11,10 @@
     </div>
 @endif
 
+
+@if (session('success')=='Verification link sent')
+    <div class="alert alert-success" role="alert">
+        Ссылка на подтверждение Email-адреса отправлена на почту
+    </div>
+@endif
+

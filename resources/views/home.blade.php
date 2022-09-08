@@ -1,21 +1,23 @@
 @extends('layouts.layout')
 @section('content')
+    @if(!isset(auth()->user()->id))
+        <div class="px-4 py-5 text-center container">
+            <h1 class="display-5 fw-bold">Кабель оптом</h1>
+            <div class="col-lg-12 mx-auto">
 
-    <div class="px-4 py-5 text-center container">
-        <h1 class="display-5 fw-bold">Кабель оптом</h1>
-        <div class="col-lg-12 mx-auto">
-            <p class="lead mb-4">Приветствуем на сайте по оптовой продаже кабеля по Тульской области. Мы небольшой семейный магазин
-                электротехнической продукции в городе Новомосковск. Оставляйтете заявку через
-                сайт и наши менеджеры свяжутся с Вами для подтверждения заказа и деталей доставки. Ведем свою деятельность с 1993г. и всегда обеспечиваем
-                наших клиентов низкими ценами,отличным сервисом и быстрым обслуживанием.</p>
-            <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+                <p class="lead mb-4">Приветствуем на сайте по оптовой продаже кабеля по Тульской области. Мы небольшой семейный магазин
+                    электротехнической продукции в городе Новомосковск. Оставляйтете заявку через
+                    сайт и наши менеджеры свяжутся с Вами для подтверждения заказа и деталей доставки. Ведем свою деятельность с 1993г. и всегда обеспечиваем
+                    наших клиентов низкими ценами, отличным сервисом и быстрым обслуживанием.</p>
+                <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+                </div>
             </div>
+
         </div>
+    @endif
 
-    </div>
 
-
-    <div class="container">
+    <div class="container mt-4">
         <div class="list-group w-auto">
             @foreach($cables as $key=>$cable)
                 @if (!isset($prevCableGroup) || $prevCableGroup!=$cable->group_id)

@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
+use Illuminate\Http\Request;
 
 /*
 |--------------------------------------------------------------------------
@@ -37,3 +39,17 @@ Route::post('login', [\App\Http\Controllers\LoginController::class,'login'])->na
 Route::post('register', [\App\Http\Controllers\RegisterController::class,'register'])->name('register');
 Route::get('logout', [\App\Http\Controllers\LogoutController::class,'perform'])->name('logout');
 Route::get('deleteAccount', [\App\Http\Controllers\AccountController::class,'deleteAccount'])->name('deleteAccount');
+
+
+
+// Email verification
+Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
+    $request->fulfill();
+    return redirect('/');
+})->middleware(['auth', 'signed'])->name('verification.verify');
+
+Route::post('/email/verification-notification', function (Request $request) {
+    $request->user()->sendEmailVerificationNotification();
+
+    return back()->with('success', 'Verification link sent');
+})->middleware(['auth', 'throttle:6,1'])->name('verification.send');

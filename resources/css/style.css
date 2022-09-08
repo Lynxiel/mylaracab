@@ -127,8 +127,9 @@
 #account .panel-heading button{
     width: 100%;
 }
-#account .btn-success{
+#account .btn-success, #account .btn-warning{
     width: 100%;
+
 }
 #account input[type='number'] {
     -moz-appearance:textfield;

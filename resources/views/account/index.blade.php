@@ -91,7 +91,10 @@
 
                 <div class="col-lg-4 col-md-4 col-sm-6 col-xs-6 mt-4">
                     @if (!$user->email_verified_at)
-                        <a  href="###"><button type="button" class="btn btn-warning">Подтвердить Email</button></a>
+                        <form method="post" action="{{route('verification.send')}}">
+                            @csrf
+                            <input class="btn btn-warning" type="submit" value="Подтвердить Email">
+                        </form>
                     @endif
                 </div>
 

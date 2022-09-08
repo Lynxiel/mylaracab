@@ -79,11 +79,6 @@
             </form>
         </div>
     </div>
-
-<h1>{{ $id }}</h1>
-
-
-
 @endsection('content')
 
 
