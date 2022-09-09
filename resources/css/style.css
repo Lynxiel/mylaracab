@@ -27,6 +27,21 @@
     margin-top: 10px;
 }
 
+/*------ MENU ----------*/
+#top-menu .lk-btn{
+    max-width: 200px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+@media (max-width: 420px) {
+    #top-menu .lk-btn{
+        max-width: 110px;
+
+    }
+}
+
+
 /*--- MODAL -----*/
 #regModal .modal-header, #loginModal .modal-header{
     padding-top: 15px!important;

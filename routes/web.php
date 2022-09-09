@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
-
+use TCG\Voyager\Facades\Voyager;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -29,16 +29,16 @@ Route::post('account/saveUserData', [\App\Http\Controllers\AccountController::cl
 
 
 
-Route::get('admin', [\App\Http\Controllers\CableController::class,'create']);
-Route::post('admin/cable_create', [\App\Http\Controllers\CableController::class,'store']);
-Route::post('admin/group_create', [\App\Http\Controllers\CableGroupController::class,'store']);
+//Route::get('admin', [\App\Http\Controllers\CableController::class,'create']);
+//Route::post('admin/cable_create', [\App\Http\Controllers\CableController::class,'store']);
+//Route::post('admin/group_create', [\App\Http\Controllers\CableGroupController::class,'store']);
+//
 
 
-
-Route::post('login', [\App\Http\Controllers\LoginController::class,'login'])->name('login');
-Route::post('register', [\App\Http\Controllers\RegisterController::class,'register'])->name('register');
-Route::get('logout', [\App\Http\Controllers\LogoutController::class,'perform'])->name('logout');
-Route::get('deleteAccount', [\App\Http\Controllers\AccountController::class,'deleteAccount'])->name('deleteAccount');
+Route::post('user_login', [\App\Http\Controllers\LoginController::class,'login'])->name('login');
+Route::post('user_register', [\App\Http\Controllers\RegisterController::class,'register'])->name('register');
+Route::get('user_logout', [\App\Http\Controllers\LogoutController::class,'perform'])->name('logout');
+Route::get('user_deleteAccount', [\App\Http\Controllers\AccountController::class,'deleteAccount'])->name('deleteAccount');
 
 
 
@@ -53,3 +53,9 @@ Route::post('/email/verification-notification', function (Request $request) {
 
     return back()->with('success', 'Verification link sent');
 })->middleware(['auth', 'throttle:6,1'])->name('verification.send');
+
+Route::group(['prefix' => 'admin'], function () {
+    Voyager::routes();
+
+    //Route::get('orders',  [\App\Http\Controllers\Admin\OrderController::class,'index', 'as' => 'orders']);
+});

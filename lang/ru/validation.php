@@ -126,7 +126,7 @@ return [
         'array' => 'The :attribute must contain :size items.',
         'file' => 'The :attribute must be :size kilobytes.',
         'numeric' => 'Поле ":attribute" допустимая длиная символов - :size',
-        'string' => 'Допустимая длина поля ":attribute" - :size',
+        'string' => 'Поле ":attribute" должно быть длиной :size символов',
     ],
     'starts_with' => 'The :attribute must start with one of the following: :values.',
     'doesnt_start_with' => 'The :attribute may not start with one of the following: :values.',

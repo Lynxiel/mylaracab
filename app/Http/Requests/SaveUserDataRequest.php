@@ -26,7 +26,7 @@ class SaveUserDataRequest extends FormRequest
     public function rules()
     {
         return [
-            'contact_name'=>['required', 'min:3', 'max:40',
+            'contact_name'=>['required', 'min:2', 'max:40',
                 'not_regex:/[^(\w)|(\x7F-\xFF)|(\s)]/'],
             'phone'=>['required','min:5','max:20', 'regex:/[0-9]/'],
             'company_name'=>['nullable','max:100', 'not_regex:/[^(\w)|(\x7F-\xFF)|(\s)"-]/'],

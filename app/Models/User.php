@@ -13,7 +13,7 @@ use phpDocumentor\Reflection\Types\Integer;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
-class User extends Authenticatable implements MustVerifyEmail
+class User extends \TCG\Voyager\Models\User implements MustVerifyEmail
 {
     use HasApiTokens, HasFactory, Notifiable;
 

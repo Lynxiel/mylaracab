@@ -13,7 +13,7 @@ class Order extends Model
     CONST CONFIRMED = 1;
     CONST PAID = 2;
     CONST COMPLETED = 3;
-
+    protected $primaryKey = 'order_id';
     protected $order_id;
     protected $user_id;
     protected $status = self::CREATED;
