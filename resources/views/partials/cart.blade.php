@@ -80,8 +80,18 @@
                                                 </div>
 
                                             </div>
-                                                <p class="unauthorized-desc">После отправки с Вами свяжется наш менеджер для уточнения деталей заказа.</p>
-                                                <script>
+                                    <hr>
+                                                <p class="unauthorized-desc">После отправки с Вами свяжется наш менеджер для уточнения деталей заказа. Для сохранения истории заказов и отслеживания статуса<br></p>
+                                                <div class="row justify-content-center">
+                                                    <div class="offset-1 col-4">
+                                                        <button id="btn-register" type="button" class="btn btn-warning mt-1" data-bs-toggle="modal" data-bs-target="#regModal">Зарегистрируйтесь</button>
+                                                    </div>
+                                                    <div class="offset-1 col-1 mt-2 cart-or"><p>или</p></div>
+                                                    <div class="col-5">
+                                                        <button type="button" id="btn-login" class="btn btn-warning mt-1" data-bs-toggle="modal" data-bs-target="#loginModal">Войдите</button>
+                                                    </div>
+                                                </div>
+                                                   <script>
                                                     $("#order_contact").mask("+7(999) 999-99-99");
                                                 </script>
                                     @endif
