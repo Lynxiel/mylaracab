@@ -12,14 +12,14 @@
                                 <form method="post" action="{{route('login')}}">
                                     @csrf
                                     <div class="form-floating mb-3">
-                                        <input  name="email"  type="email" required class="form-control rounded-3" id="email" placeholder="name@example.com">
-                                        <label for="email">Email</label>
+                                        <input  name="emailorphone"  type="text" required class="form-control rounded-3" id="emailorphone" >
+                                        <label for="email">Email или телефон</label>
                                     </div>
 
                                     <div class="form-floating mb-3">
 
                                         <div class="input-group form-floating show_hide_password" >
-                                            <input type="password" name="password" class="form-control rounded-3"  placeholder="Пароль" aria-label="Пароль" >
+                                            <input required type="password" name="password" class="form-control rounded-3"  placeholder="Пароль" aria-label="Пароль" >
                                             <label for="password">Пароль</label>
                                             <span class="input-group-text" id="basic-addon1">
                                                <a href="###" class="eye-slash" >

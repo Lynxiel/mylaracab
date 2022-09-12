@@ -25,7 +25,7 @@ class LoginRequest extends FormRequest
     public function rules()
     {
         return [
-            'email' => ['required','email','regex:/[^(\w)|(\@)|(\.)|(\-)]/'],
+            'emailorphone' => ['required', 'not_regex:/[^(\w)|(\@)|(\.)|(\-)][0-9]/'],
             'password' => 'required'
         ];
     }
@@ -38,9 +38,39 @@ class LoginRequest extends FormRequest
      */
     public function getCredentials()
     {
+        // The form field for providing username or password
+        // have name of "username", however, in order to support
+        // logging users in with both (username and email)
+        // we have to check if user has entered one or another
+        $emailorphone = $this->get('emailorphone');
 
-        return $this->only('email', 'password');
+        if ($this->isEmail($emailorphone)) {
+            return [
+                'email' => $emailorphone,
+                'password' => $this->get('password')
+            ];
+        }
+
+        else return [
+            'phone' => $emailorphone,
+            'password' => $this->get('password')
+        ];
     }
 
+    /**
+     * Validate if provided parameter is valid email.
+     *
+     * @param $param
+     * @return bool
+     * @throws \Illuminate\Contracts\Container\BindingResolutionException
+     */
+    private function isEmail($param)
+    {
+        $factory = $this->container->make(ValidationFactory::class);
 
+        return ! $factory->make(
+            ['emailorphone' => $param],
+            ['emailorphone' => 'email']
+        )->fails();
+    }
 }
