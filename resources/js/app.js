@@ -1,9 +1,3 @@
-$(window).scroll(function() {
-    sessionStorage.scrollTop = $(this).scrollTop();
-});
-if (sessionStorage.scrollTop != "undefined") {
-    $(window).scrollTop(sessionStorage.scrollTop);
-}
 
 /*---cart confirm ---*/
 $('#order-confirm').bind('click',function (){

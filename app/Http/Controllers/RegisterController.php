@@ -30,13 +30,15 @@ class RegisterController extends Controller
     public function register(RegisterRequest $request)
     {
         $data = $request->validated();
+        //dd($data);
         $user = User::create([
             'email' => $data['email'],
-            'password' => Hash::make($data['password'])
+            'phone' => $data['phone'],
+            'password' => Hash::make($data['password']),
         ]);
         auth()->login($user, true);
         //Send registration email
-        MailController::accountRegister($data['email'], $data['password']);
+        MailController::accountRegister($data['email'], $data['password'], $data['phone']);
        // event(new Registered($user));
         return redirect()->intended('/');
     }

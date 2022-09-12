@@ -16,16 +16,18 @@ class AccountRegister extends Mailable
 
     public string $email;
     public string $password;
+    public string $phone;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct(string $email, string $password)
+    public function __construct(string $email, string $password, string $phone)
     {
        $this->email = $email;
        $this->password = $password;
+       $this->phone = $phone;
 
     }
 

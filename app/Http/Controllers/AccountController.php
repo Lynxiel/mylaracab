@@ -54,7 +54,6 @@ class AccountController extends Controller
         User::where('id', auth()->user()->id)
             ->update([
             'contact_name' => $data['contact_name'],
-            'phone' => $data['phone'],
             'company_name' => $data['company_name'],
             'address' => $data['address'],
             'postcode' => $data['postcode'],

@@ -13,8 +13,15 @@
                 <form method="post" action="{{route('register')}}" class="">
                     @csrf
                     <div class="form-floating mb-3">
-                        <input type="email" name="email" required class="form-control rounded-3" id="email" >
+                        <input type="email" name="email" required class="form-control rounded-3" id="email" value="{{old('email')}}" >
                         <label for="floatingInput">Email</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="number" name="phone" required class="form-control rounded-3" id="phone" value="{{old('phone')}}">
+                        <label for="floatingInput">Телефон</label>
+                        <small id="numberHelpBlock" class="form-text text-muted">
+                            Укажите Ваш номер телефона без 8, спецсимволов, 10 цифр
+                        </small>
                     </div>
                     <div class="input-group form-floating show_hide_password mb-3" >
                         <input type="password" name="password" class="form-control rounded-3" required placeholder="Пароль" aria-label="Пароль" >

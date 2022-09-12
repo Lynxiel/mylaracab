@@ -25,6 +25,7 @@ class RegisterRequest extends FormRequest
     {
         return [
             'email' => ['required','email:rfc,dns,strict','unique:users,email', 'not_regex:/[^(\w)|(\@)|(\.)|(\-)]/'],
+            'phone' => 'size:10|required|regex:/[0-9]/|unique:users,phone',
             'password' => 'required|min:8',
             'password_confirmation' => 'required|same:password'
         ];

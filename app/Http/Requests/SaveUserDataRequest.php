@@ -28,7 +28,6 @@ class SaveUserDataRequest extends FormRequest
         return [
             'contact_name'=>['required', 'min:2', 'max:40',
                 'not_regex:/[^(\w)|(\x7F-\xFF)|(\s)]/'],
-            'phone'=>['required','min:5','max:20', 'regex:/[0-9]/'],
             'company_name'=>['nullable','max:100', 'not_regex:/[^(\w)|(\x7F-\xFF)|(\s)"-]/'],
             'address'=>['nullable','max:200', 'not_regex:/[^(\w)|(\x7F-\xFF)|(\s)".,]/'],
             'postcode'=>['nullable','size:6', 'regex:/[0-9]/'],

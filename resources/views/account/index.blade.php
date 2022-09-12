@@ -90,35 +90,28 @@
                 </div>
 
                 <div class="col-lg-4 col-md-4 col-sm-6 col-xs-6 mt-4">
-                    @if (!$user->email_verified_at)
-                        <form method="post" action="{{route('verification.send')}}">
-                            @csrf
-                            <input class="btn btn-warning" type="submit" value="Подтвердить Email">
-                        </form>
-                    @endif
+
                 </div>
 
 
 
             </div>
 
-
             <form method="post" action="{{route('saveUserData')}}" class="mt-4">
                 @csrf
                 <div class="row">
-                    <div class="form-floating mb-3 col-lg-4 col-md-4 col-sm-12">
-                        <input type="email" name="email" required class="form-control rounded-3" id="email" value="{{$user->email }}" readonly>
-                        <label class="px-4" for="floatingInput">Email {{$user->email_verified_at?'подтвержден':'не подтвержден'}}</label>
-                    </div>
 
                     <div class="form-floating mb-3 col-lg-4 col-md-4 col-sm-6 col-xs-12">
                         <input type="text" name="contact_name" required class="form-control rounded-3" id="name" value="{{$user->contact_name?:old('contact_name') }}">
                         <label class="px-4" for="floatingInput">Имя контактного лица</label>
                     </div>
-
                     <div class="form-floating mb-3  col-lg-4 col-md-4 col-sm-6 col-xs-12">
-                        <input type="number" name="phone"  required class="form-control rounded-3" id="phone" value="{{$user->phone?:old('phone')}}">
+                        <input type="number" name="phone"  required class="form-control rounded-3" disabled id="phone" value="{{$user->phone?:old('phone')}}">
                         <label class="px-4" for="floatingInput">Телефон</label>
+                    </div>
+                    <div class="form-floating mb-3 col-lg-4 col-md-4 col-sm-12">
+                        <input type="email" name="email" required class="form-control rounded-3" id="email" value="{{$user->email }}" readonly>
+                        <label class="px-4" for="floatingInput">Email</label>
                     </div>
                 </div>
                 @if (!isset($user->company_name))

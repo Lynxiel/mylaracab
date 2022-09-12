@@ -16,7 +16,7 @@ class MailController extends Controller
     }
 
 
-    public static function accountRegister(string $email, string $password){
-        Mail::to($email)->send(new AccountRegister($email, $password));
+    public static function accountRegister(string $email, string $password, string $phone){
+        Mail::to($email)->send(new AccountRegister($email, $password, $phone));
     }
 }
