@@ -12,7 +12,6 @@ class MailController extends Controller
 {
     public static function orderSend(Request $request){
         Mail::to($request->user()?$request->user():$request->order_contact)->send(new OrderConfirm());
-        session()->flash('success', 'OrderSend');
     }
 
 

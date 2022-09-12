@@ -1,4 +1,7 @@
-
+.right-label{
+    position: absolute;
+    right: -60px;
+}
 .group-container{
     margin-bottom: 20px;
     padding-bottom: 20px;
@@ -107,8 +110,18 @@
 #cart-container .unauthorized-order button{
     height: 56px;
 }
+#cart-container .unauthorized-desc{
 
+}
 
+#cart-container input[type='number'] {
+    -moz-appearance:textfield!important;
+}
+#cart-container input::-webkit-outer-spin-button,
+#cart-container input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
 
 
 @media (max-width: 400px) {

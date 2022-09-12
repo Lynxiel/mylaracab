@@ -1,14 +1,4 @@
 
-/*---cart confirm ---*/
-$('#order-confirm').bind('click',function (){
-    if ($(this).is(':checked')){
-        $('#btn-confirm-order').prop('disabled',false).removeClass('disabled');
-    }else {
-        $('#btn-confirm-order').prop('disabled',true).addClass('disabled');
-    }
-})
-
-
 /*-----  show hide password ---------------*/
 $(".show_hide_password a").bind('click', function(event) {
     event.preventDefault();

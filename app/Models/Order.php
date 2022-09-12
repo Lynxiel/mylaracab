@@ -14,14 +14,20 @@ class Order extends Model
     CONST PAID = 2;
     CONST COMPLETED = 3;
     protected $primaryKey = 'order_id';
-    protected $order_id;
-    protected $user_id;
-    protected $status = self::CREATED;
-    protected $cables = array();
+    protected int $order_id;
+    protected ?int $user_id;
+    protected string $phone='';
+    protected int $status = self::CREATED;
+    protected array $cables = [];
 
 
-    public function setUserID(int $user_id ) :static{
+    public function setUserID(?int $user_id ) :static{
         $this->user_id = $user_id;
+        return $this;
+    }
+
+    public function setPhone(string $phone ) :static{
+        $this->phone = $phone;
         return $this;
     }
 
@@ -58,7 +64,10 @@ class Order extends Model
 
     public function AddOrder(){
         return $this->order_id = DB::table('orders')->insertGetId(
-            ['user_id' => $this->user_id, 'status' => $this->status, 'created_at'=> date('Y-m-d H:i:s')]
+            ['user_id' => $this->user_id,
+                'status' => $this->status,
+                'comment'=> $this->phone,
+                'created_at'=> date('Y-m-d H:i:s')]
         );
     }
 

@@ -106,7 +106,7 @@
                         <label class="px-4" for="floatingInput">Имя контактного лица</label>
                     </div>
                     <div class="form-floating mb-3  col-lg-4 col-md-4 col-sm-6 col-xs-12">
-                        <input type="number" name="phone"  required class="form-control rounded-3" disabled id="phone" value="{{$user->phone?:old('phone')}}">
+                        <input type="text" name="phone"  required class="form-control rounded-3" disabled id="phone" value="{{$user->phone?:old('phone')}}">
                         <label class="px-4" for="floatingInput">Телефон</label>
                     </div>
                     <div class="form-floating mb-3 col-lg-4 col-md-4 col-sm-12">

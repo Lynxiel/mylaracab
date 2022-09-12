@@ -14,25 +14,18 @@ use Illuminate\Auth\Events\Registered;
 class OrderController extends Controller
 {
     public function createOrder(Request $request){
-        $email = $request->order_contact;
 
         $order = new Order();
-        if  (!isset(auth()->user()->id)){
-            $user_id = User::getUserIdByEmail($email);
-            if (!$user_id) {
-                $user = new User();
-                $user->addNewUser($email);
-                $user_id = $user->user_id;
-                MailController::accountRegister($user->email, $user->password);
-               // event(new Registered($user));
-            }
-        }else $user_id = auth()->user()->id;
-
+        if ($request->order_contact){
+            $order->setPhone($request->order_contact);
+        }
+        $user_id = isset(auth()->user()->id)?:null;
         $order->setUserID($user_id)->AddOrder();
         $cables = CartController::init($request);
         $order->AddCablesToOrder($cables);
-        MailController::orderSend($request);
+        if ($user_id)MailController::orderSend($request);
         session()->remove('cable_id');
+        session()->flash('success', 'OrderSend');
         return redirect()->intended('/');
     }
 

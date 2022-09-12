@@ -58,27 +58,20 @@
 
                             <div class="modal-footer">
                                 <form method="post" action="{{route('createOrder')}}">
-
+                                    @csrf
                                         @if (auth()->user())
                                             <div class="row">
-                                                <div class="col-6 mt-1">
-                                                    <p>Заказ будет отправлен на
-                                                        <strong>{{auth()->user()->email}}</strong></p>
-                                                </div>
-                                                <div class="col-6 section-confirm">
-                                                    <input class="form-check-input" type="checkbox" value="" id="order-confirm">
-                                                    <label class="form-check-label" for="order-confirm">
-                                                        Подтвердить заказ
-                                                    </label>
-                                                    <button id="btn-confirm-order" type="submit" class="btn btn-primary disabled" disabled >Отправить</button>
+
+                                                <div class=" section-confirm">
+                                                    <button id="btn-confirm-order" type="submit" class="btn btn-primary "  >Отправить</button>
                                                 </div>
                                             </div>
                                         @else
                                             <div class="row mt-1 unauthorized-order">
                                                 <div class="col-6">
                                                     <div class="form-floating mb-3 mt-1">
-                                                        <input  name="order_contact"  type="email" required class="form-control rounded-3" id="order-contact" placeholder="name@example.com">
-                                                        <label for="email">Email</label>
+                                                        <input  name="order_contact"  type="text" required class="form-control rounded-3" id="order_contact" >
+                                                        <label for="order_contact">Телефон</label>
                                                     </div>
                                                 </div>
                                                 <div class="col-6">
@@ -87,9 +80,13 @@
                                                 </div>
 
                                             </div>
-                                        @endif
+                                                <p class="unauthorized-desc">После отправки с Вами свяжется наш менеджер для уточнения деталей заказа.</p>
+                                                <script>
+                                                    $("#order_contact").mask("+7(999) 999-99-99");
+                                                </script>
+                                    @endif
 
-                                    @csrf
+
                                 </form>
                             </div>
                                 @if (session('success')=='Успешно удалено из корзины!' ||  session('success')=='Успешно изменено количество!')
