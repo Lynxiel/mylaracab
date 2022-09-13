@@ -3,6 +3,12 @@
         Заказ успешно отправлен!
     </div>
 @endif
+@if (session('success')=='UserRegistered')
+    <div class="alert alert-success" role="alert">
+        Вы успешно зарегистрировались!
+    </div>
+@endif
+
 
 
 @if (session('success')=='OrderCanceled')

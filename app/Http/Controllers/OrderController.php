@@ -19,14 +19,15 @@ class OrderController extends Controller
         if ($request->order_contact){
             $order->setPhone($request->order_contact);
         }
-        $user_id = isset(auth()->user()->id)?:null;
+        $user_id = isset(auth()->user()->id)?auth()->user()->id:null;
         $order->setUserID($user_id)->AddOrder();
         $cables = CartController::init($request);
         $order->AddCablesToOrder($cables);
         if ($user_id)MailController::orderSend($request);
         session()->remove('cable_id');
         session()->flash('success', 'OrderSend');
-        return redirect()->intended('/');
+        if ($user_id) return redirect()->intended('/account');
+            return redirect()->intended('/');
     }
 
     public function cancelOrder(int $order_id){

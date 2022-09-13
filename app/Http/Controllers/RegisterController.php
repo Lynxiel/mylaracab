@@ -39,7 +39,7 @@ class RegisterController extends Controller
         auth()->login($user, true);
         //Send registration email
         MailController::accountRegister($data['email'], $data['password'], $data['phone']);
-       // event(new Registered($user));
+        session()->flash('success','UserRegistered');
         return redirect()->intended('/');
     }
 
