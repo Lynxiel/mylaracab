@@ -27,6 +27,7 @@ class OrderController extends Controller
         $user = User::find($order->user_id);
         $order->comment = $data['comment'];
         $order->address = $data['address'];
+        $order->pay_link = $data['pay_link'];
         if (isset($data['status']))        {
             $order->status = $data['status'];
             if ($order->user_id)

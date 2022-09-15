@@ -23,7 +23,7 @@
                                 @break
 
                                 @case(1)
-                                Подтвержден
+                                Подтвержден, ожидает оплаты
                                 @break
 
                                 @case(2)
@@ -41,14 +41,50 @@
                     <div class="accordion-body">
                         <div class="row ">
                             <p>
+                                @if ($order->status==1)
+                                <a target="_blank" href="{{route('formInvoice', ['order_id' => $order->order_id])}}"><button class="btn btn-primary">Сформировать счет</button></a>
+                                    <!-- Button trigger modal -->
+                                    @if ($order->pay_link)
+                                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#qrmodal">
+                                            Получить QR-код
+                                        </button>
 
-                                <a class="px-4" target="_blank" href="{{route('formInvoice', ['order_id' => $order->order_id])}}">Сформировать счет</a>
-                                <a class="px-4" href="{{route('formQr', ['order_id' => $order->order_id])}}">Сформировать QR-код</a>
+                                        <!-- Modal -->
+                                    <div class="modal fade" id="qrmodal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLabel">QR-код для оплаты через Ваше банковское приложение</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <a href="{{$order->pay_link}}">{{$order->pay_link}}</a>
+                                                </div>
 
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endif
+                            @endif
                             @if ($order->status==0)
-                                    <a class="px-2" href="{{route('cancelOrder', ['order_id' => $order->order_id])}}">Отменить заказ</a>
+                                    <a class="px-2" href="{{route('cancelOrder', ['order_id' => $order->order_id])}}"><button class="btn btn-danger">Отменить заказ</button></a>
                                 @endif
                             </p>
+
+                                @if ($order->delivery_address)
+                                    <div class="form-floating mb-3  col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                        <input type="text" class="form-control rounded-3" disabled value="{{$order->delivery_address}}">
+                                        <label class="px-4" for="floatingInput">Адрес доставки</label>
+                                    </div>
+                                @endif
+                                @if ($order->comment)
+                                    <div class="form-floating mb-3  col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                        <input type="text" class="form-control rounded-3" disabled value="{{$order->comment}}">
+                                        <label class="px-4" for="floatingInput">Комментарий</label>
+                                    </div>
+                                @endif
+
+
 
                             @endif
                             <div  class="list-group-item list-group-item-action d-flex gap-3 py-1" aria-current="true">
