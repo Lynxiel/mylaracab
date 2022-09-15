@@ -14,7 +14,6 @@ class Order extends Model
     CONST PAID = 2;
     CONST COMPLETED = 3;
     protected $primaryKey = 'order_id';
-    protected int $order_id;
     protected ?int $user_id;
     protected string $phone='';
     protected int $status = self::CREATED;

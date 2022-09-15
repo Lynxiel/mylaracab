@@ -234,7 +234,6 @@
 
                 </div>
                 <script>
-                    alert(0);
                     jQuery("#date_begin, #date_end").onchange(function (e) {
                         alert(1);
                         jQuery.ajaxSetup({
