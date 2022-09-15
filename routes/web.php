@@ -29,12 +29,6 @@ Route::post('account/saveUserData', [\App\Http\Controllers\AccountController::cl
 
 
 
-//Route::get('admin', [\App\Http\Controllers\CableController::class,'create']);
-//Route::post('admin/cable_create', [\App\Http\Controllers\CableController::class,'store']);
-//Route::post('admin/group_create', [\App\Http\Controllers\CableGroupController::class,'store']);
-//
-
-
 Route::post('user_login', [\App\Http\Controllers\LoginController::class,'login'])->name('login');
 Route::post('user_register', [\App\Http\Controllers\RegisterController::class,'register'])->name('register');
 Route::get('user_logout', [\App\Http\Controllers\LogoutController::class,'perform'])->name('logout');
@@ -58,5 +52,6 @@ Route::group(['prefix' => 'admin'], function () {
     Voyager::routes();
 
     Route::get('orders',  [\App\Http\Controllers\Admin\OrderController::class,'index', 'as' => 'orders']);
+    Route::post('order',  [\App\Http\Controllers\Admin\OrderController::class,'index', 'as' => 'order']);
     Route::post('update_order',  [\App\Http\Controllers\Admin\OrderController::class,'updateOrder'])->name('updateOrder');
 });

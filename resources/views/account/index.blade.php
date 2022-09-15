@@ -8,16 +8,17 @@
 
         <div class="list-group w-auto">
             @php  $summ = 0; $i=1; @endphp
-            @if (isset($orders[0]->order_id))
-                @foreach($orders as $key=>$order)
-                    @if (!isset($prevOrderId) || $prevOrderId!=$order->order_id)
-                        @php  $summ = 0;  @endphp
+            @if (!empty($orders))
+                @foreach($orders as $order)
+                        @php  $summ = 0;
+                                $orderdata = $order[0];
+                        @endphp
 
         <div class="accordion" >
             <div class="accordion-item">
-                <h2 class="accordion-header" id="panelsStayOpen-heading{{$i}}">
-                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapse{{$i}}" aria-expanded="true" aria-controls="panelsStayOpen-collapse{{$i}}">
-                        <h6 class="group-title">№{{$order->order_id}} от {{$order->created_at}} -  @switch($order->status)
+                <h2 class="accordion-header" id="panelsStayOpen-heading{{$orderdata->order_id}}">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapse{{$orderdata->order_id}}" aria-expanded="true" aria-controls="panelsStayOpen-collapse{{$orderdata->order_id}}">
+                        <h6 class="group-title">№{{$orderdata->order_id}} от {{$orderdata->created_at}} -  @switch($orderdata->status)
                                 @case(0)
                                 Создан
                                 @break
@@ -37,13 +38,13 @@
                             @endswitch </h6>
                     </button>
                 </h2>
-                <div id="panelsStayOpen-collapse{{$i}}" class="accordion-collapse collapse {{ ($i==1?'show':'') }}" aria-labelledby="panelsStayOpen-heading{{$i}}">
+                <div id="panelsStayOpen-collapse{{$orderdata->order_id}}" class="accordion-collapse collapse " aria-labelledby="panelsStayOpen-heading{{$orderdata->order_id}}">
                     <div class="accordion-body">
                         <div class="row ">
-                                @if ($order->status==1)
-                                <a target="_blank" href="{{route('formInvoice', ['order_id' => $order->order_id])}}"><button class="btn btn-primary">Сформировать счет</button></a>
+                                @if ($orderdata->status==1)
+                                <a target="_blank" href="{{route('formInvoice', ['order_id' => $orderdata->order_id])}}"><button class="btn btn-primary">Сформировать счет</button></a>
                                     <!-- Button trigger modal -->
-                                    @if ($order->pay_link)
+                                    @if ($orderdata->pay_link)
                                         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#qrmodal">
                                             Получить QR-код
                                         </button>
@@ -57,7 +58,7 @@
                                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                 </div>
                                                 <div class="modal-body">
-                                                    <a href="{{$order->pay_link}}">{{$order->pay_link}}</a>
+                                                    <a href="{{$orderdata->pay_link}}">{{$orderdata->pay_link}}</a>
                                                 </div>
 
                                             </div>
@@ -65,42 +66,40 @@
                                     </div>
                                 @endif
                             @endif
-                                @if ($order->status==0)
+                                @if ($orderdata->status==0)
                                     <div class="p-3 mb-2 bg-warning text-dark">В ближайшее время с Вами свяжется наш менеджер для подтверждения заказа. После этого станет доступна оплата и формирование счета.</div>
                                 @endif
 
-                                @if ($order->delivery_address)
+                                @if ($orderdata->delivery_address)
                                     <div class="form-floating mb-3  col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                                        <input type="text" class="form-control rounded-3" disabled value="{{$order->delivery_address}}">
+                                        <input type="text" class="form-control rounded-3" disabled value="{{$orderdata->delivery_address}}">
                                         <label class="px-4" for="floatingInput">Адрес доставки</label>
                                     </div>
                                 @endif
-                                @if ($order->comment)
+                                @if ($orderdata->comment)
                                     <div class="form-floating mb-3  col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                                        <input type="text" class="form-control rounded-3" disabled value="{{$order->comment}}">
+                                        <input type="text" class="form-control rounded-3" disabled value="{{$orderdata->comment}}">
                                         <label class="px-4" for="floatingInput">Комментарий</label>
                                     </div>
                                 @endif
 
 
-
-                            @endif
-                            <div  class="list-group-item list-group-item-action d-flex gap-3 py-1" aria-current="true">
-                                <div class="d-flex gap-2 w-100 justify-content-between">
-                                    <div>
-                                        <h6 class="mb-0">{{$order->title}} </h6>
+                            @foreach($order as $cable)
+                                <div  class="list-group-item list-group-item-action d-flex gap-3 py-1" aria-current="true">
+                                    <div class="d-flex gap-2 w-100 justify-content-between">
+                                        <div>
+                                            <h6 class="mb-0">{{$cable->title}} </h6>
+                                        </div>
+                                        <small class="opacity-50 text-nowrap cable-price">{{$cable->quantity}}м х {{$cable->price}}₽</small>
+                                        <small class="opacity-50 text-nowrap cable-price">{{($cable->quantity*$cable->price)}}₽</small>
+                                        @php  $summ += $cable->price*$cable->quantity;  @endphp
                                     </div>
-                                    <small class="opacity-50 text-nowrap cable-price">{{$order->quantity}}м х {{$order->price}}₽</small>
-                                    <small class="opacity-50 text-nowrap cable-price">{{($order->quantity*$order->price)}}₽</small>
-                                    @php  $summ += $order->price*$order->quantity;  @endphp
                                 </div>
-
-                            </div>
-                            @if (!isset($orders[$key+1]->order_id) || $orders[$key+1]->order_id!=$order->order_id)
+                            @endforeach
                                 <strong class="summ mt-3 text-end">Сумма: {{$summ}}₽</strong>
 
-                                        @if ($order->status==0)
-                                            <a class="px-2" href="{{route('cancelOrder', ['order_id' => $order->order_id])}}"><button class="btn btn-danger">Отменить заказ</button></a>
+                                        @if ($orderdata->status==0)
+                                            <a class="px-2" href="{{route('cancelOrder', ['order_id' => $orderdata->order_id])}}"><button class="btn btn-danger">Отменить заказ</button></a>
                                         @endif
                         </div>
                     </div>
@@ -108,15 +107,6 @@
             </div>
 
         </div>
-
-
-
-                    @endif
-
-
-                    @php $prevOrderId =  $order->order_id ; $i++; @endphp
-
-
                 @endforeach
 
 

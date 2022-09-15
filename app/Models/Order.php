@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 
 class Order extends Model
@@ -18,6 +19,7 @@ class Order extends Model
     protected string $phone='';
     protected int $status = self::CREATED;
     protected array $cables = [];
+
 
 
     public function setUserID(?int $user_id ) :static{
@@ -47,6 +49,13 @@ class Order extends Model
 
     }
 
+    public static function GetOrderWithContents(int $order_id){
+        return DB::table('orders')
+            ->select('*')
+            ->where('order_id' ,'=',$order_id)
+            ->get();
+    }
+
     public static function GetUserOrders(?int $user_id){
         $result =  DB::table('orders')
             ->select('orders.order_id','comment' , 'cables.title as title', 'orders.created_at', 'cables_order.quantity',
@@ -58,7 +67,8 @@ class Order extends Model
             if ($user_id) $result->where('orders.user_id' ,'=',$user_id);
            $result->orderBy('orders.order_id','desc');
 
-        return $result->get();
+        $result =  $result->get();
+        return $result->groupBy(['order_id'], false);
 
     }
 
