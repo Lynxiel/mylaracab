@@ -32,6 +32,6 @@ class OrderConfirm extends Mailable
     public function build(Request $request)
     {
         $cart = CartController::init($request);
-        return $this->view('mails.confirm')->with('cart',$cart);
+        return $this->subject('Заказ Kabelopt71.ru')->view('mails.confirm')->with('cart',$cart);
     }
 }

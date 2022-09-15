@@ -9,6 +9,8 @@
     <link rel="stylesheet" href="/resources/css/style.css">
 </head>
 <body class="antialiased">
+Спасибо за заказ!
+В ближайшее время с Вами свяжется наш менеджер для подтверждения заказа. После этого станет доступна оплата и формирование счета.
 @if (!empty($cart))
     <?php $sum=0; $n=1;?>
     @foreach ($cart as $item)

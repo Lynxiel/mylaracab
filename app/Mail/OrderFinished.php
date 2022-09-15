@@ -35,6 +35,6 @@ class OrderFinished extends Mailable
      */
     public function build(Request $request)
     {
-        return $this->view('mails.orderfinished')->with(['order'=>$this->order ] );
+        return $this->subject('Заказ завершен Kabelopt71.ru')->view('mails.orderfinished')->with(['order'=>$this->order ] );
     }
 }

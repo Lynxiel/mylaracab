@@ -35,6 +35,6 @@ class OrderConfirmed extends Mailable
      */
     public function build(Request $request)
     {
-        return $this->view('mails.orderconfirmed')->with(['order'=>$this->order ] );
+        return $this->subject('Заказ подтвержден Kabelopt71.ru')->view('mails.orderconfirmed')->with(['order'=>$this->order ] );
     }
 }

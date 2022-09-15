@@ -40,7 +40,6 @@
                 <div id="panelsStayOpen-collapse{{$i}}" class="accordion-collapse collapse {{ ($i==1?'show':'') }}" aria-labelledby="panelsStayOpen-heading{{$i}}">
                     <div class="accordion-body">
                         <div class="row ">
-                            <p>
                                 @if ($order->status==1)
                                 <a target="_blank" href="{{route('formInvoice', ['order_id' => $order->order_id])}}"><button class="btn btn-primary">Сформировать счет</button></a>
                                     <!-- Button trigger modal -->
@@ -66,10 +65,9 @@
                                     </div>
                                 @endif
                             @endif
-                            @if ($order->status==0)
-                                    <a class="px-2" href="{{route('cancelOrder', ['order_id' => $order->order_id])}}"><button class="btn btn-danger">Отменить заказ</button></a>
+                                @if ($order->status==0)
+                                    <div class="p-3 mb-2 bg-warning text-dark">В ближайшее время с Вами свяжется наш менеджер для подтверждения заказа. После этого станет доступна оплата и формирование счета.</div>
                                 @endif
-                            </p>
 
                                 @if ($order->delivery_address)
                                     <div class="form-floating mb-3  col-lg-6 col-md-6 col-sm-6 col-xs-12">
@@ -100,6 +98,10 @@
                             </div>
                             @if (!isset($orders[$key+1]->order_id) || $orders[$key+1]->order_id!=$order->order_id)
                                 <strong class="summ mt-3 text-end">Сумма: {{$summ}}₽</strong>
+
+                                        @if ($order->status==0)
+                                            <a class="px-2" href="{{route('cancelOrder', ['order_id' => $order->order_id])}}"><button class="btn btn-danger">Отменить заказ</button></a>
+                                        @endif
                         </div>
                     </div>
                 </div>
@@ -111,9 +113,13 @@
 
                     @endif
 
+
                     @php $prevOrderId =  $order->order_id ; $i++; @endphp
 
+
                 @endforeach
+
+
 
             @else
                 <p>Заказов пока нет</p>

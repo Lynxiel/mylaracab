@@ -35,6 +35,6 @@ class OrderPayed extends Mailable
      */
     public function build(Request $request)
     {
-        return $this->view('mails.orderpayed')->with(['order'=>$this->order ] );
+        return $this->subject('Заказ оплачен Kabelopt71.ru')->view('mails.orderpayed')->with(['order'=>$this->order ] );
     }
 }
