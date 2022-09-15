@@ -48,17 +48,18 @@ class Order extends Model
 
     }
 
-    public static function GetUserOrders(int $user_id){
+    public static function GetUserOrders(?int $user_id){
         $result =  DB::table('orders')
-            ->select('orders.order_id', 'cables.title as title', 'orders.created_at', 'cables_order.quantity', 'cables_order.price', 'status')
+            ->select('orders.order_id','comment' , 'cables.title as title', 'orders.created_at', 'cables_order.quantity',
+                'cables_order.price', 'status', 'orders.address as delivery_address', 'pay_link',
+                'email','phone', 'contact_name','users.address as company_address','company_name')
             ->join('cables_order', 'orders.order_id', '=', 'cables_order.order_id')
-            ->join('cables', 'cables.cable_id', '=', 'cables_order.cable_id')
-            ->where('orders.user_id' ,'=',$user_id)
-            ->orderBy('orders.order_id','desc')
-            ->get();
+            ->Leftjoin('users', 'users.id', '=', 'orders.user_id')
+            ->join('cables', 'cables.cable_id', '=', 'cables_order.cable_id');
+            if ($user_id) $result->where('orders.user_id' ,'=',$user_id);
+           $result->orderBy('orders.order_id','desc');
 
-        //dd($result);
-        return $result;
+        return $result->get();
 
     }
 

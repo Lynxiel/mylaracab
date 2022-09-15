@@ -57,5 +57,6 @@ Route::post('/email/verification-notification', function (Request $request) {
 Route::group(['prefix' => 'admin'], function () {
     Voyager::routes();
 
-    //Route::get('orders',  [\App\Http\Controllers\Admin\OrderController::class,'index', 'as' => 'orders']);
+    Route::get('orders',  [\App\Http\Controllers\Admin\OrderController::class,'index', 'as' => 'orders']);
+    Route::post('update_order',  [\App\Http\Controllers\Admin\OrderController::class,'updateOrder'])->name('updateOrder');
 });

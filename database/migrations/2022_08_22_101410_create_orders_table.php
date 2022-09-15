@@ -20,6 +20,7 @@ return new class extends Migration
             $table->boolean('delivery')->default(0);
             $table->string('address')->nullable();
             $table->string('comment')->nullable();
+            $table->string('pay_link')->nullable();
             $table->timestamps();
             $table->foreign('user_id')->references('id')->on('users');
         });
