@@ -9,11 +9,10 @@
         <div class="list-group w-auto">
             @php  $summ = 0; $i=1; @endphp
             @if (!empty($orders))
-                @foreach($orders as $order)
+                @foreach($orders as $key=>$order)
                         @php  $summ = 0;
                                 $orderdata = $order[0];
                         @endphp
-
         <div class="accordion" >
             <div class="accordion-item">
                 <h2 class="accordion-header" id="panelsStayOpen-heading{{$orderdata->order_id}}">
@@ -38,33 +37,38 @@
                             @endswitch </h6>
                     </button>
                 </h2>
-                <div id="panelsStayOpen-collapse{{$orderdata->order_id}}" class="accordion-collapse collapse " aria-labelledby="panelsStayOpen-heading{{$orderdata->order_id}}">
+                <div id="panelsStayOpen-collapse{{$orderdata->order_id}}" class="accordion-collapse collapse {{$i==1?'show':''}}" aria-labelledby="panelsStayOpen-heading{{$orderdata->order_id}}">
                     <div class="accordion-body">
                         <div class="row ">
-                                @if ($orderdata->status==1)
-                                <a target="_blank" href="{{route('formInvoice', ['order_id' => $orderdata->order_id])}}"><button class="btn btn-primary">Сформировать счет</button></a>
+                            @if ($orderdata->status==1)
+                                <div class="col-3 mb-4">
+                                    <a target="_blank" href="{{route('formInvoice', ['order_id' => $orderdata->order_id])}}"><button class="btn btn-primary">Сформировать счет</button></a>
+                                </div>
+                                <div class="col-4 mb-4">
                                     <!-- Button trigger modal -->
                                     @if ($orderdata->pay_link)
-                                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#qrmodal">
+                                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#qrmodal{{$orderdata->order_id}}">
                                             Получить QR-код
                                         </button>
 
                                         <!-- Modal -->
-                                    <div class="modal fade" id="qrmodal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                        <div class="modal-dialog">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" id="exampleModalLabel">QR-код для оплаты через Ваше банковское приложение</h5>
-                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <a href="{{$orderdata->pay_link}}">{{$orderdata->pay_link}}</a>
-                                                </div>
+                                        <div class="modal fade" id="qrmodal{{$orderdata->order_id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLabel">QR-код для оплаты через Ваше банковское приложение</h5>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <a href="{{$orderdata->pay_link}}">{{$orderdata->pay_link}}</a>
+                                                    </div>
 
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                @endif
+                                    @endif
+                                </div>
+
                             @endif
                                 @if ($orderdata->status==0)
                                     <div class="p-3 mb-2 bg-warning text-dark">В ближайшее время с Вами свяжется наш менеджер для подтверждения заказа. После этого станет доступна оплата и формирование счета.</div>
@@ -99,7 +103,36 @@
                                 <strong class="summ mt-3 text-end">Сумма: {{$summ}}₽</strong>
 
                                         @if ($orderdata->status==0)
-                                            <a class="px-2" href="{{route('cancelOrder', ['order_id' => $orderdata->order_id])}}"><button class="btn btn-danger">Отменить заказ</button></a>
+
+
+                                           <!-- Button trigger modal -->
+                                            <button type="button" class="btn btn-danger mt-4" data-bs-toggle="modal" data-bs-target="#cancelorder">
+                                                Отменить заказ
+                                            </button>
+
+                                            <!-- Modal -->
+                                            <div class="modal fade" id="cancelorder" tabindex="-1" aria-labelledby="ModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="exampleModalLabel">Отменить заказ</h5>
+                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <h4>Действительно удалить заказ?</h4>
+                                                            <div class="form-floating mb-3 mt-4">
+                                                                <textarea type="text" class="form-control rounded-3" name="cancel_comment"> </textarea>
+                                                                <label class="px-4" for="cancel_comment">Оставьте комментарий</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                                                            <a href="{{route('cancelOrder', ['order_id' => $orderdata->order_id])}}"><button type="button" class="btn btn-danger">Да</button></a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
                                         @endif
                         </div>
                     </div>
@@ -107,6 +140,7 @@
             </div>
 
         </div>
+                @php $i++; @endphp
                 @endforeach
 
 

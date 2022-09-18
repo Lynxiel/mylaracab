@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Поступила оплата Kabelopt71.ru</title>
+    <title>Заказ завершен Kabelopt71.ru</title>
 
 </head>
 <body class="antialiased">

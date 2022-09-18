@@ -7,9 +7,12 @@ use App\Mail\OrderConfirm;
 use App\Mail\OrderConfirmed;
 use App\Mail\OrderPayed;
 use App\Mail\OrderFinished;
+use App\Mail\OrderCanceled;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use App\Models\Order;
+use Illuminate\Support\Facades\App;
+use App\Models\User;
 
 
 class MailController extends Controller
@@ -32,5 +35,9 @@ class MailController extends Controller
     }
     public static function orderFinished(string $email, Order $order){
         Mail::to($email)->send(new OrderFinished($order));
+    }
+
+    public static function orderCanceled(Order $order, ?User  $user){
+        Mail::to("postmaster@kabelopt71.ru")->send(new OrderCanceled($order, $user));
     }
 }

@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Auth\Events\Registered;
+use Illuminate\Support\Facades\Redirect;
 
 
 class OrderController extends Controller
@@ -32,10 +33,13 @@ class OrderController extends Controller
 
     public function cancelOrder(int $order_id){
 
-        $order = new Order();
+        $order = Order::find($order_id);
+        $user = User::find($order->user_id);
         $order->cancelOrder($order_id);
+        // Send notification to admin
+        MailController::orderCanceled($order,$user);
         session()->flash('success', 'OrderCanceled');
-        return redirect()->intended('/account');
+        return Redirect::back();
     }
 
 

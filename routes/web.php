@@ -41,4 +41,5 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('orders',  [\App\Http\Controllers\Admin\OrderController::class,'index', 'as' => 'orders']);
     Route::post('order',  [\App\Http\Controllers\Admin\OrderController::class,'show', 'as' => 'order']);
     Route::post('update_order',  [\App\Http\Controllers\Admin\OrderController::class,'updateOrder'])->name('updateOrder');
+    Route::get('cables',  [\App\Http\Controllers\Admin\CableController::class,'index'])->name('cables');
 });
