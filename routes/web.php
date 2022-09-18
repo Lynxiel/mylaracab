@@ -14,8 +14,7 @@ use TCG\Voyager\Facades\Voyager;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-Route::get('/', [\App\Http\Controllers\HomeController::class,'index'])->name('index');
+Route::get('', [\App\Http\Controllers\HomeController::class,'index'])->name('index');
 Route::post('addToCart', [\App\Http\Controllers\CartController::class,'addToCart'])->name('addToCart');
 Route::post('removeFromCart', [\App\Http\Controllers\CartController::class,'removeFromCart'])->name('removeFromCart');
 Route::post('updateQuantity', [\App\Http\Controllers\CartController::class,'updateQuantity'])->name('updateQuantity');
@@ -36,22 +35,10 @@ Route::get('user_deleteAccount', [\App\Http\Controllers\AccountController::class
 
 
 
-// Email verification
-Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
-    $request->fulfill();
-    return redirect('/');
-})->middleware(['auth', 'signed'])->name('verification.verify');
-
-Route::post('/email/verification-notification', function (Request $request) {
-    $request->user()->sendEmailVerificationNotification();
-
-    return back()->with('success', 'Verification link sent');
-})->middleware(['auth', 'throttle:6,1'])->name('verification.send');
-
 Route::group(['prefix' => 'admin'], function () {
     Voyager::routes();
 
     Route::get('orders',  [\App\Http\Controllers\Admin\OrderController::class,'index', 'as' => 'orders']);
-    Route::post('order',  [\App\Http\Controllers\Admin\OrderController::class,'index', 'as' => 'order']);
+    Route::post('order',  [\App\Http\Controllers\Admin\OrderController::class,'show', 'as' => 'order']);
     Route::post('update_order',  [\App\Http\Controllers\Admin\OrderController::class,'updateOrder'])->name('updateOrder');
 });

@@ -49,10 +49,10 @@ class Order extends Model
 
     }
 
-    public static function GetOrderWithContents(int $order_id){
+    public static function GetOrdersWithContents(int $order_id){
         return DB::table('orders')
             ->select('*')
-            ->where('order_id' ,'=',$order_id)
+            ->whereIN('order_id' ,'=',$order_id)
             ->get();
     }
 

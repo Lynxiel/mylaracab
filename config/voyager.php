@@ -187,13 +187,13 @@ return [
 
     // Here you can specify additional assets you would like to be included in the master.blade
     'additional_css' => [
-        'http://kabelopt71.ru/vendor/twbs/bootstrap/dist/css/bootstrap.css',
-        'http://kabelopt71.ru/resources/css/style.css',
+        asset('css/bootstrap/dist/css/bootstrap.css'),
+        asset('css/style.css'),
     ],
 
     'additional_js' => [
 
-        'http://kabelopt71.ru/vendor/twbs/bootstrap/dist/js/bootstrap.bundle.js',
+        asset('bootstrap/dist/js/bootstrap.js'),
 
     ],
 

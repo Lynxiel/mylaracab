@@ -1,19 +1,3 @@
-@extends('voyager::master')
-
-@section('page_title', __('voyager::generic.viewing').' '.__('voyager::generic.settings'))
-
-
-
-@section('page_header')
-    <h1 class="page-title">
-        <i class="voyager-list"></i> Заказы
-    </h1>
-
-@stop
-
-@section('content')
-    <div class="container-fluid">
-        @include('voyager::alerts')
 
             <div class="container admin_account" id="account">
                 <div class="row">
@@ -65,30 +49,33 @@
                 </div>
                 <script type="text/javascript">
 
-                        $("#date_begin, #date_end").on('change',function (e) {
-
+                        $(".ajax-savechanges").on('click',function (e) {
                             $.ajaxSetup({
                                 headers: {
                                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                                 }
                             });
                             e.preventDefault();
+                            var input = $(this);
                             var formData = {
-                                date_begin: $('#date_begin').val(),
-                                date_end: $('#date_end').val(),
+                                order_id: input.closest('form').find('input[name="order_id"]').val(),
+                                address: input.closest('form').find('#address').val(),
+                                comment:input.closest('form').find('#comment').val(),
+                                pay_link:input.closest('form').find('#pay_link').val(),
+                                status: input.closest('form').find('#status').is(':checked')?$(this).closest('form').find('#status').val():$(this).closest('form').find('#status').val()-1,
                             };
                             var type = "POST";
-                            var ajaxurl = 'orders';
+                            var ajaxurl = 'update_order';
                             $.ajax({
                                 type: type,
                                 url: ajaxurl,
                                 data: formData,
-                                dataType: 'json',
                                 success: function (data) {
-                                    console.log(data);
+                                    input.val('Сохранено!');
                                 },
                                 error: function (data) {
-                                    console.log(data);
+                                    input.val('Возникла ошибка');
+                                    console.log(data.responseText);
                                 }
                             });
                         });
@@ -96,6 +83,5 @@
                 </script>
             </div>
 
-@stop
 
 

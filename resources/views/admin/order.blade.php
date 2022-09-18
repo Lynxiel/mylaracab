@@ -51,15 +51,15 @@
                             <div class="row">
 
                                 <div class="col-lg-12 mb-3">
-                                    <label class="px-4" for="floatingInput">Адрес</label>
+                                    <label class="px-4" for="address">Адрес</label>
                                     <textarea  name="address"  class="form-control rounded-3"  id="address">{{$orderdata->delivery_address}}</textarea>
                                 </div>
                                 <div class="col-lg-12 mb-3">
-                                    <label class="px-4" for="floatingInput">Комментарий</label>
+                                    <label class="px-4" for="comment">Комментарий</label>
                                     <textarea  name="comment"  class="form-control rounded-3"  id="comment">{{$orderdata->comment}}</textarea>
                                 </div>
                                 <div class="col-lg-12 mb-3">
-                                    <label class="px-4" for="floatingInput">Ссылка для оплаты</label>
+                                    <label class="px-4" for="pay_link">Ссылка для оплаты</label>
                                     <input  name="pay_link"  class="form-control rounded-3"  id="pay_link" value="{{$orderdata->pay_link}}">
                                 </div>
                             </div>
@@ -101,7 +101,7 @@
                                     @endswitch
                                 </div>
                                 <div class="col-6">
-                                    <input type="submit" class="btn btn-success" value="Сохранить изменения">
+                                    <input type="submit" class="btn btn-success ajax-savechanges" value="Сохранить изменения">
                                 </div>
                                 @if ($orderdata->status==0)
                                     <div class="col-12">
@@ -132,10 +132,6 @@
                                 </div>
                             </div>
                         </div>
-
-
-
-
                     </div>
                     <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                         @foreach($order as $cable)
@@ -157,5 +153,6 @@
             </div>
         </div>
     </div>
+
 
 </div>

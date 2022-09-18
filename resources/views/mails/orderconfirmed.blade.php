@@ -15,6 +15,9 @@
 @if ($order->address)
     <p>Адрес доставки: {{$order->address}}</p>
 @endif
+@if ($order->pay_link)
+    <p>Ссылка для оплаты: <a href="{{$order->pay_link}}">{{$order->pay_link}}</a></p>
+@endif
 
 </body>
 <div class="container">

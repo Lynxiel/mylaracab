@@ -15,24 +15,23 @@ class OrderController extends Controller
     public function index(){
 
         $orders= Order::GetUserOrders(null);
-        return view('admin.orders', compact('orders'));
+        return view('admin.index', compact('orders'));
     }
 
     public function show(){
 
         $orders= Order::GetUserOrders(null);
-        return view('admin.orders', compact('orders'));
+        return  view('admin.orders', compact('orders'));
     }
 
     public function updateOrder(Request $request){
         $data = $request->all();
         $order = Order::find($data['order_id']);
-        //dd($order);
         $user = User::find($order->user_id);
         $order->comment = $data['comment'];
         $order->address = $data['address'];
         $order->pay_link = $data['pay_link'];
-        if (isset($data['status']))        {
+        if (isset($data['status']) && $data['status'])        {
             $order->status = $data['status'];
             if ($order->user_id)
             switch ($order->status) {
@@ -48,7 +47,5 @@ class OrderController extends Controller
             }
         }
         $order->save();
-
-        return Redirect::back();
     }
 }

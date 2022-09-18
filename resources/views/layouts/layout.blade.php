@@ -5,11 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>{{ $_ENV['APP_NAME'] }}</title>
-    <link rel="stylesheet" href="/vendor/twbs/bootstrap/dist/css/bootstrap.css">
-    <link rel="stylesheet" href="/resources/css/style.css">
+    <link rel="stylesheet" href="{{asset('css/bootstrap/dist/css/bootstrap.css')}}">
+    <link rel="stylesheet" href="{{asset('css/style.css')}}">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-    <script src="/resources/js/jquery.maskedinput.js"></script>
+    <script src="{{asset('bootstrap/dist/js/bootstrap.js')}}"></script>
+    <script src="{{asset('js/jquery.maskedinput.js')}}"></script>
 
 </head>
 <body class="antialiased">
@@ -88,9 +88,8 @@
 
     </footer>
 </div>
-<script src="/vendor/twbs/bootstrap/dist/js/bootstrap.js"></script>
 @yield('scripts')
-<script src="/resources/js/app.js"></script>
+<script src="{{asset('js/app.js')}}"></script>
 <script>
 
 </script>
