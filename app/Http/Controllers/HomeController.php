@@ -9,8 +9,6 @@ class HomeController extends Controller
 {
     public function index(Request $request)
     {
-
-        // Gather data and compact
         //Cables
         $cables =  Cable::getAll();
         //Cart
@@ -18,5 +16,21 @@ class HomeController extends Controller
 
 
         return view('home',compact('cables', 'cart'));
+    }
+
+    public function delivery(Request $request)
+    {
+        //Cart
+        $cart=CartController::init($request);
+
+
+        return view('delivery',compact( 'cart'));
+    }
+
+    public function about_us(Request $request)
+    {
+        //Cart
+        $cart=CartController::init($request);
+        return view('about_us',compact( 'cart'));
     }
 }

@@ -38,6 +38,6 @@ class AccountRegister extends Mailable
      */
     public function build(Request $request)
     {
-        return $this->subject('Регистрация на сайте Kabelopt71.ru')->view('mails.register')->with(['email'=>$this->email,'password'=>$this->password ] );
+        return $this->subject('Регистрация на сайте Kabelopt71.ru')->view('mails.register')->with(['email'=>$this->email,'password'=>$this->password, 'phone'=>$this->phone ] );
     }
 }

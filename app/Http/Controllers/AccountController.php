@@ -38,9 +38,10 @@ class AccountController extends Controller
         // Delete user orders
         $oorder = new Order;
         $orders = Order::GetUserOrders($user_id);
-        if (isset($orders[0]))
-            foreach ($orders as $order) {
-                $oorder->cancelOrder($order->order_id);
+
+        if (count($orders))
+            foreach ($orders as $key=>$order) {
+                $oorder->cancelOrder($order[0]->order_id);
         }
         // Delete user
         $user = new User();

@@ -15,6 +15,8 @@ use TCG\Voyager\Facades\Voyager;
 |
 */
 Route::get('', [\App\Http\Controllers\HomeController::class,'index'])->name('index');
+Route::get('delivery', [\App\Http\Controllers\HomeController::class,'delivery'])->name('delivery');
+Route::get('about_us', [\App\Http\Controllers\HomeController::class,'about_us'])->name('about_us');
 Route::post('addToCart', [\App\Http\Controllers\CartController::class,'addToCart'])->name('addToCart');
 Route::post('removeFromCart', [\App\Http\Controllers\CartController::class,'removeFromCart'])->name('removeFromCart');
 Route::post('updateQuantity', [\App\Http\Controllers\CartController::class,'updateQuantity'])->name('updateQuantity');
