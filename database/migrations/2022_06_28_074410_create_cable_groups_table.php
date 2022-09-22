@@ -17,7 +17,7 @@ return new class extends Migration
             $table->bigInteger('cable_group_id')->autoIncrement()->unsigned();
             $table->timestamps();
             $table->string('title');
-            $table->string('description');
+            $table->mediumText('description');
             $table->string('image')->nullable();
             $table->string('files')->nullable();
         });

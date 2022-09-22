@@ -25,7 +25,6 @@ Route::post('createOrder', [\App\Http\Controllers\OrderController::class,'create
 Route::get('account', [\App\Http\Controllers\AccountController::class,'index'])->name('account');
 Route::get('account/cancelOrder/{order_id}', [\App\Http\Controllers\OrderController::class,'cancelOrder'])->name('cancelOrder');
 Route::get('account/formInvoice/{order_id}', [\App\Http\Controllers\InvoiceController::class,'formInvoice'])->name('formInvoice');
-Route::get('account/formQr/{order_id}', [\App\Http\Controllers\InvoiceController::class,'formQr'])->name('formQr');
 Route::post('account/saveUserData', [\App\Http\Controllers\AccountController::class,'saveUserData'])->name('saveUserData');
 
 
@@ -44,4 +43,10 @@ Route::group(['prefix' => 'admin'], function () {
     Route::post('order',  [\App\Http\Controllers\Admin\OrderController::class,'show', 'as' => 'order']);
     Route::post('update_order',  [\App\Http\Controllers\Admin\OrderController::class,'updateOrder'])->name('updateOrder');
     Route::get('cables',  [\App\Http\Controllers\Admin\CableController::class,'index'])->name('cables');
+    Route::post('cables_save',  [\App\Http\Controllers\Admin\CableController::class,'store'])->name('cables_save');
+
+    Route::post('createGroup',  [\App\Http\Controllers\Admin\CableGroupController::class,'createGroup'])->name('createGroup');
+    Route::post('updateGroup',  [\App\Http\Controllers\Admin\CableGroupController::class,'updateGroup'])->name('updateGroup');
+    Route::post('deleteImage',  [\App\Http\Controllers\Admin\CableGroupController::class,'deleteImage'])->name('deleteImage');
+
 });

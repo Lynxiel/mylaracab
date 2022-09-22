@@ -5,8 +5,10 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CableRequest;
 use App\Models\Cable;
+use App\Models\CableGroup;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 
@@ -20,7 +22,10 @@ class CableController extends Controller
     public function index(Request $request)
     {
 
-        return view('admin.cables');
+        $cables = Cable::orderby('cable_group_id')->get();
+        $groups = CableGroup::all();
+
+        return view('admin.cables', compact('cables', 'groups'));
 
     }
 
@@ -47,23 +52,21 @@ class CableController extends Controller
      */
     public function store(CableRequest $request)
     {
-        $cable = new Cable();
-        $cable->title = $request->title  ;
-        $cable-> cable_group_id  = $request->cable_group_id;
-        $cable->footage = $request->footage;
-        $cable->coresize= $request->coresize;
-        $cable->corecount = $request->corecount;
-        $cable->capacity = $request->capacity;
-        $cable->instock = $request->instock;
-        $cable->price = $request->price;
-        if ($request->file('img')){
-            $path = Storage::putFile('public',$request->file('img'));
-            $url = Storage::url($path);
-            $cable->file =$url;
+        $cable = Cable::find($request->cable_id);
+
+        if ($cable){
+            $cable->title = $request->title  ;
+            $cable-> cable_group_id  = $request->cable_group_id;
+            $cable->footage = $request->footage;
+            $cable->coresize= $request->coresize;
+            $cable->corecount = $request->corecount;
+            $cable->capacity = $request->capacity;
+            $cable->instock = $request->instock;
+            $cable->price = $request->price;
+            $cable->save();
         }
 
-        $cable->save();
-        return redirect()->action([CableController::class, 'create'])->with('success', 'Успешно создано');
+        return Redirect::back();
     }
 
     /**

@@ -8,9 +8,8 @@ use Illuminate\Support\Facades\DB;
 
 class Cable extends Model
 {
-    private $cable_id;
-    private $quantity;
-    private $price;
+
+    protected $primaryKey = 'cable_id';
 
     public function __construct(array $attributes = [])
     {
