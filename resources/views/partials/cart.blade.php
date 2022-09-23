@@ -26,7 +26,7 @@
                                                     <form method="post" action="{{route('updateQuantity')}}">
                                                         @csrf
                                                         <input  required name="cable_id" readonly value="{{$item->cable_id}}" hidden>
-                                                        <input type="number" step="100" min="0" id="quantity" onchange="this.closest('form').submit()" class="form-control-sm" required name="quantity"  value="{{ session()->get('cable_id')?session()->get('cable_id')[$item->cable_id]:100}}">
+                                                        <input type="number" step="100" min="0" id="quantity"  class="form-control-sm quantity_edit" required name="quantity"  value="{{ session()->get('cable_id')?session()->get('cable_id')[$item->cable_id]:100}}">
                                                     </form>
                                                 </div>
                                                 <div class="col-lg-2 col-md-2 col-sm-2 col-3">
@@ -75,7 +75,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="col-6">
-                                                    <button id="btn-confirm-order" type="submit" class="btn btn-primary mt-1" >Отправить</button>
+                                                    <button id="btn-confirm-order" type="submit" class="btn btn-primary mt-1" >Отправить заказ</button>
 
                                                 </div>
 
@@ -92,7 +92,7 @@
                                                     </div>
                                                 </div>
                                                    <script>
-                                                    $("#order_contact").mask("+7(999) 999-99-99");
+                                                    $("#order_contact").mask("+7(999)999-99-99");
                                                 </script>
                                     @endif
 
@@ -107,6 +107,13 @@
                                         });
                                     </script>
                                 @endif
+                                <script>
+                                    $('.quantity_edit').on('change',function(e){
+                                        e.preventDefault();
+                                        if (this.value<0) this.value=0;
+                                        this.closest('form').submit();
+                                    })
+                                </script>
                             </div>
                     @else
                         В корзине пока пусто

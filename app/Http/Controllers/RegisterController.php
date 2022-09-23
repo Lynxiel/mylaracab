@@ -33,7 +33,7 @@ class RegisterController extends Controller
         //dd($data);
         $user = User::create([
             'email' => $data['email'],
-            'phone' => $data['phone'],
+            'phone' => str_replace( ['-','(', ')'] ,'' ,$data['phone']),
             'password' => Hash::make($data['password']),
         ]);
         auth()->login($user, true);

@@ -25,7 +25,7 @@ class LoginRequest extends FormRequest
     public function rules()
     {
         return [
-            'emailorphone' => ['required', 'not_regex:/[^(\w)|(\@)|(\.)|(\-)][0-9]/'],
+            'emailorphone' => ['required', 'not_regex:/[^(\w)|(\@)|(\.)|(\-)] [0-9]/'],
             'password' => 'required'
         ];
     }
