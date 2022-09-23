@@ -10,15 +10,15 @@
 
             <div class="modal-body p-5 pt-0">
 
-                <form method="post" action="{{route('register')}}" class="">
+                <form method="post" action="{{route('register')}}" class="user_register">
                     @csrf
                     <div class="form-floating mb-3">
                         <input type="email" name="email" required class="form-control rounded-3" id="email" value="{{old('email')}}" >
-                        <label for="floatingInput">Email</label>
+                        <label for="email">Email</label>
                     </div>
                     <div class="form-floating mb-3">
                         <input type="text" name="phone" required class="form-control rounded-3" id="phone" value="{{old('phone')}} " >
-                        <label for="floatingInput">Телефон</label>
+                        <label for="phone">Телефон</label>
                     </div>
                     <div class="input-group form-floating show_hide_password mb-3" >
                         <input type="password" name="password" class="form-control rounded-3" required placeholder="Пароль" aria-label="Пароль" >
@@ -73,5 +73,7 @@
 
     <script>
         $("#phone").mask("+7(999)999-99-99");
+
+
     </script>
 @endsection
