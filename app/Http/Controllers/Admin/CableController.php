@@ -22,7 +22,7 @@ class CableController extends Controller
     public function index(Request $request)
     {
 
-        $cables = Cable::orderby('cable_group_id')->get();
+        $cables = Cable::orderby('cable_group_id', 'desc')->get();
         $groups = CableGroup::all();
 
         return view('admin.cables', compact('cables', 'groups'));
@@ -53,6 +53,7 @@ class CableController extends Controller
     public function store(CableRequest $request)
     {
         $cable = Cable::find($request->cable_id);
+
 
         if ($cable){
             $cable->title = $request->title  ;

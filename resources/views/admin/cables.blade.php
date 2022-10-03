@@ -41,7 +41,7 @@
 
                                         <div class="form-group">
                                             <label>Группа кабеля</label>
-                                            <input type="text" class="form-control" name="cable_group_id"  value="{{$cable->cable_group_id}}" required>
+                                            <input type="text" class="form-control" name="cable_group_id"  value="{{$cable->cable_group_id}}" >
                                         </div>
 
                                         <div class="form-group">

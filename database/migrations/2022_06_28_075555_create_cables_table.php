@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('cables', function (Blueprint $table) {
             $table->id('cable_id')->autoIncrement();
-            $table->bigInteger('cable_group_id')->unsigned();
+            $table->bigInteger('cable_group_id')->unsigned()->nullable();
             $table->integer('footage')->nullable();
             $table->string('title');
             $table->float('coresize')->nullable();
@@ -23,7 +23,7 @@ return new class extends Migration
             $table->float('capacity')->nullable();
             $table->float('instock');
             $table->float('price');
-            $table->string('1ccode')->nullable();
+            $table->string('1ccode')->nullable()->unique();
             $table->string('1ctitle')->nullable();
             $table->boolean('active')->default(0);
             $table->timestamps();

@@ -25,6 +25,10 @@
     width: 100%;
     max-height: 150px;
 }
+
+.group-description{
+    text-align: justify;
+}
 .cable-price{
     display: block;
     margin-top: 10px;

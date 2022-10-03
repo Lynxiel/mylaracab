@@ -43,9 +43,12 @@ Route::group(['prefix' => 'admin'], function () {
     Route::post('order',  [\App\Http\Controllers\Admin\OrderController::class,'show', 'as' => 'order']);
     Route::post('update_order',  [\App\Http\Controllers\Admin\OrderController::class,'updateOrder'])->name('updateOrder');
     Route::get('cables',  [\App\Http\Controllers\Admin\CableController::class,'index'])->name('cables');
+    Route::post('cables_save',  [\App\Http\Controllers\Admin\CableController::class,'store'])->name('cables_save');
 
     Route::post('createGroup',  [\App\Http\Controllers\Admin\CableGroupController::class,'createGroup'])->name('createGroup');
     Route::post('updateGroup',  [\App\Http\Controllers\Admin\CableGroupController::class,'updateGroup'])->name('updateGroup');
     Route::post('deleteImage',  [\App\Http\Controllers\Admin\CableGroupController::class,'deleteImage'])->name('deleteImage');
+
+    Route::get('exchange',  [\App\Http\Controllers\Admin\ExchangeController::class,'index'])->name('exchange');
 
 });
