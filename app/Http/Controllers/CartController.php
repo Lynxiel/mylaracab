@@ -44,17 +44,7 @@ class CartController extends Controller
 
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Request $request, $id)
-    {
-        $cart = $request->session()->get('cart');
-        return view('layouts.cart')->compact('cart', $cart);
-    }
+
 
     /**
      * Show the form for editing the specified resource.
@@ -109,7 +99,8 @@ class CartController extends Controller
             $request->session()->put('cable_id',$cart_list);
             //dd($request->session()->get('cable_id'));
             session()->flash('success', 'Успешно добавлено в корзину!');
-            return redirect()->intended('/');
+            $cart  = self::init($request);
+            return view('partials.cart', compact('cart'));
         }
 
     }

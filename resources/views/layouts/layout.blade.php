@@ -7,16 +7,20 @@
     <title>{{ $_ENV['APP_NAME'] }}</title>
     <link rel="stylesheet" href="{{asset('css/bootstrap/dist/css/bootstrap.css')}}">
     <link rel="stylesheet" href="{{asset('css/style.css')}}">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
     <script src="{{asset('bootstrap/dist/js/bootstrap.js')}}"></script>
-    <script src="{{asset('js/jquery.maskedinput.js')}}"></script>
+    <script src="js/jquery.js"></script>
+    <script src="js/jquery.maskedinput.js"></script>
+    <script src="js/app.js"></script>
+
+
 
 </head>
 <body class="antialiased">
 <header class="p-3 bg-dark text-white">
     <div class="container">
         <div id="top-menu" class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-            <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
+            <a href="{{route('index')}}" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
                 <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap"><use xlink:href="#bootstrap"></use></svg>
             </a>
 
@@ -33,14 +37,10 @@
                     @include('partials.login')
                     @include('partials.register')
                 @endif
+                <span id="cart-replace">
+                    @include('partials.cart')
+                </span>
 
-                <button id="cart-btn" type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#CartModal" >
-
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart" viewBox="0 0 16 16">
-                        <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"></path>
-                    </svg>
-                    <span class="cart-count">{{(!empty($cart))?count($cart):''}}</span>
-                </button>
 
             </div>
         </div>
@@ -50,9 +50,6 @@
 <div class="container">
     @yield('content')
 </div>
-
-
-@include('partials.cart')
 </body>
 <div class="container">
     <footer class="row row-cols-1">
@@ -88,10 +85,5 @@
 
     </footer>
 </div>
-@yield('scripts')
-<script src="{{asset('js/app.js')}}"></script>
-<script>
-
-</script>
 
 </html>
