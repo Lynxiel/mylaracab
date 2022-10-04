@@ -62,8 +62,8 @@
                                         @if (auth()->user())
                                             <div class="row">
 
-                                                <div class=" section-confirm">
-                                                    <button id="btn-confirm-order" type="submit" class="btn btn-primary "  >Отправить</button>
+                                                <div class="col-6 section-confirm">
+                                                    <button id="btn-confirm-order" type="submit" class="btn btn-primary "  >Отправить заказ</button>
                                                 </div>
                                             </div>
                                         @else
@@ -74,6 +74,7 @@
                                                         <label for="order_contact">Телефон</label>
                                                     </div>
                                                 </div>
+
                                                 <div class="col-6">
                                                     <button id="btn-confirm-order" type="submit" class="btn btn-primary mt-1" >Отправить заказ</button>
 

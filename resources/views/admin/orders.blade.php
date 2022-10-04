@@ -1,29 +1,6 @@
 
             <div class="container admin_account" id="account">
-                <div class="row">
-                    <div class="col-lg-4">
-                        <div class="form-floating">
-                            <input type="date" name="date_begin"  class="form-control rounded-3" id="date_begin" value="{{date("Y-m-d")}}">
-                            <label class="px-4" for="date">Дата с</label>
-                        </div>
-                    </div>
-                    <div class="col-lg-4">
-                        <div class="form-floating">
-                            <input type="date" name="date_end"  class="form-control rounded-3" id="date_end" value="{{date("Y-m-d")}}">
-                            <label class="px-4" for="date">Дата по</label>
-                        </div>
-                    </div>
-                    <div class="col-lg-4">
-                        <label class="px-4" for="status_filter">Статус</label>
-                        <select class="form-select" id="status_filter" aria-label="Default select example">
-                            <option selected>Выбрать статус</option>
-                            <option value="0">Создан</option>
-                            <option value="1">Подтвержден</option>
-                            <option value="2">Оплачен</option>
-                            <option value="3">Завершен</option>
-                        </select>
-                    </div>
-                </div>
+
                 <div class="list-group w-auto">
                     @php  $summ = 0;   @endphp
                     @if (!empty($orders))

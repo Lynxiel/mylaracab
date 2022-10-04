@@ -11,12 +11,115 @@
 @section('content')
     <div class="container-fluid" id="main-content">
         @include('voyager::alerts')
+        @if ($groups)
+            <div class="accordion col-lg-12 col-md-12 col-sm-12 col-xs-12" id="accordionGroups">
+                <div class="row">
+                    <div class="col-4"><h4>Группы</h4></div>
+                    <div class="col-4"><button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#newGroupModal">Добавить новую группу</button> </div>
+                    <div class="col-4"></div>
+                </div>
+                <!-- Modal -->
+                <div class="modal fade" id="newGroupModal" tabindex="-1" aria-labelledby="newGroupModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Новая группа</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <form action="{{route('createGroup')}}" method="post" enctype="multipart/form-data">
+                                    @csrf
+                                    <div class="form-group">
+                                        <label>Название</label>
+                                        <input type="text" class="form-control" name="title" value="{{old('title')}}" required>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>Описание</label>
+                                        <textarea type="text" class="form-control" name="description"  value="{{old('description')}}" required> </textarea>
+                                    </div>
+
+
+                                    <div class="form-group">
+                                        <label>Изображение</label>
+                                        <input type="file" class="form-control" name="image" >
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>Сертификат</label>
+                                        <input type="file" class="form-control" name="files" >
+                                    </div>
+
+
+                                    <input type="submit" value="Создать группу" class="btn btn-outline-success ">
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                @foreach($groups as $group)
+
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headinggr{{$group->cable_group_id}}">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapsegr{{$group->cable_group_id}}" aria-expanded="true" aria-controls="collapsegr{{$group->cable_group_id}}">
+                                {{$group->cable_group_id}}. {{$group->title}}
+                            </button>
+                        </h2>
+                        <div id="collapsegr{{$group->cable_group_id}}" class="accordion-collapse collapse " aria-labelledby="headinggr{{$group->cable_group_id}}" data-bs-parent="#accordionGroups">
+                            <div class="accordion-body">
+                                <form action="{{route('updateGroup')}}" method="post" enctype="multipart/form-data">
+                                    @csrf
+                                    <input type="text" class="form-control" readonly hidden name="cable_group_id" value="{{$group->cable_group_id}}">
+                                    <div class="form-group">
+                                        <label>Название</label>
+                                        <input type="text" class="form-control" name="title" value="{{$group->title}}" required>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>Описание</label>
+                                        <textarea type="text" rows="5" class="form-control" name="description"   required> {{$group->description}}</textarea>
+                                    </div>
+
+
+                                    <div class="form-group">
+                                        <label>Изображение</label>
+                                        <input type="file" class="form-control" name="image" >
+                                        @if ($group->image)
+                                            <div class="image-group">
+                                                <button  class="btn btn-danger image-delete">Удалить изображение</button>
+                                                <img class="category-image" src="{{$group->image}}">
+                                            </div>
+
+                                        @endif
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>Сертификат</label>
+                                        <input type="file" class="form-control" name="files" >
+                                    </div>
+
+
+                                    <input type="submit" value="Сохранить" class="btn btn-outline-success mt-4">
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                @endforeach
+            </div>
+
+        @endif
+
+
+
         @if ($cables)
 
             <div class="row">
-                <div class="accordion col-lg-6 col-md-6 col-sm-12 col-xs-12" id="accordionCables">
+                <div class="accordion col-lg-12 col-md-12 col-sm-12 col-xs-12" id="accordionCables">
                     <div class="row">
-                        <div class="col-4"><h4>Кабели</h4></div>
+                        <div class="col-4 mt-4"><h4>Кабели</h4></div>
 
                         <div class="col-4"></div>
                         <div class="col-4"></div>
@@ -33,7 +136,7 @@
                                 <div class="accordion-body">
                                     <form action="{{route('cables_save')}}" method="post" enctype="multipart/form-data">
                                         @csrf
-                                        <input type="text" readonly hidden name="cable_id" value="{{$cable->cable_id}}">
+                                        <input type="text" class="form-control" readonly hidden name="cable_id" value="{{$cable->cable_id}}">
                                         <div class="form-group">
                                             <label>Название</label>
                                             <input type="text" class="form-control" name="title" value="{{$cable->title}}" required>
@@ -74,7 +177,7 @@
                                             <input type="text" class="form-control" name="price"  value="{{$cable->price}}" >
                                         </div>
 
-                                        <input type="submit" value="Сохранить" class="btn btn-outline-success">
+                                        <input type="submit" value="Сохранить" class="btn btn-outline-success cable_save">
                                     </form>
                                 </div>
                             </div>
@@ -86,106 +189,7 @@
         @endif
 
 
-        @if ($groups)
-                <div class="accordion col-lg-6 col-md-6 col-sm-12 col-xs-12" id="accordionGroups">
-                    <div class="row">
-                        <div class="col-4"><h4>Группы</h4></div>
-                        <div class="col-4"><button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#newGroupModal">Добавить новую группу</button> </div>
-                        <div class="col-4"></div>
-                    </div>
-                    <!-- Modal -->
-                    <div class="modal fade" id="newGroupModal" tabindex="-1" aria-labelledby="newGroupModalLabel" aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel">Новая группа</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body">
-                                    <form action="{{route('createGroup')}}" method="post" enctype="multipart/form-data">
-                                        @csrf
-                                        <div class="form-group">
-                                            <label>Название</label>
-                                            <input type="text" class="form-control" name="title" value="{{old('title')}}" required>
-                                        </div>
 
-                                        <div class="form-group">
-                                            <label>Описание</label>
-                                            <textarea type="text" class="form-control" name="description"  value="{{old('description')}}" required> </textarea>
-                                        </div>
-
-
-                                        <div class="form-group">
-                                            <label>Изображение</label>
-                                            <input type="file" class="form-control" name="image" >
-                                        </div>
-
-                                        <div class="form-group">
-                                            <label>Сертификат</label>
-                                            <input type="file" class="form-control" name="files" >
-                                        </div>
-
-
-                                        <input type="submit" value="Создать группу" class="btn btn-outline-success">
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-
-                    @foreach($groups as $group)
-
-                        <div class="accordion-item">
-                            <h2 class="accordion-header" id="headinggr{{$group->cable_group_id}}">
-                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapsegr{{$group->cable_group_id}}" aria-expanded="true" aria-controls="collapsegr{{$group->cable_group_id}}">
-                                    {{$group->cable_group_id}}. {{$group->title}}
-                                </button>
-                            </h2>
-                            <div id="collapsegr{{$group->cable_group_id}}" class="accordion-collapse collapse " aria-labelledby="headinggr{{$group->cable_group_id}}" data-bs-parent="#accordionGroups">
-                                <div class="accordion-body">
-                                    <form action="{{route('updateGroup')}}" method="post" enctype="multipart/form-data">
-                                        @csrf
-                                        <input type="text" readonly hidden name="cable_group_id" value="{{$group->cable_group_id}}">
-                                        <div class="form-group">
-                                            <label>Название</label>
-                                            <input type="text" class="form-control" name="title" value="{{$group->title}}" required>
-                                        </div>
-
-                                        <div class="form-group">
-                                            <label>Описание</label>
-                                            <textarea type="text" rows="5" class="form-control" name="description"   required> {{$group->description}}</textarea>
-                                        </div>
-
-
-                                        <div class="form-group">
-                                            <label>Изображение</label>
-                                            <input type="file" class="form-control" name="image" >
-                                            @if ($group->image)
-                                                <div class="image-group">
-                                                    <button  class="btn btn-danger image-delete">Удалить изображение</button>
-                                                    <img class="category-image" src="{{$group->image}}">
-                                                </div>
-
-                                            @endif
-                                        </div>
-
-                                        <div class="form-group">
-                                            <label>Сертификат</label>
-                                            <input type="file" class="form-control" name="files" >
-                                        </div>
-
-
-                                        <input type="submit" value="Сохранить" class="btn btn-outline-success mt-4">
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-
-                    @endforeach
-            </div>
-
-        @endif
 
             </div>
 
@@ -216,6 +220,40 @@
                 },
                 error: function (data) {
                     console.log(data);
+                }
+            });
+        })
+
+
+        $('.cable_save').on('click', function (e){
+            e.preventDefault();
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+
+
+            var formData={};
+            var type = "POST";
+            var ajaxurl = 'cables_save';
+
+            var form = $(this).closest('form');
+            form.find(".form-control").each(function() {
+                formData[$(this).attr("name")] = $(this).val();
+            });
+
+            $.ajax({
+                type: type,
+                url: ajaxurl,
+                data: formData,
+                success: function (data) {
+                    form.find('.cable_save').val('Сохранено!');
+                },
+                error: function (data) {
+                    form.find('.cable_save').val('Возникла ошибка');
+                    console.log(data.responseText);
                 }
             });
         })

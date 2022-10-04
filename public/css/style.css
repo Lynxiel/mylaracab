@@ -118,14 +118,14 @@
 
 }
 
-#cart-container input[type='number'] {
-    -moz-appearance:textfield!important;
-}
-#cart-container input::-webkit-outer-spin-button,
-#cart-container input::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-}
+/*#cart-container input[type='number'] {*/
+/*    -moz-appearance:textfield!important;*/
+/*}*/
+/*#cart-container input::-webkit-outer-spin-button,*/
+/*#cart-container input::-webkit-inner-spin-button {*/
+/*    -webkit-appearance: none;*/
+/*    margin: 0;*/
+/*}*/
 #cart-container p.unauthorized-desc{
     font-size: 12px;
     text-align: center;

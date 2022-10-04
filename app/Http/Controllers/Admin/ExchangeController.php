@@ -27,11 +27,17 @@ class ExchangeController extends Controller
         $data = $this->xmltoArray(public_path('/exchange/elCabel.xml'));
         if ($data){
             foreach ($data as $row){
-                $rowaffected = DB::update ('update cables SET instock=?, price=? where 1ccode = ?',
-                    [ $row['quantity'], $row['price'], $row['1cCode']]);
+                //for some reason, laravel update return 0 if nothing is changed!
+//                $rowaffected = DB::table('cables')->where('1ccode','=', $row['1cCode'])->update([
+//                    'instock'=> $row['quantity'],
+//                    'price' =>$row['price'],
+//                ]);
+                $rawquery = 'UPDATE cables SET price='.  $row['price'] . ', instock='. $row['quantity']. ', active = '. $row['active'] .'
+                WHERE `1ccode`="' . $row['1cCode'] .'" ';
+                $rowaffected = DB::unprepared($rawquery);
                 if (!$rowaffected){
-                    DB::insert("insert into cables (title, instock, price, 1ctitle, 1ccode)  Values(?, ?, ?, ?, ?)"
-                        ,[$row['1ctitle'], $row['quantity'], $row['price'],$row['1ctitle'], $row['1cCode']] );
+                    DB::insert("insert into cables (title, instock, price, 1ctitle, 1ccode, active)  Values(?, ?, ?, ?, ?, ?)"
+                        ,[$row['1ctitle'], $row['quantity'], $row['price'],$row['1ctitle'], $row['1cCode'], $row['active']] );
                 }
             }
         }
@@ -48,6 +54,7 @@ class ExchangeController extends Controller
                 $data[$i]['1ctitle'] = $node->ProductName->__toString();
                 $data[$i]['quantity'] = $node->Quantity->__toString();
                 $data[$i]['price'] = $node->Price->__toString();
+                $data[$i]['active'] = ($data[$i]['quantity']=='0'?0:1);
                 $i++;
 
             }

@@ -41,10 +41,10 @@
                     <div class="accordion-body">
                         <div class="row ">
                             @if ($orderdata->status==1)
-                                <div class="col-3 mb-4">
+                                <div class="col-lg-3 col-sm-6 col-xs-6 mb-4">
                                     <a target="_blank" href="{{route('formInvoice', ['order_id' => $orderdata->order_id])}}"><button class="btn btn-primary">Сформировать счет</button></a>
                                 </div>
-                                <div class="col-4 mb-4">
+                                <div class="col-lg-4 col-sm-6 col-xs-6 mb-4">
                                     <!-- Button trigger modal -->
                                     @if ($orderdata->pay_link)
                                         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#qrmodal{{$orderdata->order_id}}">
@@ -60,7 +60,7 @@
                                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                     </div>
                                                     <div class="modal-body">
-                                                        <a href="{{$orderdata->pay_link}}">{{$orderdata->pay_link}}</a>
+                                                        <a target="_blank" href="{{$orderdata->pay_link}}">{{$orderdata->pay_link}}</a>
                                                     </div>
 
                                                 </div>
