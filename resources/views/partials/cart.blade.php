@@ -100,7 +100,7 @@
                                                         <button type="button" id="btn-login" class="btn btn-warning mt-1" data-bs-toggle="modal" data-bs-target="#loginModal">Войдите</button>
                                                     </div>
                                                 </div>
-                                                   <script>
+                                                <script>
                                                     $("#order_contact").mask("+7(999)999-99-99");
                                                 </script>
                                     @endif

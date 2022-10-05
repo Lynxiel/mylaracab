@@ -8,17 +8,17 @@
     <link rel="stylesheet" href="{{asset('css/bootstrap/dist/css/bootstrap.css')}}">
     <link rel="stylesheet" href="{{asset('css/style.css')}}">
 
-    <script src="{{asset('bootstrap/dist/js/bootstrap.js')}}"></script>
-    <script src="js/jquery.js"></script>
-    <script src="js/jquery.maskedinput.js"></script>
-    <script src="js/app.js"></script>
 
+    <script src="{{asset('bootstrap/dist/js/bootstrap.js')}}"></script>
+    <script src="{{asset('/js/jquery.js')}}"></script>
+    <script src="{{asset('/js/app.js')}}"></script>
+    <script src="{{asset('/js/jquery.maskedinput.js')}}"></script>
 
 
 </head>
 <body class="antialiased">
 <header class="p-3 bg-dark text-white">
-    <div class="container">
+     <div class="container">
         <div id="top-menu" class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
             <a href="{{route('index')}}" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
                 <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap"><use xlink:href="#bootstrap"></use></svg>
@@ -84,6 +84,7 @@
         </div>
 
     </footer>
+    @yield('scripts')
 </div>
 
 </html>
