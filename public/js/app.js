@@ -5,7 +5,8 @@ window.onload = function() {
             e.preventDefault();
             if (this.value<0) this.value=0;
             this.closest('form').submit();
-        })
+        });
+
         $('.cart-add').on('click',function(e){
 
             e.preventDefault();

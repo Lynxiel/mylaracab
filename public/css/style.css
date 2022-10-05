@@ -34,6 +34,14 @@
     margin-top: 10px;
 }
 
+.content-container{
+    margin-top: 80px;
+}
+.modal-backdrop{
+    z-index: 1029;
+}
+
+
 /*------ MENU ----------*/
 #top-menu .lk-btn{
     max-width: 200px;
