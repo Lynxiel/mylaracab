@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\LoginRequest;
+use Illuminate\Support\Facades\Redirect;
 
 class LoginController extends Controller
 {
@@ -17,14 +18,15 @@ class LoginController extends Controller
     public function login(LoginRequest $request)
     {
         $credentials = $request->getCredentials();
+        //dd($credentials);
         if(!Auth::validate($credentials)):
             return back()->withErrors([
-                'email' => 'Учетная запись не найдена',
+                'email' => 'Неверный логин или пароль',
                 'action'=>'login'
-            ])->onlyInput('email');
+            ]);
         endif;
         $user = Auth::getProvider()->retrieveByCredentials($credentials);
         Auth::login($user);
-        return redirect()->intended('/');
+        return Redirect::back();
     }
 }
