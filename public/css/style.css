@@ -106,14 +106,9 @@
 #cart-container p{
     font-size: 12px;
 }
-#cart-container strong{
-    display: inline-block;
-    text-align: right;
-    width: 50%;
 
-}
 #cart-container #btn-confirm-order{
-    width: 160px;
+    width: 100%;
 }
 #cart-container .section-confirm{
     text-align: right;
@@ -125,9 +120,7 @@
 #cart-container .unauthorized-order button{
     height: 56px;
 }
-#cart-container .unauthorized-desc{
 
-}
 
 /*#cart-container input[type='number'] {*/
 /*    -moz-appearance:textfield!important;*/
@@ -137,14 +130,17 @@
 /*    -webkit-appearance: none;*/
 /*    margin: 0;*/
 /*}*/
-#cart-container p.unauthorized-desc{
-    font-size: 12px;
-    text-align: center;
+
+#cart-container .modal-footer p.unauthorized-desc{
+    font-size: 13px;
 }
+
 #cart-container .cart-or p{
     margin: 2px 0 0 -8px;
 }
-
+#cart-container .unauthorized-controls button{
+    width: 100%;
+}
 
 @media (max-width: 400px) {
     #cart-container .cable-title{

@@ -59,9 +59,9 @@
 
                             </div>
                         @endforeach
-                        <div class="mt-1">
-                            <small class="col-3">Ожидаемая дата доставки: {{date('d.m.y', strtotime(date('d.m.y').'+2 day'))}}</small>
-                            <strong id="order-sum" class="col-3">Итого:{{$sum}}₽</strong>
+                        <div class=" row justify-content-center mb-2 mt-2">
+                            <div class="col-lg-9 col-md-9 col-sm-7 col-7"><small>Ожидаемая дата доставки: {{date('d.m.y', strtotime(date('d.m.y').'+2 day'))}}</small></div>
+                            <div class="col-lg-3 col-md-3 col-sm-5 col-5 text-end"> <strong id="order-sum">Итого:{{$sum}}₽</strong></div>
                         </div>
 
                             <div class="modal-footer">
@@ -90,13 +90,13 @@
 
                                             </div>
                                     <hr>
-                                                <p class="unauthorized-desc">После отправки с Вами свяжется наш менеджер для уточнения деталей заказа. Для сохранения истории заказов и отслеживания статуса<br></p>
-                                                <div class="row justify-content-center">
-                                                    <div class="offset-1 col-4">
+                                                <p class="unauthorized-desc mb-1 text-center">После отправки с Вами свяжется наш менеджер для уточнения деталей заказа. Для сохранения истории заказов и отслеживания статуса<br></p>
+                                                <div class="row justify-content-center unauthorized-controls" >
+                                                    <div class="col-lg-5 col-md-5 col-sm-5">
                                                         <button id="btn-register" type="button" class="btn btn-warning mt-1" data-bs-toggle="modal" data-bs-target="#regModal">Зарегистрируйтесь</button>
                                                     </div>
-                                                    <div class="offset-1 col-1 mt-2 cart-or"><p>или</p></div>
-                                                    <div class="col-5">
+                                                    <div class="col-lg-2 col-md-2 col-sm-2 mt-2 cart-or "><p class="text-center">или</p></div>
+                                                    <div class="col-lg-5 col-md-5 col-sm-5">
                                                         <button type="button" id="btn-login" class="btn btn-warning mt-1" data-bs-toggle="modal" data-bs-target="#loginModal">Войдите</button>
                                                     </div>
                                                 </div>
