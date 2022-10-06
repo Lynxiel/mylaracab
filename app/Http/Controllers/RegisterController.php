@@ -7,18 +7,11 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 use App\Http\Requests\RegisterRequest;
 use Illuminate\Auth\Events\Registered;
+use Illuminate\Support\Facades\Redirect;
 
 class RegisterController extends Controller
 {
-    /**
-     * Display register page.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function show()
-    {
-        return view('auth.register');
-    }
+
 
     /**
      * Handle account registration request
@@ -30,17 +23,16 @@ class RegisterController extends Controller
     public function register(RegisterRequest $request)
     {
         $data = $request->validated();
-        //dd($data);
         $user = User::create([
             'email' => $data['email'],
-            'phone' => str_replace( ['-','(', ')'] ,'' ,$data['phone']),
+            'phone' => $data['phone'],
             'password' => Hash::make($data['password']),
         ]);
         auth()->login($user, true);
         //Send registration email
         MailController::accountRegister($data['email'], $data['password'], $data['phone']);
         session()->flash('success','UserRegistered');
-        return redirect()->intended('/');
+        return Redirect::back();
     }
 
 

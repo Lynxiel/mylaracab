@@ -16,6 +16,13 @@ class RegisterRequest extends FormRequest
         return true;
     }
 
+    public function prepareForValidation(){
+        $this->merge([
+            'phone' => str_replace( ['-','(', ')'] ,'' ,$this->phone),
+        ]);
+
+    }
+
     /**
      * Get the validation rules that apply to the request.
      *
@@ -26,7 +33,7 @@ class RegisterRequest extends FormRequest
         //dd($this);
         return [
             'email' => ['required','email:rfc,dns,strict','unique:users,email', 'not_regex:/[^(\w)|(\@)|(\.)|(\-)]/'],
-            'phone' => 'required|regex:/[0-9]+/|unique:users,phone',
+            'phone' => ['required','regex:/[0-9]+/','unique:users,phone'],
             'password' => 'required|min:8',
             'password_confirmation' => 'required|same:password'
         ];

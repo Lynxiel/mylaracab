@@ -170,6 +170,7 @@ return [
         'password'=> 'Пароль',
         'password_confirmation'=> 'Подверждение пароля',
         'postcode'=> 'Индекс',
+        'email'=> 'Email',
         'contact_name'=> 'Имя контактного лица',
         'phone'=> 'Телефон',
         'company_name'=> 'Название компании',
