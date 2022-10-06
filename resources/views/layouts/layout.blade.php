@@ -43,8 +43,9 @@
         </div>
     </div>
 </nav>
-@include('partials.flashmessages')
+
 <div class="container content-container">
+    @include('partials.flashmessages')
     @yield('content')
 </div>
 </body>
