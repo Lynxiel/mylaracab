@@ -48,36 +48,36 @@
 <table class="details">
     <tbody>
     <tr>
-        <td colspan="2" style="border-bottom: none;">ЗАО "БАНК", г.Москва</td>
+        <td colspan="2" style="border-bottom: none;">Филиал "Центральный" Банка ВТБ ПАО г.Москва</td>
         <td>БИК</td>
-        <td style="border-bottom: none;">000000000</td>
+        <td style="border-bottom: none;">044525411</td>
     </tr>
     <tr>
         <td colspan="2" style="border-top: none; font-size: 10px;">Банк получателя</td>
         <td>Сч. №</td>
-        <td style="border-top: none;">00000000000000000000</td>
+        <td style="border-top: none;">30101810145250000411</td>
     </tr>
     <tr>
-        <td width="25%">ИНН 0000000000</td>
-        <td width="30%">КПП 000000000</td>
+        <td width="25%">ИНН 711600236125</td>
+        <td width="30%">КПП 0</td>
         <td width="10%" rowspan="3">Сч. №</td>
-        <td width="35%" rowspan="3">00000000000000000000</td>
+        <td width="35%" rowspan="3">40802810310450004255</td>
     </tr>
     <tr>
-        <td colspan="2" style="border-bottom: none;">ИП "Кондратьев А.С"</td>
+        <td colspan="2" style="border-bottom: none;">ИП Кондратьев Александр Семенович</td>
     </tr>
     <tr>
         <td colspan="2" style="border-top: none; font-size: 10px;">Получатель</td>
     </tr>
     </tbody>
 </table>
-<h1>Счет на оплату № {{$order_id}} от {{$order[0]->created_at}} </h1>
+<h1>Счет на оплату № {{$order_id}} от {{$order->created_at->format('d.m.y')}} </h1>
 
 <table class="contract">
     <tbody>
     <tr>
         <td width="15%">Поставщик:</td>
-        <th width="85%">ИП "Кондратьев А.С", ИНН 711600236125, КПП 0, 301650, Новомосковск г, Вавилова, дом № 1А</th>
+        <th width="85%">ИП Кондратьев Александр Семенович, ИНН 711600236125, КПП 0, 301650, Новомосковск г, Вавилова, дом № 1А</th>
     </tr>
     <tr>
         <td>Покупатель:</td>
@@ -113,8 +113,8 @@
         <td align="left">{{$cable->title}}</td>
         <td align="right">{{$cable->quantity}}</td>
         <td align="left">м</td>
-        <td align="right">{{$cable->price}}</td>
-        <td align="right">{{$cable->price * $cable->quantity}}</td>
+        <td align="right">{{sprintf("%.2f", $cable->price)}}</td>
+        <td align="right">{{sprintf("%.2f",$cable->price * $cable->quantity)}}</td>
     </tr>';
     @endforeach
 
@@ -122,20 +122,20 @@
     <tfoot>
     <tr>
         <th colspan="5">Итого:</th>
-        <th>{{$total}}</th>
+        <th>{{sprintf("%.2f",$total)}}</th>
     </tr>
     <tr>
         <th colspan="5">Без НДС</th>
     </tr>
     <tr>
         <th colspan="5">Всего к оплате:</th>
-        <th>{{$total}}</th>
+        <th>{{sprintf("%.2f",$total)}}</th>
     </tr>
     </tfoot>
 </table>
 
 <div class="total">
-    <p>Всего наименований {{count($order_data)}}, на сумму {{$total}}</p>
+    <p>Всего наименований {{count($order_data)}}, на сумму {{sprintf("%.2f",$total)}}</p>
 </div>
 
 <div class="sign">

@@ -14,17 +14,11 @@ class InvoiceController extends Controller
     //
     public function formInvoice(int $order_id, InvoiceRequest $request){
 
+        $order = Order::findOrFail($order_id);
+
         $user_id = auth()->user()->id;
         if (!Order::isUserOrder($order_id,$user_id)){
-            return response()->json([
-            'message' => 'Заказ не найден'
-        ], 404); }
-
-        $order = Order::GetOrder($order_id);
-        if (!isset($order['0'])){
-            return response()->json([
-            'message' => 'Заказ не найден'
-        ], 404); }
+            abort(404); }
 
         $pdf = App::make('dompdf.wrapper');
         $order_data = App\Models\Order::getOrderContents($order_id);
