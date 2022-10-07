@@ -27,6 +27,8 @@ class AccountController extends Controller
         //Orders
         $orders = Order::GetUserOrders(auth()->user()->id);
 
+       //dd($orders);
+
         return view('account.index',compact('cart', 'orders', 'user'));
     }
 

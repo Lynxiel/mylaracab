@@ -119,15 +119,21 @@
                                                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                         </div>
                                                         <div class="modal-body">
-                                                            <h4>Действительно удалить заказ?</h4>
-                                                            <div class="form-floating mb-3 mt-4">
-                                                                <textarea type="text" class="form-control rounded-3" name="cancel_comment"> </textarea>
-                                                                <label class="px-4" for="cancel_comment">Оставьте комментарий</label>
-                                                            </div>
+                                                            <form action="{{route('cancelOrder')}}" method="post">
+                                                                @csrf
+                                                                <h4>Действительно удалить заказ?</h4>
+                                                                <div class="form-floating mb-3 mt-4">
+                                                                    <input type="hidden" name="order_id" readonly value="{{$orderdata->order_id}}">
+                                                                    <textarea type="text" class="form-control rounded-3" name="cancel_comment"> </textarea>
+                                                                    <label class="px-4" for="cancel_comment">Оставьте комментарий</label>
+                                                                </div>
+                                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                                                                <button type="submit" class="btn btn-danger">Да</button></a>
+                                                            </form>
+
                                                         </div>
                                                         <div class="modal-footer">
-                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
-                                                            <a href="{{route('cancelOrder', ['order_id' => $orderdata->order_id])}}"><button type="button" class="btn btn-danger">Да</button></a>
+
                                                         </div>
                                                     </div>
                                                 </div>

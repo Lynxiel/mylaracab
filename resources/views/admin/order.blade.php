@@ -20,6 +20,10 @@
                     <p class="text-light mt-2 px-2">Завершен</p>
                     @break
 
+                    @case(4)
+                    <p class="text-danger mt-2 px-2">Отменен</p>
+                    @break
+
                 @endswitch
                 <p class="mt-2 px-2">{{ $orderdata->company_name }}   {{ $orderdata->company_address}}</p>
             </button>

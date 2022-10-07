@@ -12,11 +12,12 @@ use App\Models\User;
 class OrderController extends Controller
 {
     //
-    public function index(){
-
-        $orders= Order::GetUserOrders(null);
+    public function index(?int $status=null){
+        if ($status===null)  $orders= Order::GetUserOrders();
+        else  $orders= Order::GetUserOrders(null, [$status] );
         return view('admin.index', compact('orders'));
     }
+
 
     public function show(){
 

@@ -33,11 +33,14 @@ class OrderController extends Controller
             return redirect()->intended('/');
     }
 
-    public function cancelOrder(int $order_id){
+    public function cancelOrder(Request $request){
 
-        $order = Order::find($order_id);
+        $data = $request->only(['order_id','cancel_comment']);
+        $order = Order::findOrFail($data['order_id']);
+        $order->update([
+            'status'=>Order::CANCELED,
+            'comment'=>$data['cancel_comment'] ]);
         $user = User::find($order->user_id);
-        $order->cancelOrder($order_id);
         // Send notification to admin
         MailController::orderCanceled($order,$user);
         session()->flash('success', 'OrderCanceled');

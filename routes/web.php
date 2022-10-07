@@ -23,7 +23,7 @@ Route::post('updateQuantity', [\App\Http\Controllers\CartController::class,'upda
 Route::post('createOrder', [\App\Http\Controllers\OrderController::class,'createOrder'])->name('createOrder');
 
 Route::get('account', [\App\Http\Controllers\AccountController::class,'index'])->name('account');
-Route::get('account/cancelOrder/{order_id}', [\App\Http\Controllers\OrderController::class,'cancelOrder'])->name('cancelOrder');
+Route::post('account/cancelOrder', [\App\Http\Controllers\OrderController::class,'cancelOrder'])->name('cancelOrder');
 Route::get('account/formInvoice/{order_id}', [\App\Http\Controllers\InvoiceController::class,'formInvoice'])->name('formInvoice');
 Route::post('account/saveUserData', [\App\Http\Controllers\AccountController::class,'saveUserData'])->name('saveUserData');
 
@@ -39,7 +39,8 @@ Route::get('user_deleteAccount', [\App\Http\Controllers\AccountController::class
 Route::group(['prefix' => 'admin'], function () {
     Voyager::routes();
 
-    Route::get('orders',  [\App\Http\Controllers\Admin\OrderController::class,'index', 'as' => 'orders']);
+    Route::get('orders',  [\App\Http\Controllers\Admin\OrderController::class,'index' ])->name('orders');
+    Route::get('/orders/status={status}',  [\App\Http\Controllers\Admin\OrderController::class,'index'])->name('filter_orders');
     Route::post('order',  [\App\Http\Controllers\Admin\OrderController::class,'show', 'as' => 'order']);
     Route::post('update_order',  [\App\Http\Controllers\Admin\OrderController::class,'updateOrder'])->name('updateOrder');
     Route::get('cables',  [\App\Http\Controllers\Admin\CableController::class,'index'])->name('cables');
