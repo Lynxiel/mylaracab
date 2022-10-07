@@ -70,7 +70,7 @@
                                         @if (auth()->user())
                                             <div class="row">
 
-                                                <div class="col-6 section-confirm">
+                                                <div class="col-lg-12  col-md-12  col-sm-12 col-xs-12 section-confirm">
                                                     <button id="btn-confirm-order" type="submit" class="btn btn-primary "  >Отправить заказ</button>
                                                 </div>
                                             </div>
