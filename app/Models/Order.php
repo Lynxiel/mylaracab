@@ -97,16 +97,16 @@ class Order extends Model
         }
     }
 
+
+    public function deleteOrder(int $order_id){
+        // Hard delete
+        DB::table('cables_order')->where('order_id', '=', $order_id)->delete();
+        DB::table('orders')->where('order_id', '=', $order_id)->delete();
+    }
+
     public function cancelOrder(int $order_id){
 
-          // Hard delete
-//        DB::table('cables_order')->where('order_id', '=', $order_id)->delete();
-//        DB::table('orders')->where('order_id', '=', $order_id)->delete();
-
-        // Soft delete
         DB::table('orders')->where('order_id', '=', $order_id)->update(['status'=>self::CANCELED]);
-
-
     }
 
     public  static function isUserOrder(int $order_id, int $user_id):bool{

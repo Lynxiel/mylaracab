@@ -34,7 +34,6 @@ class AccountController extends Controller
 
     public function deleteAccount(){
 
-        if (!isset(auth()->user()->id)) {return redirect()->intended('/'); }
         $user_id = auth()->user()->id;
 
         // Delete user orders
@@ -43,7 +42,7 @@ class AccountController extends Controller
 
         if (count($orders))
             foreach ($orders as $key=>$order) {
-                $oorder->cancelOrder($order[0]->order_id);
+                $oorder->deleteOrder($order[0]->order_id);
         }
         // Delete user
         $user = new User();
