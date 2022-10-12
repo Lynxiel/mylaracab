@@ -32,12 +32,5 @@ class InvoiceController extends Controller
         return $pdf->stream();
     }
 
-    public function formQr(int $order_id){
 
-
-    }
-
-    public function notFoundInvoice():string{
-
-    }
 }

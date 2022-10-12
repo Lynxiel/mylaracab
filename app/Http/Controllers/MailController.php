@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Mail\AccountRegister;
-use App\Mail\OrderConfirm;
+use App\Mail\OrderCreated;
 use App\Mail\OrderConfirmed;
 use App\Mail\OrderPayed;
 use App\Mail\OrderFinished;
@@ -18,8 +18,8 @@ use App\Models\User;
 
 class MailController extends Controller
 {
-    public static function orderSend(Request $request){
-        Mail::to($request->user()?$request->user():$request->order_contact)->send(new OrderConfirm());
+    public static function orderSend(Request $request,Order $order){
+        Mail::to($request->user()?$request->user():$request->order_contact)->send(new OrderCreated($order));
     }
 
 

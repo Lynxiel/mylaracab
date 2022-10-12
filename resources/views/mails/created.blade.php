@@ -25,20 +25,44 @@
                                             <td class="es-m-txt-l" bgcolor="#ffffff" align="left"
                                                 style="Margin:0;padding-top:20px;padding-bottom:20px;padding-left:30px;padding-right:30px">
                                                 <p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:lato, 'helvetica neue', helvetica, arial, sans-serif;line-height:18px;color:#666666;font-size:14px">
-                                                    <strong>Ваш заказ №{{$order->order_id}} от {{Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $order->created_at)->format('d.m.y')}} был подтвержден!</strong><br>
-                                                    <br>
-                                                    Теперь Вам доступна оплата заказа в личном кабинете по Qr-коду или с помощью счета.</p>
-                                                @if ($order->comment)
-                                                    <p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:lato, 'helvetica neue', helvetica, arial, sans-serif;line-height:18px;color:#666666;font-size:14px">
-                                                        <strong>Комментарий к заказу:</strong> {{$order->comment}}</p>
-                                                @endif
-                                                @if ($order->address)
-                                                    <p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:lato, 'helvetica neue', helvetica, arial, sans-serif;line-height:18px;color:#666666;font-size:14px">
-                                                        <strong>Адрес доставки:</strong> {{$order->address}}</p>
-                                                @endif
-                                                @if ($order->pay_link)
-                                                    <p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:lato, 'helvetica neue', helvetica, arial, sans-serif;line-height:18px;color:#666666;font-size:14px">
-                                                        <strong>Ссылка для оплаты:</strong> <a href="{{$order->pay_link}}">{{$order->pay_link}}</a></p>
+                                                    Спасибо за заказ! <br>
+                                                    В ближайшее время с Вами свяжется наш менеджер для подтверждения заказа. После этого станет доступна оплата и формирование счета.
+                                                </p>
+                                                <br>
+                                                <strong style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:lato, 'helvetica neue', helvetica, arial, sans-serif;line-height:18px;color:#666666;font-size:14px">
+                                                    Ваш заказ № {{$order->order_id}} от {{Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $order->created_at)->format('d.m.y')}} :
+                                                </strong>
+                                                <br>
+                                                @if (!empty($cart))
+                                                    <?php $sum=0; $n=1;?>
+                                                    @foreach ($cart as $item)
+
+                                                        <?php $sum += $item->price*(session()->get('cable_id')?session()->get('cable_id')[$item->cable_id]:100); ?>
+                                                        <div class="list-group w-auto">
+                                                            <div class="row ">
+                                                                <div class="col-md-12">
+                                                                    <div  class="list-group-item list-group-item-action d-flex " aria-current="true">
+                                                                        <div class="d-flex gap-2 w-100 justify-content-between">
+                                                                            <p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:lato, 'helvetica neue', helvetica, arial, sans-serif;line-height:27px;color:#666666;font-size:12px">
+                                                                                {{$n}}. {{$item->title}}
+                                                                            {{$item->price}}₽ х  {{session()->get('cable_id')?session()->get('cable_id')[$item->cable_id]:100}}м
+                                                                            {{$item->price*(session()->get('cable_id')?session()->get('cable_id')[$item->cable_id]:100)}}₽
+                                                                            </p>
+                                                                            <hr>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                        <?php $n++;?>
+                                                    @endforeach
+                                                    <div class="mt-1">
+                                                        <strong style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:lato, 'helvetica neue', helvetica, arial, sans-serif;line-height:27px;color:#666666;font-size:14px" id="order-sum" class="col-3">Итого:{{$sum}}₽</strong>
+                                                        <br>
+                                                        <div class="col-3">Ожидаемая дата доставки: {{date('d.m.y', strtotime(date('d.m.y').'+2 day'))}}</div>
+
+                                                    </div>
                                                 @endif
                                             </td>
                                         </tr>

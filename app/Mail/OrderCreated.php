@@ -3,6 +3,7 @@
 namespace App\Mail;
 
 //use http\Env\Request;
+use App\Models\Order;
 use Illuminate\Http\Request;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -10,18 +11,18 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use App\Http\Controllers\CartController;
 
-class OrderConfirm extends Mailable
+class OrderCreated extends Mailable
 {
     use Queueable, SerializesModels;
-
+    protected Order $order;
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(Order $order)
     {
-        //
+        $this->order = $order;
     }
 
     /**
@@ -32,6 +33,6 @@ class OrderConfirm extends Mailable
     public function build(Request $request)
     {
         $cart = CartController::init($request);
-        return $this->subject('Заказ Kabelopt71.ru')->view('mails.confirm')->with('cart',$cart);
+        return $this->subject('Заказ Kabelopt71.ru')->view('mails.created')->with('cart',$cart)->with('order', $this->order);
     }
 }

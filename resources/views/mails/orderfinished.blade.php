@@ -1,17 +1,14 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <title>Заказ завершен Kabelopt71.ru</title>
-
-</head>
-<body class="antialiased">
-Заказ №{{$order->order_id}} от {{$order->created_at}} завершен!
-Спасибо за Ваш заказ!
-
-
-</body>
+@include('mails.header')
+<table>
+    <tr>
+        <td bgcolor="#ffffff" align="left"
+            style="Margin:0;padding-top:20px;padding-bottom:20px;padding-left:30px;padding-right:30px">
+            <p style="-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:lato, 'helvetica neue', helvetica, arial, sans-serif;line-height:18px;color:#666666;font-size:14px">
+                Заказ №{{$order->order_id}} от {{Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $order->created_at)->format('d.m.y')}} завершен!
+                <br>
+                <strong>Спасибо за Ваш заказ!</strong>
+            </p>
+        </td>
+    </tr>
+</table>
 @include('mails.footer')
-</html>

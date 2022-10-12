@@ -25,7 +25,8 @@ class OrderController extends Controller
         $order->setUserID($user_id)->AddOrder();
         $cables = CartController::init($request);
         $order->AddCablesToOrder($cables);
-        if ($user_id)MailController::orderSend($request);
+        $order = Order::findorFail($order->order_id);
+        if ($user_id)MailController::orderSend($request,$order);
         MailController::orderReceived($order,$user);
         session()->remove('cable_id');
         session()->flash('success', 'OrderSend');
