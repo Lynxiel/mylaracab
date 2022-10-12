@@ -17,7 +17,7 @@
             <div class="accordion-item">
                 <h2 class="accordion-header" id="panelsStayOpen-heading{{$orderdata->order_id}}">
                     <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapse{{$orderdata->order_id}}" aria-expanded="true" aria-controls="panelsStayOpen-collapse{{$orderdata->order_id}}">
-                        <h6 class="group-title">№{{$orderdata->order_id}} от {{$orderdata->created_at}} -  @switch($orderdata->status)
+                        <h6 class="group-title">№{{$orderdata->order_id}} от {{Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $orderdata->created_at)->format('d.m.y')}} -  @switch($orderdata->status)
                                 @case(0)
                                 Создан
                                 @break
