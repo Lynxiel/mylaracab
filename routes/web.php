@@ -26,6 +26,7 @@ Route::get('account', [\App\Http\Controllers\AccountController::class,'index'])-
 Route::post('account/cancelOrder', [\App\Http\Controllers\OrderController::class,'cancelOrder'])->name('cancelOrder');
 Route::get('account/formInvoice/{order_id}', [\App\Http\Controllers\InvoiceController::class,'formInvoice'])->name('formInvoice');
 Route::post('account/saveUserData', [\App\Http\Controllers\AccountController::class,'saveUserData'])->name('saveUserData');
+Route::post('recoverPassword', [\App\Http\Controllers\AccountController::class,'recoverPassword'])->name('recoverPassword');
 
 
 

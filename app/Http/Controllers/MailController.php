@@ -9,10 +9,10 @@ use App\Mail\OrderPayed;
 use App\Mail\OrderFinished;
 use App\Mail\OrderCanceled;
 use App\Mail\OrderReceived;
+use App\Mail\PasswordChanged;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use App\Models\Order;
-use Illuminate\Support\Facades\App;
 use App\Models\User;
 
 
@@ -20,6 +20,10 @@ class MailController extends Controller
 {
     public static function orderSend(Request $request,Order $order){
         Mail::to($request->user()?$request->user():$request->order_contact)->send(new OrderCreated($order));
+    }
+
+    public static function passwordChanged(User $user ,string $password){
+        Mail::to($user->email)->send(new PasswordChanged($user, $password));
     }
 
 

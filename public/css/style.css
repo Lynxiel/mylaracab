@@ -75,7 +75,7 @@
 #loginModal .modal-title{
     color:#666;
 }
-#loginModal, #CartModal, #regModal {
+#loginModal, #CartModal, #regModal, #recoverModal {
     color: #666;
 }
 #regModal small, #loginModal small{
@@ -176,6 +176,7 @@
 }
 
 #loginModal .alert-danger, #regModal .alert-danger{
+    width: 100%;
     text-align: center;
     font-size: 12px;
     padding: 5px 0 5px 0;

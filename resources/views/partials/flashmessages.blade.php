@@ -15,7 +15,14 @@
 
 @if (session('success')=='OrderCanceled')
     <div class="alert alert-success alert-dismissible fade show" role="alert">
-        Заказ удалён!
+        Заказ отменён!
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+@endif
+
+@if (session('success')=='PasswordChanged')
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        Письмо с учетными данными было отправлено на {{session('emailrecover')}}!
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
 @endif

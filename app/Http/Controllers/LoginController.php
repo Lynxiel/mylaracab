@@ -17,14 +17,15 @@ class LoginController extends Controller
      */
     public function login(LoginRequest $request)
     {
-        $credentials = $request->getCredentials();
-        //dd($credentials);
-        if(!Auth::validate($credentials)):
+
+        $credentials = $request->validated();
+//        dd($credentials);
+        if(!Auth::validate($credentials)){
+            session()->flash('loginFailed');
             return back()->withErrors([
-                'email' => 'Неверный логин или пароль',
-                'action'=>'login'
+                'auth_failed' => 'Неверный логин или пароль',
             ]);
-        endif;
+        }
         $user = Auth::getProvider()->retrieveByCredentials($credentials);
         Auth::login($user);
         return Redirect::back();

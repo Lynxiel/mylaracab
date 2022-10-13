@@ -9,7 +9,9 @@ use Illuminate\Http\Request;
 use App\Http\Requests\SaveUserDataRequest;
 use App\Http\Requests\AccountRequest;
 use Illuminate\Support\Facades\Hash;
-
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Validator;
 class AccountController extends Controller
 {
     /**
@@ -60,6 +62,38 @@ class AccountController extends Controller
             'address' => $data['address'],
             'postcode' => $data['postcode'],
         ]);
-        return redirect('account/');
+        return Redirect::back();
+    }
+
+    public function recoverPassword(Request $request){
+        $rules = ['email'=>['required','email:rfc,dns,strict', 'not_regex:/[^(\w)|(\@)|(\.)|(\-)]/']];
+        $data = $request->only('email');
+        $validator = Validator::make($data, $rules );
+        if ($validator->fails()) {
+            session()->flash('recoveryFailed');
+            return Redirect::back()
+                ->withErrors($validator)
+                ->withInput();
+        }
+
+        $data = $validator->validated();
+        $user = User::where('email', '=' , $data['email'])->first();
+        if (!$user){
+            session()->flash('recoveryFailed');
+            return back()->withErrors([
+                'email' => 'Email '.$data['email'].' не найден',
+                'user_not_found' => true
+            ]);
+        }
+
+        $random_password = strtolower(Str::random(8));
+        $user->update(
+            ['password' => Hash::make($random_password)]
+        );
+
+        MailController::passwordChanged($user, $random_password);
+        session()->flash('success', 'PasswordChanged');
+        session()->flash('emailrecover', $data['email']);
+        return Redirect::back();
     }
 }

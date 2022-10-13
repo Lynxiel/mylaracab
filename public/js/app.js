@@ -54,5 +54,10 @@ window.onload = function() {
             }
         });
     }
+
+    $('.btn-close, .modal-btn').bind('click',function (){
+        $('div.alert-danger').remove();
+    })
+
 }
 

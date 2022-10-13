@@ -2,8 +2,10 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Factory as ValidationFactory;
+use phpDocumentor\Reflection\Types\This;
 
 class LoginRequest extends FormRequest
 {
@@ -25,9 +27,31 @@ class LoginRequest extends FormRequest
     public function rules()
     {
         return [
-            'emailorphone' => ['required', 'not_regex:/[^(\w)|(\@)|(\.)|(\-)] [0-9]/'],
+            'email' => ['email:rfc,dns,strict', 'not_regex:/[^(\w)|(\@)|(\.)|(\-)]/'],
+            'phone' => ['regex:/[0-9]+/'],
             'password' => 'required'
         ];
+    }
+
+    /**
+     * Prepare the data for validation.
+     *
+     * @return void
+     */
+    protected function prepareForValidation()
+    {
+        $credentials =$this->getCredentials();
+        $this->merge(
+            $credentials
+        );
+
+    }
+
+    public function failedValidation(Validator $validator)
+    {
+        session()->flash('loginFailed');
+        parent::failedValidation($validator);
+
     }
 
     /**
