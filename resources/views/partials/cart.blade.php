@@ -89,17 +89,8 @@
                                                 </div>
 
                                             </div>
-                                    <hr>
-                                                <p class="unauthorized-desc mb-1 text-center">После отправки с Вами свяжется наш менеджер для уточнения деталей заказа. Для сохранения истории заказов и отслеживания статуса<br></p>
-                                                <div class="row justify-content-center unauthorized-controls" >
-                                                    <div class="col-lg-5 col-md-5 col-sm-5">
-                                                        <button id="btn-register" type="button" class="btn btn-warning mt-1" data-bs-toggle="modal" data-bs-target="#regModal">Зарегистрируйтесь</button>
-                                                    </div>
-                                                    <div class="col-lg-2 col-md-2 col-sm-2 mt-2 cart-or "><p class="text-center">или</p></div>
-                                                    <div class="col-lg-5 col-md-5 col-sm-5">
-                                                        <button type="button" id="btn-login" class="btn btn-warning mt-1" data-bs-toggle="modal" data-bs-target="#loginModal">Войдите</button>
-                                                    </div>
-                                                </div>
+                                                <p class="unauthorized-desc mb-1 text-center">После отправки с Вами свяжется наш менеджер для уточнения деталей заказа<br></p>
+
                                                 <script>
                                                     $("#order_contact").mask("+7(999)999-99-99");
                                                 </script>
