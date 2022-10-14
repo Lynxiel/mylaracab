@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="{{asset('css/style.css')}}">
 
 
-    <script src="{{asset('bootstrap/dist/js/bootstrap.js')}}"></script>
+    <script src="{{asset('/bootstrap/dist/js/bootstrap.bundle.min.js')}}"></script>
     <script src="{{asset('/js/jquery.js')}}"></script>
     <script src="{{asset('/js/app.js')}}"></script>
     <script src="{{asset('/js/jquery.maskedinput.js')}}"></script>
