@@ -52,8 +52,8 @@ class ExchangeController extends Controller
             foreach ($xml as $node){
                 $data[$i]['1cCode']= $node->Code->__toString();
                 $data[$i]['1ctitle'] = $node->ProductName->__toString();
-                $data[$i]['quantity'] = $node->Quantity->__toString();
-                $data[$i]['price'] = $node->Price->__toString();
+                $data[$i]['quantity'] = (int)$node->Quantity->__toString();
+                $data[$i]['price'] = ((float)$node->Price->__toString()*0.9); // Special price from 1c price
                 $data[$i]['active'] = ($data[$i]['quantity']=='0'?0:1);
                 $i++;
 

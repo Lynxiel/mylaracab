@@ -12,6 +12,7 @@ class OrderController extends Controller
 {
     public function createOrder(Request $request){
 
+        $phone = $request->only('order_contact');
         $user_id = (isset(auth()->user()->id))?auth()->user()->id:null;
         $user = User::find($user_id);
 
@@ -19,6 +20,7 @@ class OrderController extends Controller
             [
                 'user_id' => $user_id,
                 'status' => Order::CREATED,
+                'comment' => isset($phone['order_contact'])?$phone['order_contact']:'',
             ]
         );
 
@@ -32,6 +34,7 @@ class OrderController extends Controller
         if ($user_id) return redirect()->intended('/account');
             return redirect()->intended('/');
     }
+
 
     public function cancelOrder(Request $request){
 
