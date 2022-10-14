@@ -37,19 +37,12 @@ class AccountController extends Controller
     public function deleteAccount(){
 
         $user_id = auth()->user()->id;
-
-        // Delete user orders
-        $oorder = new Order;
-        $orders = Order::GetUserOrders($user_id);
-
-        if (count($orders))
-            foreach ($orders as $key=>$order) {
-                $oorder->deleteOrder($order[0]->order_id);
-        }
+        // Unbind user orders but save them for statistics
+        Order::where('user_id', '=', $user_id)
+            ->update(['user_id'=> null, 'comment'=>'Пользователь удалил свой аккаунт']);
         // Delete user
-        $user = new User();
-        $user->DeleteUser($user_id);
-
+        User::where('id', '=', $user_id)->delete();
+        session()->flash('AccountDeleted');
         return redirect('/');
     }
 

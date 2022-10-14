@@ -2,13 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Cable;
 use App\Models\Order;
 use App\Models\User;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Redirect;
 
 
@@ -16,17 +12,20 @@ class OrderController extends Controller
 {
     public function createOrder(Request $request){
 
-        $order = new Order();
-        if ($request->order_contact){
-            $order->setPhone($request->order_contact);
-        }
-        $user_id = isset(auth()->user()->id)?auth()->user()->id:null;
+        $user_id = (isset(auth()->user()->id))?auth()->user()->id:null;
         $user = User::find($user_id);
-        $order->setUserID($user_id)->AddOrder();
+
+        $order= Order::create(
+            [
+                'user_id' => $user_id,
+                'status' => Order::CREATED,
+            ]
+        );
+
         $cables = CartController::init($request);
-        $order->AddCablesToOrder($cables);
-        $order = Order::findorFail($order->order_id);
-        if ($user_id)MailController::orderSend($request,$order);
+        Order::AddCablesToOrder($cables , $order->order_id);
+
+        if ($user_id) MailController::orderSend($request,$order);
         MailController::orderReceived($order,$user);
         session()->remove('cable_id');
         session()->flash('success', 'OrderSend');
@@ -36,12 +35,18 @@ class OrderController extends Controller
 
     public function cancelOrder(Request $request){
 
+        //TODO validate
         $data = $request->only(['order_id','cancel_comment']);
+
         $order = Order::findOrFail($data['order_id']);
+        $user = User::find($order->user_id);
+
+        if (auth()->user()->id != $order->user_id){ abort('404');}
+
         $order->update([
             'status'=>Order::CANCELED,
             'comment'=>$data['cancel_comment'] ]);
-        $user = User::find($order->user_id);
+
         // Send notification to admin
         MailController::orderCanceled($order,$user);
         session()->flash('success', 'OrderCanceled');

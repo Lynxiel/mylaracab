@@ -102,22 +102,23 @@
                             @endforeach
                                 <strong class="summ mt-3 text-end">Сумма: {{$summ}}₽</strong>
 
-                                        @if ($orderdata->status==0)
+                                        @if ($orderdata->status==0 || $orderdata->status==1)
 
 
                                            <!-- Button trigger modal -->
-                                            <button type="button" class="btn btn-danger mt-4" data-bs-toggle="modal" data-bs-target="#cancelorder">
+                                            <button type="button" class="btn btn-danger mt-4" data-bs-toggle="modal" data-bs-target="#cancelorder{{$orderdata->order_id}}">
                                                 Отменить заказ
                                             </button>
 
                                             <!-- Modal -->
-                                            <div class="modal fade" id="cancelorder" tabindex="-1" aria-labelledby="ModalLabel" aria-hidden="true">
+                                            <div class="modal fade" id="cancelorder{{$orderdata->order_id}}" tabindex="-1" aria-labelledby="ModalLabel" aria-hidden="true">
                                                 <div class="modal-dialog">
                                                     <div class="modal-content">
 
                                                         <div class="modal-body">
                                                             <form action="{{route('cancelOrder')}}" method="post">
                                                                 @csrf
+                                                                @method('PUT')
                                                                 <h4>Действительно удалить заказ?</h4>
                                                                 <div class="form-floating mb-3 mt-4">
                                                                     <input type="hidden" name="order_id" readonly value="{{$orderdata->order_id}}">
@@ -233,16 +234,17 @@
             <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Вот так собака...</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
+                        <div class="modal-body mt-3">
                             <h4>Действительно удалить аккаунт?</h4>
+                            <p>Это действие нельзя будет обратить</p>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Ние</button>
-                            <a href="{{route('deleteAccount')}}"><button type="button" class="btn btn-primary">Дыа</button></a>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Нет</button>
+                            <form action="{{route('deleteAccount')}}" method="post">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger">Да</button></a>
+                            </form>
                         </div>
                     </div>
                 </div>

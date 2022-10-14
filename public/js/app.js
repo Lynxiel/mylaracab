@@ -10,6 +10,7 @@ window.onload = function() {
         $('.cart-add').on('click',function(e){
 
             e.preventDefault();
+            $('.tooltip').remove();
             var cartbtn = $(this);
             var type = "POST";
             var ajaxurl = 'addToCart';

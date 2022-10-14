@@ -16,23 +16,9 @@ class Order extends Model
     CONST COMPLETED = 3;
     CONST CANCELED = 4;
     protected $primaryKey = 'order_id';
-    protected ?int $user_id;
-    protected string $phone='';
-    protected int $status = self::CREATED;
-    protected array $cables = [];
 
-    protected $fillable = ['comment','status'];
+    protected $fillable = ['comment','status', 'user_id'];
 
-
-    public function setUserID(?int $user_id ) :static{
-        $this->user_id = $user_id;
-        return $this;
-    }
-
-    public function setPhone(string $phone ) :static{
-        $this->phone = $phone;
-        return $this;
-    }
 
 
     public static function GetOrder(int $order_id){
@@ -75,20 +61,11 @@ class Order extends Model
 
     }
 
-    public function AddOrder(){
-        return $this->order_id = DB::table('orders')->insertGetId(
-            ['user_id' => $this->user_id,
-                'status' => $this->status,
-                'comment'=> $this->phone,
-                'created_at'=> date('Y-m-d H:i:s')]
-        );
-    }
-
-    public function AddCablesToOrder( $cables){
+    public static function AddCablesToOrder(Collection $cables, int $order_id){
         foreach ($cables as $cable) {
             if (session()->get('cable_id')[$cable->cable_id]==0) continue;
             DB::table('cables_order')->insert([
-                'order_id' => $this->order_id,
+                'order_id' => $order_id,
                 'price' => $cable->price,
                 'quantity' => session()->get('cable_id') ? session()->get('cable_id')[$cable->cable_id] : 100,
                 'cable_id' => $cable->cable_id
@@ -104,7 +81,7 @@ class Order extends Model
         DB::table('orders')->where('order_id', '=', $order_id)->delete();
     }
 
-    public function cancelOrder(int $order_id){
+    public static function  cancelOrder(int $order_id){
 
         DB::table('orders')->where('order_id', '=', $order_id)->update(['status'=>self::CANCELED]);
     }

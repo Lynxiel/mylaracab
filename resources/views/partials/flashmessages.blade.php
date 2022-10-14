@@ -27,3 +27,11 @@
     </div>
 @endif
 
+@if (session('AccountDeleted'))
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        Учетные данные были удалены!
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+@endif
+
+

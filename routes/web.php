@@ -23,7 +23,7 @@ Route::post('updateQuantity', [\App\Http\Controllers\CartController::class,'upda
 Route::post('createOrder', [\App\Http\Controllers\OrderController::class,'createOrder'])->name('createOrder');
 
 Route::get('account', [\App\Http\Controllers\AccountController::class,'index'])->name('account');
-Route::post('account/cancelOrder', [\App\Http\Controllers\OrderController::class,'cancelOrder'])->name('cancelOrder');
+Route::put('account/cancelOrder', [\App\Http\Controllers\OrderController::class,'cancelOrder'])->name('cancelOrder');
 Route::get('account/formInvoice/{order_id}', [\App\Http\Controllers\InvoiceController::class,'formInvoice'])->name('formInvoice');
 Route::post('account/saveUserData', [\App\Http\Controllers\AccountController::class,'saveUserData'])->name('saveUserData');
 Route::post('recoverPassword', [\App\Http\Controllers\AccountController::class,'recoverPassword'])->name('recoverPassword');
@@ -33,7 +33,7 @@ Route::post('recoverPassword', [\App\Http\Controllers\AccountController::class,'
 Route::post('user_login', [\App\Http\Controllers\LoginController::class,'login'])->name('login');
 Route::post('user_register', [\App\Http\Controllers\RegisterController::class,'register'])->name('register');
 Route::get('user_logout', [\App\Http\Controllers\LogoutController::class,'perform'])->name('logout');
-Route::get('user_deleteAccount', [\App\Http\Controllers\AccountController::class,'deleteAccount'])->name('deleteAccount');
+Route::delete('user_deleteAccount', [\App\Http\Controllers\AccountController::class,'deleteAccount'])->name('deleteAccount');
 
 
 
