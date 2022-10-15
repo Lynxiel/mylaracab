@@ -144,7 +144,7 @@
 
                                         <div class="form-group">
                                             <label>Группа кабеля</label>
-                                            <input type="text" class="form-control" name="cable_group_id"  value="{{$cable->cable_group_id}}" >
+                                            <x-controls.select name="cable_group_id" label="title" class="App\Models\CableGroup" value="{{$cable->cable_group_id}}" />
                                         </div>
 
                                         <div class="form-group">
@@ -177,7 +177,7 @@
                                             <input type="text" class="form-control" name="price"  value="{{$cable->price}}" >
                                         </div>
 
-                                        <input type="submit" value="Сохранить" class="btn btn-outline-success cable_save">
+                                        <input type="submit" value="Сохранить" class="btn btn-outline-success cable_save w-25">
                                     </form>
                                 </div>
                             </div>
@@ -243,7 +243,7 @@
             form.find(".form-control").each(function() {
                 formData[$(this).attr("name")] = $(this).val();
             });
-
+            console.log(formData);
             $.ajax({
                 type: type,
                 url: ajaxurl,

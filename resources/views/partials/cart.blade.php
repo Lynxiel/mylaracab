@@ -14,37 +14,42 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body" id="cart-container">
-
                     @if (!empty($cart))
-                        <?php $sum=0; ?>
+                        @php $sum=0; @endphp
                         @foreach ($cart as $item)
-                            <?php $sum += $item->price*(session()->get('cable_id')?session()->get('cable_id')[$item->cable_id]:100); ?>
-                            <div class="list-group w-auto">
-                                <div class="row ">
-                                        <div  class="list-group-item list-group-item-action  " aria-current="true">
+                            @php
+                                $quantity =session()->get('cable_id')?session()->get('cable_id')[$item->cable_id]:1;
+                                $sum += $item->price*$quantity*$item->footage;
+
+                            @endphp
                                             <div class="row">
-                                                <div class="col-lg-4 col-md-4 col-sm-4 col-3 ">
+                                                <div class="col-lg-4 col-md-4 col-sm-4 col-4 ">
                                                     <h6 class="mb-0">{{$item->title}} </h6>
                                                     <p class="mb-0 opacity-75 text-success">Доступно: {{$item->instock}}м</p>
+
                                                 </div>
-                                                <div class="col-lg-2 col-md-2 col-sm-2 col-2">
-                                                    <p class="opacity-50 text-nowrap cable-price text-center">{{$item->price}}₽</p>
+                                                <div class="col-lg-2 col-md-2 col-sm-2 col-2 ">
+                                                    <p class=" cable-summ mb-0 text-center badge bg-warning text-wrap text-black ">{{$item->price*$quantity*$item->footage}}₽</p>
+                                                    <p class="opacity-50 mb-0 text-nowrap cable-price text-center ">{{$item->price}}₽/м</p>
+                                                    <p class="opacity-50 mb-0 text-nowrap cable-price text-center">{{$item->footage*$quantity}}м</p>
+
                                                 </div>
-                                                <div class="col-lg-2 col-md-2 col-sm-2 col-2">
+                                                <div class="col-lg-4 col-md-4 col-sm-4 col-4  text-center">
                                                     <form method="post" action="{{route('updateQuantity')}}">
                                                         @csrf
                                                         <input  required name="cable_id" readonly value="{{$item->cable_id}}" hidden>
-                                                        <input type="number" step="100" min="0" id="quantity"  class="form-control-sm quantity_edit" required name="quantity"  value="{{ session()->get('cable_id')?session()->get('cable_id')[$item->cable_id]:100}}">
+                                                        <div class="qty pt-2 mt-2">
+                                                            <span class="minus bg-dark">-</span>
+                                                            <input type="number" readonly class="count quantity_edit" name="quantity" value="{{$quantity}}">
+                                                            <span class="plus bg-dark">+</span>
+                                                        </div>
                                                     </form>
-                                                </div>
-                                                <div class="col-lg-2 col-md-2 col-sm-2 col-3">
-                                                    <p class=" cable-summ text-muted pt-2 text-center">{{$item->price*(session()->get('cable_id')?session()->get('cable_id')[$item->cable_id]:100)}}₽</p>
                                                 </div>
                                                 <div class="col-lg-2 col-md-2 col-sm-2 col-2">
                                                     <form method="post" action="{{route('removeFromCart')}}">
                                                         @csrf
                                                         <input  required name="cable_id" readonly value="{{$item->cable_id}}" hidden>
-                                                        <button type="submit" class="btn btn-outline-danger btn-remove-cart">
+                                                        <button type="submit" class="btn btn-outline-danger btn-remove-cart mt-2">
                                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
                                                                 <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
                                                                 <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
@@ -53,52 +58,55 @@
                                                     </form>
                                                 </div>
                                             </div>
+                                            <hr>
 
-                                        </div>
-                                </div>
-
-                            </div>
                         @endforeach
-                        <div class=" row justify-content-center mb-2 mt-2">
-                            <div class="col-lg-9 col-md-9 col-sm-7 col-7"><small>Ожидаемая дата доставки: {{date('d.m.y', strtotime(date('d.m.y').'+2 day'))}}</small></div>
-                            <div class="col-lg-3 col-md-3 col-sm-5 col-5 text-end"> <strong id="order-sum">Итого:{{$sum}}₽</strong></div>
-                        </div>
+                        @php $auth = auth()->user();
+                             if ($auth) $col = 6; else $col = 12;
+                        @endphp
+                        <div class=" {{ $auth?'row':'' }} justify-content-center mb-2 mt-2">
 
-                            <div class="modal-footer">
+                            <div class="col-lg-{{$col}} col-md-{{$col}} col-sm-{{$col}} col-{{$col}} badge bg-dark text-wrap text-center text-warning"><p class="fs-6 fw-bold d-inline-block mt-2 mb-0" >Итого:{{$sum}}₽</p> </div>
+                            <div class="col-lg-{{$col}} col-md-{{$col}} col-sm-{{$col}} col-{{$col}}  ">
                                 <form method="post" action="{{route('createOrder')}}">
                                     @csrf
-                                        @if (auth()->user())
-                                            <div class="row">
-
-                                                <div class="col-lg-12  col-md-12  col-sm-12 col-xs-12 section-confirm">
-                                                    <button id="btn-confirm-order" type="submit" class="btn btn-primary "  >Отправить заказ</button>
+                                    @if ($auth)
+                                        <div class="row">
+                                            <div class="col-lg-12  col-md-12  col-sm-12 col-xs-12 section-confirm">
+                                                <button id="btn-confirm-order" type="submit" class="btn btn-warning "  >Отправить заказ</button>
+                                            </div>
+                                        </div>
+                                    @else
+                                        <div class="row mt-3 unauthorized-order">
+                                            <div class="col-6">
+                                                <div class="form-floating mb-3 mt-1">
+                                                    <input  name="order_contact"  type="text" required class="form-control rounded-3" id="order_contact" >
+                                                    <label for="order_contact">Телефон</label>
                                                 </div>
                                             </div>
-                                        @else
-                                            <div class="row mt-1 unauthorized-order">
-                                                <div class="col-6">
-                                                    <div class="form-floating mb-3 mt-1">
-                                                        <input  name="order_contact"  type="text" required class="form-control rounded-3" id="order_contact" >
-                                                        <label for="order_contact">Телефон</label>
-                                                    </div>
-                                                </div>
 
-                                                <div class="col-6">
-                                                    <button id="btn-confirm-order" type="submit" class="btn btn-primary mt-1" >Отправить заказ</button>
-
-                                                </div>
+                                            <div class="col-6">
+                                                <button id="btn-confirm-order" type="submit" class="btn btn-warning mt-1" >Отправить заказ</button>
 
                                             </div>
-                                                <p class="unauthorized-desc mb-1 text-center">После отправки с Вами свяжется наш менеджер для уточнения деталей заказа<br></p>
 
-                                                <script>
-                                                    $("#order_contact").mask("+7(999)999-99-99");
-                                                </script>
+                                        </div>
+                                        <p class="unauthorized-desc mb-1 text-center">После отправки с Вами свяжется наш менеджер для уточнения деталей заказа<br></p>
+
+                                        <script>
+                                            $("#order_contact").mask("+7(999)999-99-99");
+                                        </script>
                                     @endif
 
 
                                 </form>
+
                             </div>
+                            <p class="text-center">Ожидаемая дата доставки: {{date('d.m.y', strtotime(date('d.m.y').'+2 day'))}}</p>
+
+                        </div>
+
+
                                 @if (session('success')=='Успешно удалено из корзины!' ||  session('success')=='Успешно изменено количество!')
 
                                     <script>

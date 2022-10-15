@@ -10,4 +10,5 @@ class CableGroup extends Model
     use HasFactory;
 
     protected $primaryKey = 'cable_group_id';
+
 }

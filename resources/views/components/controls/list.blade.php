@@ -10,4 +10,11 @@
     else{$classes.= ' text-'. $color;}
 @endphp
 
-<li><a href="{{route($route)}}" class="{{$classes}} ">{{$text}}</a></li>
+<li>
+    <a
+        href="{{route($route)}}"
+        class="{{$classes}} "
+    >
+        {{$text}}
+    </a>
+</li>
