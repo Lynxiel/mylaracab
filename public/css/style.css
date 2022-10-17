@@ -1,3 +1,6 @@
+.active{
+    color: #ffc107;
+}
 .alert-dismissible{
     text-align: center;
 }
@@ -106,7 +109,7 @@
     background-color: #dc3545;
 }
 #cart-container #quantity{
-    width: 58px;
+    width: 35px;
     height: 35px;
     padding: 5px 0 2px 10px;
     border: 1px solid #333;
@@ -155,7 +158,8 @@
     height: 45px;
 }
 
-@media (max-width: 400px) {
+@media (max-width: 450px) {
+
     #cables-container .cable-title, #cables-container .cable-instock,
     #cables-container .cable-footage,
     #cables-container .cable-price{
@@ -256,4 +260,66 @@ footer .mb-2{
 }
 #accordionGroups .category-image{
     max-width: 200px;
+}
+
+/*------------------- Quantity input ------------------*/
+.qty .count {
+    color: #333;
+    display: inline-block;
+    vertical-align: top;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 16px;
+    padding: 0 2px;
+    width: 20px;
+    text-align: center;
+}
+.qty .plus {
+    cursor: pointer;
+    display: inline-block;
+    vertical-align: top;
+    color: white;
+    width: 16px;
+    height: 16px;
+    font: 15px/1 Arial,sans-serif;
+    text-align: center;
+    border-radius: 30%;
+    background-clip: padding-box;
+}
+.qty .minus {
+    cursor: pointer;
+    display: inline-block;
+    vertical-align: top;
+    color: white;
+    width: 16px;
+    height: 16px;
+    font: 15px/1 Arial,sans-serif;
+    text-align: center;
+    border-radius: 30%;
+    background-clip: padding-box;
+}
+
+.minus:hover{
+    background-color: #717fe0 !important;
+}
+.plus:hover{
+    background-color: #717fe0 !important;
+}
+/*Prevent text selection*/
+span{
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+}
+input{
+    border: 0;
+    width: 2%;
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+input:disabled{
+    background-color:white;
 }

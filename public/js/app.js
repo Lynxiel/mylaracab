@@ -1,11 +1,6 @@
 /*------------------- CART----------------------*/
 window.onload = function() {
     if (window.jQuery) {
-        $('.quantity_edit').on('change',function(e){
-            e.preventDefault();
-            if (this.value<0) this.value=0;
-            this.closest('form').submit();
-        });
 
         $('.cart-add').on('click',function(e){
 
@@ -64,5 +59,19 @@ window.onload = function() {
     var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
         return new bootstrap.Tooltip(tooltipTriggerEl)
     })
+
+
+    $(document).on('click','.plus',function(){
+        input = $(this).closest('.qty').find('.count');
+        input.attr('value',parseInt(input.val()) + 1 );
+        this.closest('form').submit()
+    });
+    $(document).on('click','.minus',function(){
+        input = $(this).closest('.qty').find('.count');
+        input.attr('value',parseInt(input.val()) - 1 );
+        if (input.val() == 0) {
+            input.attr('value',1);
+        }else  this.closest('form').submit()
+    });
 }
 

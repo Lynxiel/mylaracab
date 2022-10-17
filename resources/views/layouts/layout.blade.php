@@ -20,14 +20,14 @@
 <nav class="p-3 bg-dark text-white fixed-top ">
      <div class="container">
         <div id="top-menu" class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-
             <ul class=" nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-                <li><a href="{{route('index')}}" class="nav-link px-2 text-secondary">Главная</a></li>
-                <li><a href="{{route('delivery')}}" class="nav-link px-2 text-white">Доставка и оплата</a></li>
-                <li><a href="{{route('about_us')}}" class="nav-link px-2 text-white">О нас</a></li>
+                <x-controls.list text="Главная"           route="index"    classes="nav-link px-2 "/>
+                <x-controls.list text="Доставка и оплата" route="delivery" classes="nav-link px-2 "/>
+                <x-controls.list text="О нас"             route="about_us" classes="nav-link px-2 "/>
+
             </ul>
 
-            <div class="text-end">
+            <div>
                 @if (isset(auth()->user()->email))
                     @include('partials.logout')
                 @else
@@ -37,8 +37,6 @@
                 <span id="cart-replace">
                     @include('partials.cart')
                 </span>
-
-
             </div>
         </div>
     </div>
@@ -55,9 +53,9 @@
         <div class="col-lg-2  col-sm-4 col-6  footer-menu">
             <h5>Меню</h5>
             <ul class="nav flex-column justify-content-between">
-                <li class="nav-item mb-2"><a href="{{route('index')}}" class="nav-link p-0 text-muted">Главная</a></li>
-                <li class="nav-item mb-2"><a href="{{route('delivery')}}" class="nav-link p-0 text-muted">Доставка и оплата</a></li>
-                <li class="nav-item mb-2"><a href="{{route('about_us')}}" class="nav-link p-0 text-muted">О Нас</a></li>
+                <x-controls.list text="Главная" route="index" classes=" nav-link p-0 m-0 " color="secondary"/>
+                <x-controls.list text="Доставка и оплата" route="delivery" classes="nav-link p-0 m-0 " color="secondary"/>
+                <x-controls.list text="О нас" route="about_us" classes="nav-link p-0 m-0 " color="secondary" />
             </ul>
         </div>
 
