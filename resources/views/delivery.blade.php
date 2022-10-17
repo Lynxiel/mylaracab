@@ -2,8 +2,8 @@
 <body>
     <x-layouts.nav :cart="$cart" />
 
-    <div class="container mt-4">
-
+    <div class="content-container">
+        @include('partials.flashmessages')
     </div>
 </body>
 <x-layouts.footer />

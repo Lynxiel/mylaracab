@@ -3,6 +3,7 @@
     <x-layouts.nav :cart="$cart" />
 
     <div class="content-container">
+        @include('partials.flashmessages')
         @if(!isset(auth()->user()->id))
             <div class="px-4 py-5 mt-5 text-center container">
                 <h1 class="display-5 fw-bold">Кабель оптом</h1>
