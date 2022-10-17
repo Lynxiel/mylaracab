@@ -4,149 +4,125 @@
     <div class="container" id="account">
         <h2 class="mt-4 text-center">Личный кабинет</h2>
         <h4>История заказов</h4>
-
-
         <div class="list-group w-auto">
+            <div class="accordion" >
             @php  $summ = 0; $i=1; @endphp
             @if (!empty($orders))
                 @foreach($orders as $key=>$order)
                         @php  $summ = 0;
                                 $orderdata = $order[0];
                         @endphp
-        <div class="accordion" >
-            <div class="accordion-item">
-                <h2 class="accordion-header" id="panelsStayOpen-heading{{$orderdata->order_id}}">
-                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapse{{$orderdata->order_id}}" aria-expanded="true" aria-controls="panelsStayOpen-collapse{{$orderdata->order_id}}">
-                        <h6 class="group-title">№{{$orderdata->order_id}} от {{Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $orderdata->created_at)->format('d.m.y')}} -  @switch($orderdata->status)
-                                @case(0)
-                                Создан
-                                @break
 
-                                @case(1)
-                                Подтвержден, ожидает оплаты
-                                @break
+            <x-controls.accordion collapsed="{{$i==1?false:true}}" >
+                <x-slot:header>
+                    <h6 class="group-title">№{{$orderdata->order_id}} от {{Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $orderdata->created_at)->format('d.m.y')}} -
+                        @switch($orderdata->status)
+                            @case(0)
+                            Создан
+                            @break
 
-                                @case(2)
-                                Оплачен
-                                @break
+                            @case(1)
+                            Подтвержден, ожидает оплаты
+                            @break
 
-                                @case(3)
-                                Завершен
-                                @break
+                            @case(2)
+                            Оплачен
+                            @break
 
-                            @endswitch </h6>
-                    </button>
-                </h2>
-                <div id="panelsStayOpen-collapse{{$orderdata->order_id}}" class="accordion-collapse collapse {{$i==1?'show':''}}" aria-labelledby="panelsStayOpen-heading{{$orderdata->order_id}}">
-                    <div class="accordion-body">
-                        <div class="row ">
-                            @if ($orderdata->status==1)
-                                <div class="col-lg-3 col-sm-6 col-xs-6 mb-4">
-                                    <a target="_blank" href="{{route('formInvoice', ['order_id' => $orderdata->order_id])}}"><button class="btn btn-primary">Сформировать счет</button></a>
-                                </div>
-                                <div class="col-lg-4 col-sm-6 col-xs-6 mb-4">
-                                    <!-- Button trigger modal -->
-                                    @if ($orderdata->pay_link)
-                                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#qrmodal{{$orderdata->order_id}}">
-                                            Получить QR-код
-                                        </button>
+                            @case(3)
+                            Завершен
+                            @break
 
-                                        <!-- Modal -->
-                                        <div class="modal fade" id="qrmodal{{$orderdata->order_id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                            <div class="modal-dialog">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title" id="exampleModalLabel">QR-код для оплаты через Ваше банковское приложение</h5>
-                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <a target="_blank" href="{{$orderdata->pay_link}}">{{$orderdata->pay_link}}</a>
-                                                    </div>
-
-                                                </div>
-                                            </div>
-                                        </div>
-                                    @endif
-                                </div>
-
-                            @endif
-                                @if ($orderdata->status==0)
-                                    <div class="p-3 mb-2 bg-warning text-dark">В ближайшее время с Вами свяжется наш менеджер для подтверждения заказа. После этого станет доступна оплата и формирование счета.</div>
-                                @endif
-
-                                @if ($orderdata->delivery_address)
-                                    <div class="form-floating mb-3  col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                                        <input type="text" class="form-control rounded-3" disabled value="{{$orderdata->delivery_address}}">
-                                        <label class="px-4" for="floatingInput">Адрес доставки</label>
-                                    </div>
-                                @endif
-                                @if ($orderdata->comment)
-                                    <div class="form-floating mb-3  col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                                        <input type="text" class="form-control rounded-3" disabled value="{{$orderdata->comment}}">
-                                        <label class="px-4" for="floatingInput">Комментарий</label>
-                                    </div>
-                                @endif
-
-
-                            @foreach($order as $cable)
-                                <div  class="list-group-item list-group-item-action d-flex gap-3 py-1" aria-current="true">
-                                    <div class="d-flex gap-2 w-100 justify-content-between">
-                                        <div>
-                                            <h6 class="mb-0">{{$cable->title}} </h6>
-                                        </div>
-                                        <small class="opacity-50 text-nowrap cable-price">{{$cable->quantity}}м х {{$cable->price}}₽</small>
-                                        <small class="opacity-50 text-nowrap cable-price">{{($cable->quantity*$cable->price)}}₽</small>
-                                        @php  $summ += $cable->price*$cable->quantity;  @endphp
-                                    </div>
-                                </div>
-                            @endforeach
-                                <strong class="summ mt-3 text-end">Сумма: {{$summ}}₽</strong>
-
-                                        @if ($orderdata->status==0 || $orderdata->status==1)
-
-
-                                           <!-- Button trigger modal -->
-                                            <button type="button" class="btn btn-danger mt-4" data-bs-toggle="modal" data-bs-target="#cancelorder{{$orderdata->order_id}}">
-                                                Отменить заказ
-                                            </button>
-
-                                            <!-- Modal -->
-                                            <div class="modal fade" id="cancelorder{{$orderdata->order_id}}" tabindex="-1" aria-labelledby="ModalLabel" aria-hidden="true">
-                                                <div class="modal-dialog">
-                                                    <div class="modal-content">
-
-                                                        <div class="modal-body">
-                                                            <form action="{{route('cancelOrder')}}" method="post">
-                                                                @csrf
-                                                                @method('PUT')
-                                                                <h4>Действительно удалить заказ?</h4>
-                                                                <div class="form-floating mb-3 mt-4">
-                                                                    <input type="hidden" name="order_id" readonly value="{{$orderdata->order_id}}">
-                                                                    <textarea type="text" class="form-control rounded-3" name="cancel_comment"> </textarea>
-                                                                    <label class="px-4" for="cancel_comment">Оставьте комментарий</label>
-                                                                </div>
-                                                                <button type="submit" class="btn btn-danger">Да</button>
-                                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
-
-                                                            </form>
-
-                                                        </div>
-                                                        <div class="modal-footer">
-
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                        @endif
+                        @endswitch </h6>
+                </x-slot:header>
+                <div class="row">
+                    @if ($orderdata->status==1)
+                        <div class="col-lg-3 col-sm-6 col-xs-6 mb-4">
+                            <a target="_blank" href="{{route('formInvoice', ['order_id' => $orderdata->order_id])}}"><button class="btn btn-primary">Сформировать счет</button></a>
                         </div>
-                    </div>
-                </div>
-            </div>
+                        <div class="col-lg-4 col-sm-6 col-xs-6 mb-4">
+                            <!-- Button trigger modal -->
+                            @if ($orderdata->pay_link)
+                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#qrmodal{{$orderdata->order_id}}">
+                                    Получить QR-код
+                                </button>
 
-        </div>
+                                <!-- Modal -->
+                                <div class="modal fade" id="qrmodal{{$orderdata->order_id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLabel">QR-код для оплаты через Ваше банковское приложение</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <a target="_blank" href="{{$orderdata->pay_link}}">{{$orderdata->pay_link}}</a>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            @endif
+                        </div>
+
+                    @endif
+                    @if ($orderdata->status==0)
+                        <div class="p-3 mb-2 bg-warning text-dark">В ближайшее время с Вами свяжется наш менеджер для подтверждения заказа. После этого станет доступна оплата и формирование счета.</div>
+                    @endif
+
+                    @if ($orderdata->delivery_address)
+                        <div class="form-floating mb-3  col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                            <input type="text" class="form-control rounded-3" disabled value="{{$orderdata->delivery_address}}">
+                            <label class="px-4" for="floatingInput">Адрес доставки</label>
+                        </div>
+                    @endif
+                    @if ($orderdata->comment)
+                        <div class="form-floating mb-3  col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                            <input type="text" class="form-control rounded-3" disabled value="{{$orderdata->comment}}">
+                            <label class="px-4" for="floatingInput">Комментарий</label>
+                        </div>
+                    @endif
+
+
+                    @foreach($order as $cable)
+                        <div  class="list-group-item list-group-item-action d-flex gap-3 py-1" aria-current="true">
+                            <div class="d-flex gap-2 w-100 justify-content-between">
+                                <div>
+                                    <h6 class="mb-0">{{$cable->title}} </h6>
+                                </div>
+                                <small class="opacity-50 text-nowrap cable-price">{{$cable->quantity}}м х {{$cable->price}}₽</small>
+                                <small class="opacity-50 text-nowrap cable-price">{{($cable->quantity*$cable->price)}}₽</small>
+                                @php  $summ += $cable->price*$cable->quantity;  @endphp
+                            </div>
+                        </div>
+                    @endforeach
+                    <strong class="summ mt-3 text-end">Сумма: {{$summ}}₽</strong>
+
+                    @if ($orderdata->status==0 || $orderdata->status==1)
+
+                    <x-controls.modal label="Отменить заказ" >
+                        <form action="{{route('cancelOrder')}}" method="post">
+                            @csrf
+                            @method('PUT')
+                            <h4>Действительно отменить заказ?</h4>
+                            <p>Заказ будет удален из личного кабинета</p>
+                            <div class="form-floating mb-3 mt-4">
+                                <input type="hidden" name="order_id" readonly value="{{$orderdata->order_id}}">
+                                <textarea type="text" class="form-control rounded-3" name="cancel_comment"> </textarea>
+                                <label class="px-4" for="cancel_comment">Оставьте комментарий</label>
+                            </div>
+                            <button type="submit" class="btn btn-danger">Да</button>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                        </form>
+                    </x-controls.modal>
+
+                    @endif
+                </div>
+            </x-controls.accordion>
+
                 @php $i++; @endphp
                 @endforeach
+        </div>
 
 
 
@@ -163,9 +139,6 @@
                 <div class="col-lg-4 col-md-4 col-sm-6 col-xs-6 mt-4">
 
                 </div>
-
-
-
             </div>
 
             <form method="post" action="{{route('saveUserData')}}" class="mt-4">

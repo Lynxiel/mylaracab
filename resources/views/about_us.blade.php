@@ -1,7 +1,12 @@
-@extends('layouts.layout')
-@section('content')
+<x-layouts.header title="КабельОпт71" />
+<x-layouts.nav :cart="$cart" />
+<body>
+    <div class="container mt-4">
 
-@endsection('content')
+    </div>
+</body>
+<x-layouts.footer />
+
 
 
 
