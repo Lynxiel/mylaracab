@@ -16,9 +16,10 @@ class InvoiceController extends Controller
 
         $order = Order::findOrFail($order_id);
 
+        if($order->status==Order::CREATED) abort(404);
+
         $user_id = auth()->user()->id;
-        if (!Order::isUserOrder($order_id,$user_id)){
-            abort(404); }
+        if (!Order::isUserOrder($order_id,$user_id)){ abort(404); }
 
         $pdf = App::make('dompdf.wrapper');
         $order_data = App\Models\Order::getOrderContents($order_id);

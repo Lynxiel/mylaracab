@@ -20,16 +20,8 @@ class Order extends Model
     protected $fillable = ['comment','status', 'user_id'];
 
 
-
-    public static function GetOrder(int $order_id){
-        return DB::table('orders')
-            ->select('*')
-            ->where('order_id' ,'=',$order_id)
-            ->get();
-    }
-
     public static function getOrderContents(int $order_id){
-        return $result =  DB::table('cables_order')
+        return DB::table('cables_order')
             ->select('*')
             ->join('cables', 'cables.cable_id', '=', 'cables_order.cable_id')
             ->where('cables_order.order_id' ,'=',$order_id)
@@ -37,16 +29,9 @@ class Order extends Model
 
     }
 
-    public static function GetOrdersWithContents(int $order_id){
-        return DB::table('orders')
-            ->select('*')
-            ->whereIN('order_id' ,'=',$order_id)
-            ->get();
-    }
 
     public static function GetUserOrders(?int $user_id=null, ?array $status=[self::CREATED, self::CONFIRMED, self::PAID, self::COMPLETED]){
-        $result =  DB::table('orders')
-            ->select('orders.order_id','comment' , 'cables.title as title', 'orders.created_at', 'cables_order.quantity',
+        $result =self::select('orders.order_id','comment' , 'cables.title as title', 'orders.created_at', 'cables_order.quantity',
                 'cables_order.price', 'status', 'orders.address as delivery_address', 'pay_link',
                 'email','phone', 'contact_name','users.address as company_address','company_name')
             ->join('cables_order', 'orders.order_id', '=', 'cables_order.order_id')
@@ -70,7 +55,6 @@ class Order extends Model
                 'price' => $cable->price,
                 'quantity' => session()->get('cable_id') ? (session()->get('cable_id')[$cable->cable_id]*$cable->footage) : $cable->footage,
                 'cable_id' => $cable->cable_id
-
             ]);
         }
     }
@@ -79,17 +63,16 @@ class Order extends Model
     public function deleteOrder(int $order_id){
         // Hard delete
         DB::table('cables_order')->where('order_id', '=', $order_id)->delete();
-        DB::table('orders')->where('order_id', '=', $order_id)->delete();
+        self::where('order_id', '=', $order_id)->delete();
     }
 
     public static function  cancelOrder(int $order_id){
 
-        DB::table('orders')->where('order_id', '=', $order_id)->update(['status'=>self::CANCELED]);
+        self::where('order_id', '=', $order_id)->update(['status'=>self::CANCELED]);
     }
 
     public  static function isUserOrder(int $order_id, int $user_id):bool{
-        $result =  DB::table('orders')
-            ->select('*')
+        $result =  self::select('*')
             ->where('user_id' ,'=',$user_id)
             ->where('order_id' ,'=',$order_id)
             ->get();
