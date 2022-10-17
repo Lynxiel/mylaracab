@@ -63,11 +63,12 @@ class Order extends Model
 
     public static function AddCablesToOrder(Collection $cables, int $order_id){
         foreach ($cables as $cable) {
+
             if (session()->get('cable_id')[$cable->cable_id]==0) continue;
             DB::table('cables_order')->insert([
                 'order_id' => $order_id,
                 'price' => $cable->price,
-                'quantity' => session()->get('cable_id') ? session()->get('cable_id')[$cable->cable_id] : 100,
+                'quantity' => session()->get('cable_id') ? (session()->get('cable_id')[$cable->cable_id]*$cable->footage) : $cable->footage,
                 'cable_id' => $cable->cable_id
 
             ]);
