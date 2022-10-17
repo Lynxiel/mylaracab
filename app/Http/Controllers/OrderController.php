@@ -30,7 +30,7 @@ class OrderController extends Controller
         if ($user_id) MailController::orderSend($request,$order);
         MailController::orderReceived($order,$user);
         session()->remove('cable_id');
-        session()->flash('success', 'OrderSend');
+        session()->flash('OrderSend');
         if ($user_id) return redirect()->intended('/account');
             return redirect()->intended('/');
     }
@@ -52,7 +52,7 @@ class OrderController extends Controller
 
         // Send notification to admin
         MailController::orderCanceled($order,$user);
-        session()->flash('success', 'OrderCanceled');
+        session()->flash('OrderCanceled');
         return Redirect::back();
     }
 

@@ -61,9 +61,6 @@
     </div>
 </div>
 
-@section('scripts')
-    @parent
     <script>
         $('input[name=phone]').mask("+7(999)999-99-99");
     </script>
-@endsection

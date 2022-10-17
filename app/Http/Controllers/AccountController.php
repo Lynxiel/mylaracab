@@ -85,7 +85,7 @@ class AccountController extends Controller
         );
 
         MailController::passwordChanged($user, $random_password);
-        session()->flash('success', 'PasswordChanged');
+        session()->flash( 'PasswordChanged');
         session()->flash('emailrecover', $data['email']);
         return Redirect::back();
     }
