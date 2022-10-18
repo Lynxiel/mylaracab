@@ -1,5 +1,9 @@
-@extends('layouts.layout')
-@section('content')
+<x-layouts.header title="Личный кабинет"  />
+<body>
+    <x-layouts.nav :cart="$cart" />
+
+<div class="content-container">
+    @include('partials.flashmessages')
 
     <div class="container" id="account">
         <h2 class="mt-4 text-center">Личный кабинет</h2>
@@ -13,7 +17,7 @@
                                 $orderdata = $order[0];
                         @endphp
 
-            <x-controls.accordion collapsed="{{$i==1?false:true}}" >
+            <x-controls.accordion  collapsed="{{$i==1?false:true}}" >
                 <x-slot:header>
                     <h6 class="group-title">№{{$orderdata->order_id}} от {{Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $orderdata->created_at)->format('d.m.y')}} -
                         @switch($orderdata->status)
@@ -227,9 +231,14 @@
     </form>
     </div>
 
+    </div>
+</div>
+    <x-layouts.footer />
+</body>
 
 
-@endsection('content')
+
+
 
 
 
