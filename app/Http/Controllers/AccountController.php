@@ -31,7 +31,7 @@ class AccountController extends Controller
 
        //dd($orders);
 
-        return view('account.index',compact('cart', 'orders', 'user'));
+        return view('account',compact('cart', 'orders', 'user'));
     }
 
     public function deleteAccount(){
