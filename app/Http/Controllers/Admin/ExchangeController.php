@@ -42,13 +42,53 @@ class ExchangeController extends Controller
 
         // Arsenal
         $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load(public_path('/exchange/price.xlsx'));
-        $sheet = $spreadsheet->getActiveSheet();
-        $val = $sheet->getCellCollection();
-        $val = $sheet->getCell('A5');
-        dd($val);
+        $rowstart = 5; $rowend=132;
+        $dataArray1 = $spreadsheet->getActiveSheet()
+            ->rangeToArray(
+                "A$rowstart:C$rowend",     // The worksheet range that we want to retrieve
+                NULL,        // Value that should be returned for empty cells
+                TRUE,        // Should formulas be calculated (the equivalent of getCalculatedValue() for each cell)
+                TRUE,        // Should values be formatted (the equivalent of getFormattedValue() for each cell)
+                TRUE         // Should the array be indexed by cell row and cell column
+            );
 
-        $writer = new Xlsx($spreadsheet);
-        $writer->save('hello world.xlsx');
+        $dataArray2 = $spreadsheet->getActiveSheet()
+            ->rangeToArray(
+                "F$rowstart:G$rowend",     // The worksheet range that we want to retrieve
+                NULL,        // Value that should be returned for empty cells
+                TRUE,        // Should formulas be calculated (the equivalent of getCalculatedValue() for each cell)
+                TRUE,        // Should values be formatted (the equivalent of getFormattedValue() for each cell)
+                TRUE         // Should the array be indexed by cell row and cell column
+            );
+
+
+        $dataArray3= $spreadsheet->getActiveSheet()
+            ->rangeToArray(
+                "K$rowstart:M$rowend",     // The worksheet range that we want to retrieve
+                NULL,        // Value that should be returned for empty cells
+                TRUE,        // Should formulas be calculated (the equivalent of getCalculatedValue() for each cell)
+                TRUE,        // Should values be formatted (the equivalent of getFormattedValue() for each cell)
+                TRUE         // Should the array be indexed by cell row and cell column
+            );
+
+        $dataArray4 = $spreadsheet->getActiveSheet()
+            ->rangeToArray(
+                "P$rowstart:R$rowend",     // The worksheet range that we want to retrieve
+                NULL,        // Value that should be returned for empty cells
+                TRUE,        // Should formulas be calculated (the equivalent of getCalculatedValue() for each cell)
+                TRUE,        // Should values be formatted (the equivalent of getFormattedValue() for each cell)
+                TRUE         // Should the array be indexed by cell row and cell column
+            );
+
+
+        $dataArray = array_merge($dataArray1,$dataArray2, $dataArray3,$dataArray4 );
+
+        $dataArray = array_unique($dataArray, SORT_REGULAR);
+        dd($dataArray);
+
+
+
+
     }
 
 
