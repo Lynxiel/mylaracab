@@ -11,4 +11,8 @@ class CableGroup extends Model
 
     protected $primaryKey = 'cable_group_id';
 
+    public function cables(){
+        return $this->hasMany(Cable::class, 'cable_group_id');
+    }
+
 }

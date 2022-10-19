@@ -20,23 +20,26 @@
             </div>
         @endif
         <div class="container">
-            <div class="list-group">
-                @foreach($cables as $key=>$cable)
-                    @if (!isset($prevCableGroup) || $prevCableGroup!=$cable->group_id)
-                        <div class="row group-container">
-                            <div class="col-md-4">
-                                <h3 class="group-title">{{$cable->group_title}}</h3>
-                                <p class="group-description">{{$cable->description}}</p>
-                                <img class="group-image"  src="{{ $cable->image?:asset('images/default.jpg') }}">
-                            </div>
-                            <div class="col-md-8" id="cables-container">
-                                @endif
+
+                @foreach($groups as $group)
+                <div class="row">
+                    <div class="col-md-4 col-lg-4 col-sm-4 col-12" >
+                        <h3 class="group-title">{{$group->title}}</h3>
+                        <p class="group-description">{{$group->description}}</p>
+                        <img class="group-image"  src="{{ $group->image?:asset('images/default.jpg') }}">
+                    </div>
+
+                    <div class="col-md-8 col-lg-8 col-sm-8 col-12" id="cables-container">
+                    @foreach($group->cables as $cable)
+
                                 <div  class="row mt-1 mb-1 pb-1 " aria-current="true">
                                     <div class=" col-md-5 col-lg-6 col-sm-5 col-5">
-                                        <strong class="mb-0 cable-title">{{$cable->cable_title}} </strong>
+                                        <strong class="mb-0 cable-title">{{$cable->title}} </strong>
                                         <p class="mb-0 opacity-75 text-success cable-instock">В наличии: {{$cable->instock}}м</p>
                                     </div>
-                                    <div class="col-md-2 col-lg-2 col-sm-2 col-2 d-none d-sm-block cable-footage"><p class="pt-2 mb-0 ">{{$cable->footage}}м</p></div>
+                                    <div class="col-md-2 col-lg-2 col-sm-2 col-2 d-none d-sm-block cable-footage">
+                                        <p class="pt-2 mb-0 ">{{$cable->footage}}м</p>
+                                    </div>
                                     <div class="col-md-3 col-lg-2  col-sm-3 col-4 badge bg-secondary text-wrap cable-price">
                                         <div class="mt-1">{{$cable->price}}₽/м</div>
                                         <div class="mt-1">{{$cable->price*$cable->footage}}₽/бухта</div>
@@ -64,20 +67,18 @@
                                                 </button>
                                         </form>
                                     </div>
-                                    <hr class="m-0 p-0 mt-2">
                                 </div>
-                                @if (!isset($cables[$key+1]->group_id) || $cables[$key+1]->group_id!=$cable->group_id)
-                            </div>
-                        </div>
-                        <div class="clearfix"></div>
-                    @endif
+                                    <hr class="m-0 p-0 mt-2">
 
-                    <?php $prevCableGroup =  $cable->group_id ?>
-
+                    @endforeach
+                    </div>
+                </div>
+                    <hr class="mb-1">
                 @endforeach
+
+
             </div>
         </div>
-    </div>
 
 
 <x-layouts.footer />

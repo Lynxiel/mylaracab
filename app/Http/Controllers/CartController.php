@@ -17,15 +17,12 @@ class CartController extends Controller
      */
     public static function init(Request $request)
     {
-        $cart=array();
+        $cables=[];
         $ids = self::getCartList($request);
         if ($ids)
-            return  Cable::getCablesList(array_keys($ids));
+            $cables =  Cable::whereIN('cable_id', array_keys($ids))->get();
+         return $cables;
     }
-
-
-
-
 
 
     /**
@@ -37,7 +34,7 @@ class CartController extends Controller
     public function  addToCart(Request $request){
 
         $cart_list = array();
-        $cable_id = $request->input("cable_id");
+        $cable_id = (int)$request->input("cable_id");
 
         if ($cable_id){
             $current_list = $this->getCartList($request);
@@ -53,7 +50,6 @@ class CartController extends Controller
 
     protected static function  getCartList(Request $request){
         $cart_list = $request->session()->get('cable_id');
-        //dd($cart_list);
         return $cart_list;
     }
 
@@ -79,7 +75,7 @@ class CartController extends Controller
 
     public function removeFromCart(Request $request){
         $cart_list = array();
-        $cable_id = $request->input("cable_id");
+        $cable_id = (int)$request->input("cable_id");
 
         if ($cable_id){
             $cart_list = $this->getCartList($request);
