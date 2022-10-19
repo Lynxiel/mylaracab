@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Mail\AccountRegister;
+use App\Mail\ExchangeError;
 use App\Mail\OrderCreated;
 use App\Mail\OrderConfirmed;
 use App\Mail\OrderPayed;
@@ -48,5 +49,9 @@ class MailController extends Controller
 
     public static function orderReceived(Order $order, ?User  $user){
         Mail::to("postmaster@kabelopt71.ru")->send(new OrderReceived($order, $user));
+    }
+
+    public static function ExchangeError($msg){
+        Mail::to("postmaster@kabelopt71.ru")->send(new ExchangeError($msg));
     }
 }
