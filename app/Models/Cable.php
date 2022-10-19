@@ -15,6 +15,12 @@ class Cable extends Model
         return $this->belongsTo(CableGroup::class,'cable_group_id');
     }
 
+    public function orders(){
+        return $this->hasMany(CableOrder::class,'order_id');
+    }
+
+
+
     public function __construct(array $attributes = [])
     {
         parent::__construct($attributes);

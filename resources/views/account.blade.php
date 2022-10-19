@@ -8,45 +8,58 @@
     <div class="container" id="account">
         <h2 class="mt-4 text-center">Личный кабинет</h2>
         <h4>История заказов</h4>
-        <div class="list-group w-auto">
-            <div class="accordion" >
-            @php  $summ = 0; $i=1; @endphp
-            @if (!empty($orders))
-                @foreach($orders as $key=>$order)
-                        @php  $summ = 0;
-                                $orderdata = $order[0];
-                        @endphp
+        <div class="d-flex justify-content-end">
+            {{ $orders->links() }}
+        </div>
 
+            <div class="accordion" >
+
+            @php  $summ = 0; $i=1; @endphp
+
+            @if (!empty($orders))
+                @foreach($orders as $order)
+
+                        @php  $summ = 0;  @endphp
             <x-controls.accordion  collapsed="{{$i==1?false:true}}" >
                 <x-slot:header>
-                    <h6 class="group-title">№{{$orderdata->order_id}} от {{Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $orderdata->created_at)->format('d.m.y')}} -
-                        @switch($orderdata->status)
+                    <h6 class="group-title">№{{$order->order_id}} от {{$order->created_at->format('d.m.y')}} -
+                        @switch($order->status)
                             @case(0)
-                            Создан
+                            <span class="text-bg-danger p-1">Создан</span>
                             @break
 
                             @case(1)
-                            Подтвержден, ожидает оплаты
+                            <span class="text-bg-warning p-1">Подтвержден, ожидает оплаты</span>
                             @break
 
                             @case(2)
-                            Оплачен
+                            <span class="text-bg-primary p-1">Оплачен</span>
                             @break
 
                             @case(3)
-                            Завершен
+                            <span class="text-bg-success p-1">Завершен</span>
+                            @break
+
+                            @case(4)
+                            <span class="text-bg-dark p-1">Отменен</span>
                             @break
 
                         @endswitch </h6>
                 </x-slot:header>
-                <x-forms.order :info="$orderdata" :contents="$order" />
+
+                <x-forms.order :order="$order" />
             </x-controls.accordion>
 
                 @php $i++; @endphp
                 @endforeach
+
+
+        </div>
+        <div class="d-flex justify-content-end">
+            {{ $orders->links() }}
         </div>
 
-            @else
+    @else
                 <p>Заказов пока нет</p>
             @endif
 
@@ -59,7 +72,6 @@
 
                 </div>
             </div>
-
             <form method="post" action="{{route('saveUserData')}}" class="mt-4">
                 @csrf
                 <div class="row">
@@ -144,8 +156,6 @@
 
 
     </form>
-    </div>
-
     </div>
 </div>
     <x-layouts.footer />

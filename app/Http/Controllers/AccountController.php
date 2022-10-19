@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Cable;
+use App\Models\CableOrder;
 use App\Models\Order;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -22,16 +22,17 @@ class AccountController extends Controller
 
     public function index(AccountRequest $request)
     {
-        //User
-        $user = User::GetUser(auth()->user()->id);
+        $user = User::firstOrFail()->where('id','=',auth()->user()->id)->first();
+
         //Cart
         $cart=CartController::init($request);
         //Orders
-        $orders = Order::GetUserOrders(auth()->user()->id);
+        $orders = Order::with('cables.cable')
+            ->orderByDesc('created_at')
+            ->where('user_id','=',auth()->user()->id)
+            ->paginate(10);
 
-       //dd($orders);
-
-        return view('account',compact('cart', 'orders', 'user'));
+        return view('account',compact('cart',  'user', 'orders'));
     }
 
     public function deleteAccount(){
@@ -47,14 +48,9 @@ class AccountController extends Controller
     }
 
     public function saveUserData(SaveUserDataRequest $request){
-        $data = $request->validated();
+        $data = $request->only(['contact_name','company_name','address','postcode']);
         User::where('id', auth()->user()->id)
-            ->update([
-            'contact_name' => $data['contact_name'],
-            'company_name' => $data['company_name'],
-            'address' => $data['address'],
-            'postcode' => $data['postcode'],
-        ]);
+            ->update($data);
         return Redirect::back();
     }
 

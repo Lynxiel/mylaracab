@@ -2,25 +2,23 @@
 
 namespace App\View\Components\Forms;
 
-use App\Models\Order as ModelOrder;
 use Illuminate\Database\Eloquent\Collection;
+use App\Models\Order as modelOrder;
 use Illuminate\View\Component;
 
 class Order extends Component
 {
-    public ModelOrder $info ;
-    public Collection $contents;
+    public modelOrder $order;
 
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct(ModelOrder $info, Collection $contents)
+    public function __construct(modelOrder $order)
     {
 
-        $this->info = $info;
-        $this->contents = $contents;
+        $this->order = $order;
     }
 
     /**

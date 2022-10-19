@@ -71,7 +71,7 @@
     </tr>
     </tbody>
 </table>
-<h1>Счет на оплату № {{$order_id}} от {{$order->created_at->format('d.m.y')}} </h1>
+<h1>Счет на оплату № {{$order->order_id}} от {{$order->created_at->format('d.m.y')}} </h1>
 
 <table class="contract">
     <tbody>
@@ -102,7 +102,7 @@
     <tbody>';
 
     @php $total = $nds = 0; $i=0;@endphp
-    @foreach ($order_data as $key => $cable)
+    @foreach ($order->cables as $key => $cable)
     @php
     $total += $cable->price * $cable->quantity;
     @endphp
@@ -110,7 +110,7 @@
 
     <tr>
         <td align="center">{{++$i}}</td>
-        <td align="left">{{$cable->title}}</td>
+        <td align="left">{{$cable->cable->title}}</td>
         <td align="right">{{$cable->quantity}}</td>
         <td align="left">м</td>
         <td align="right">{{sprintf("%.2f", $cable->price)}}</td>
@@ -135,7 +135,7 @@
 </table>
 
 <div class="total">
-    <p>Всего наименований {{count($order_data)}}, на сумму {{sprintf("%.2f",$total)}}</p>
+    <p>Всего наименований {{count($order->cables)}}, на сумму {{sprintf("%.2f",$total)}}</p>
 </div>
 
 <div class="sign">

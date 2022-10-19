@@ -19,6 +19,16 @@ class Order extends Model
 
     protected $fillable = ['comment','status', 'user_id'];
 
+    public function user(){
+        return $this->hasOne(User::class, 'id');
+    }
+
+    public function cables(){
+        return $this->hasMany(CableOrder::class,'order_id');
+    }
+
+
+
 
     public static function getOrderContents(int $order_id){
         return DB::table('cables_order')
