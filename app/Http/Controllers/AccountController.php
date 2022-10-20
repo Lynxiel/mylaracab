@@ -22,14 +22,14 @@ class AccountController extends Controller
 
     public function index(AccountRequest $request)
     {
-        $user = User::firstOrFail()->where('id','=',auth()->user()->id)->first();
+        $user = auth()->user();
 
         //Cart
         $cart=CartController::init($request);
         //Orders
         $orders = Order::with('cables.cable')
             ->orderByDesc('created_at')
-            ->where('user_id','=',auth()->user()->id)
+            ->where('user_id','=',$user->id)
             ->paginate(10);
 
         return view('account',compact('cart',  'user', 'orders'));
@@ -65,7 +65,6 @@ class AccountController extends Controller
                 ->withInput();
         }
 
-        $data = $validator->validated();
         $user = User::where('email', '=' , $data['email'])->first();
         if (!$user){
             session()->flash('recoveryFailed');
@@ -76,9 +75,7 @@ class AccountController extends Controller
         }
 
         $random_password = strtolower(Str::random(8));
-        $user->update(
-            ['password' => Hash::make($random_password)]
-        );
+        $user->update( ['password' => Hash::make($random_password)]  );
 
         MailController::passwordChanged($user, $random_password);
         session()->flash( 'PasswordChanged');

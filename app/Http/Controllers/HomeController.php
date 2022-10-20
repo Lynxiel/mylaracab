@@ -14,8 +14,6 @@ class HomeController extends Controller
         $groups = CableGroup::with('cables')->get();
         //Cart
         $cart=CartController::init($request);
-
-
         return view('home',compact('groups','cart'));
     }
 
@@ -23,8 +21,6 @@ class HomeController extends Controller
     {
         //Cart
         $cart=CartController::init($request);
-
-
         return view('delivery',compact( 'cart'));
     }
 

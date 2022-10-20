@@ -24,21 +24,8 @@ class Order extends Model
     }
 
     public function cables(){
-        return $this->hasMany(CableOrder::class,'order_id');
+        return $this->hasMany(CableOrder::class, 'order_id');
     }
-
-
-
-
-    public static function getOrderContents(int $order_id){
-        return DB::table('cables_order')
-            ->select('*')
-            ->join('cables', 'cables.cable_id', '=', 'cables_order.cable_id')
-            ->where('cables_order.order_id' ,'=',$order_id)
-            ->get();
-
-    }
-
 
     public static function GetUserOrders(?int $user_id=null, ?array $status=[self::CREATED, self::CONFIRMED, self::PAID, self::COMPLETED]){
         $result =self::select('orders.order_id','comment' , 'cables.title as title', 'orders.created_at', 'cables_order.quantity',
@@ -56,20 +43,6 @@ class Order extends Model
 
     }
 
-    public static function AddCablesToOrder(Collection $cables, int $order_id){
-        foreach ($cables as $cable) {
-
-            if (session()->get('cable_id')[$cable->cable_id]==0) continue;
-            DB::table('cables_order')->insert([
-                'order_id' => $order_id,
-                'price' => $cable->price,
-                'quantity' => session()->get('cable_id') ? (session()->get('cable_id')[$cable->cable_id]*$cable->footage) : $cable->footage,
-                'cable_id' => $cable->cable_id
-            ]);
-        }
-    }
-
-
     public function deleteOrder(int $order_id){
         // Hard delete
         DB::table('cables_order')->where('order_id', '=', $order_id)->delete();
@@ -81,14 +54,7 @@ class Order extends Model
         self::where('order_id', '=', $order_id)->update(['status'=>self::CANCELED]);
     }
 
-    public  static function isUserOrder(int $order_id, int $user_id):bool{
-        $result =  self::select('*')
-            ->where('user_id' ,'=',$user_id)
-            ->where('order_id' ,'=',$order_id)
-            ->get();
-        if (isset($result[0])) return true;
-        else return false;
-    }
+
 
 
 }

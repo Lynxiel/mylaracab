@@ -5,19 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+
 class CableOrder extends Model
 {
     use HasFactory;
 
     protected $table = 'cables_order';
 
-    function cables(){
-        return $this->hasMany('orders','order_id');
-    }
 
-    function orders(){
-        return $this->hasMany('cables', 'cable_id');
-    }
+    protected $fillable = ['cable_id','order_id', 'price', 'quantity'];
+
 
     function cable(){
         return $this->belongsTo(Cable::class, 'cable_id');

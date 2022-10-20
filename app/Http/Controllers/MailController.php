@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Middleware\Authenticate;
 use App\Mail\AccountRegister;
 use App\Mail\ExchangeError;
 use App\Mail\OrderCreated;
@@ -11,6 +12,7 @@ use App\Mail\OrderFinished;
 use App\Mail\OrderCanceled;
 use App\Mail\OrderReceived;
 use App\Mail\PasswordChanged;
+use Illuminate\Auth\Authenticatable;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use App\Models\Order;
@@ -47,7 +49,7 @@ class MailController extends Controller
         Mail::to("postmaster@kabelopt71.ru")->send(new OrderCanceled($order, $user));
     }
 
-    public static function orderReceived(Order $order, ?User  $user){
+    public static function orderReceived(Order $order,   $user){
         Mail::to("postmaster@kabelopt71.ru")->send(new OrderReceived($order, $user));
     }
 

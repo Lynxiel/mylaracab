@@ -19,7 +19,6 @@ class LoginController extends Controller
     {
 
         $credentials = $request->validated();
-//        dd($credentials);
         if(!Auth::validate($credentials)){
             session()->flash('loginFailed');
             return back()->withErrors([

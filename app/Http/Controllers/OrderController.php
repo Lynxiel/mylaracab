@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CableOrder;
 use App\Models\Order;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -12,27 +13,33 @@ class OrderController extends Controller
 {
     public function createOrder(Request $request){
 
-        $phone = $request->only('order_contact');
-        $user_id = (isset(auth()->user()->id))?auth()->user()->id:null;
-        $user = User::find($user_id);
-
-        $order= Order::create(
-            [
-                'user_id' => $user_id,
-                'status' => Order::CREATED,
-                'comment' => isset($phone['order_contact'])?$phone['order_contact']:'',
-            ]
-        );
+        $validated = $request->validate([
+            'order_contact' => 'regex:/[0-9]+/',
+        ]);
 
         $cables = CartController::init($request);
-        Order::AddCablesToOrder($cables , $order->order_id);
+        if (!$cables) Redirect::back();
 
-        if ($user_id) MailController::orderSend($request,$order);
+        $user = auth()->user();
+        $order= Order::create([
+                'user_id' => $user?$user->id:$user,
+                'status' => Order::CREATED,
+                'comment' => isset($validated['order_contact'])?$validated['order_contact']:'',
+            ]);
+
+        $cables = CartController::prepareForSave($cables, $order->order_id);
+        $order->cables()->saveMany(
+            $cables
+        );
+
         MailController::orderReceived($order,$user);
         session()->remove('cable_id');
         session()->flash('OrderSend');
-        if ($user_id) return redirect()->intended('/account');
-            return redirect()->intended('/');
+        if ($user) {
+            MailController::orderSend($request,$order);
+            return redirect()->intended('/account');
+        }
+        return redirect()->back();
     }
 
 

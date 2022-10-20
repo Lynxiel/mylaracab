@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Mail\OrderConfirm;
 use App\Models\Cable;
+use App\Models\CableOrder;
 use http\Env\Response;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 
 class CartController extends Controller
@@ -23,6 +25,17 @@ class CartController extends Controller
             $cables =  Cable::whereIN('cable_id', array_keys($ids))->get();
          return $cables;
     }
+
+    public static function prepareForSave($cables, $order_id){
+
+        foreach ( $cables as $key=>$cable)    {
+            $cableOrder[] = (new CableOrder())->fill($cable->toArray());
+            $cableOrder[$key]['quantity'] =  session()->get('cable_id') ? (session()->get('cable_id')[$cable->cable_id]*$cable->footage) : $cable->footage;
+            $cableOrder[$key]['order_id'] =  $order_id;
+        }
+
+        return $cableOrder;
+}
 
 
     /**
@@ -74,9 +87,7 @@ class CartController extends Controller
     }
 
     public function removeFromCart(Request $request){
-        $cart_list = array();
         $cable_id = (int)$request->input("cable_id");
-
         if ($cable_id){
             $cart_list = $this->getCartList($request);
             unset($cart_list[$cable_id]);
@@ -87,6 +98,7 @@ class CartController extends Controller
             return redirect()->intended('/');
         }
     }
+
 
 
 }

@@ -3,6 +3,7 @@
 namespace App\Mail;
 
 //use http\Env\Request;
+use App\Http\Middleware\Authenticate;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Bus\Queueable;
@@ -24,7 +25,7 @@ class OrderReceived extends Mailable
      *
      * @return void
      */
-    public function __construct(Order $order, ?User $user)
+    public function __construct(Order $order,  $user)
     {
        $this->order = $order;
        $this->user = $user;
