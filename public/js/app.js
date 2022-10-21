@@ -51,7 +51,7 @@ window.onload = function() {
         });
     }
 
-    $('.btn-close, .modal-btn').bind('click',function (){
+    $(document).on('click', '.btn-close, .modal-btn',function (){
         $('div.alert-danger').remove();
     })
 
@@ -60,18 +60,79 @@ window.onload = function() {
         return new bootstrap.Tooltip(tooltipTriggerEl)
     })
 
+    $('#cart-replace').on('click','.btn-remove-cart',function(e){
+        e.preventDefault();
+        var context = $(this);
+        $.ajax({
+            headers: { 'X-CSRF-TOKEN': context.closest('form').find('input[name=_token]').val()  },
+            type: "POST",
+            url: 'removeFromCart',
+            data: {cable_id : context.closest('form').find('input[name=cable_id]').val()},
+            success: function (data) {
+                cartRefreshCallback(data);
+            },
+            error: function (data) {
+                console.log(data);
+            }
+        });
 
-    $(document).on('click','.plus',function(){
-        input = $(this).closest('.qty').find('.count');
-        input.attr('value',parseInt(input.val()) + 1 );
-        this.closest('form').submit()
+
     });
-    $(document).on('click','.minus',function(){
+
+
+    $('#cart-replace').on('click','.plus',function(){
+        context = $(this);
+        input = context.closest('.qty').find('.count');
+        input.attr('value',parseInt(input.val()) + 1 );
+
+        updateQuantityAjax(context );
+    });
+
+
+
+
+    $('#cart-replace').on('click','.minus',function(){
+
+        context = $(this);
         input = $(this).closest('.qty').find('.count');
         input.attr('value',parseInt(input.val()) - 1 );
         if (input.val() == 0) {
             input.attr('value',1);
-        }else  this.closest('form').submit()
+        }
+        else {
+           updateQuantityAjax( context );
+        }
+
+
     });
+
+    function updateQuantityAjax( context ){
+        var type = "POST";
+        var ajaxurl = 'updateQuantity';
+        $.ajax({
+            headers: { 'X-CSRF-TOKEN': context.closest('form').find('input[name=_token]').val()  },
+            type: type,
+            url: ajaxurl,
+            data: {cable_id : context.closest('form').find('input[name=cable_id]').val(),
+                quantity: context.closest('.qty').find('.count').val()},
+            success: function (data) {
+                cartRefreshCallback(data)
+            },
+            error: function (data) {
+                console.log(data);
+            }
+        });
+    }
+
+    function cartRefreshCallback(data){
+        $('#cart-replace').empty().append(data);
+        $('#cart-replace').find('#CartModal').addClass('d-block show');
+        // Temp, not cool
+        // bootstrap not working on recieved ajax dom
+        $("#CartModal .btn-close, .modal-backdrop").click(function (){
+            $('#CartModal , .modal-backdrop').removeClass('d-block show');
+        })
+    }
+
 }
 

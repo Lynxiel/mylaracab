@@ -117,7 +117,7 @@
                                 @endif
                             </div>
                     @else
-                        В корзине пока пусто
+                       Ничего нет!
                         <div class="modal-footer"></div>
                         @endforelse
 

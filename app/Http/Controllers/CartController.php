@@ -77,12 +77,12 @@ class CartController extends Controller
 
         $cart_list = $request->session()->get('cable_id');
         $cart_list[$cable_id] = $quantity;
-        //dd($cart_list);
+
         $request->session()->remove('cable_id');
         $request->session()->put('cable_id',$cart_list);
 
-        session()->flash('success', 'Успешно изменено количество!');
-        return redirect()->intended('/');
+        $cart  = CartController::init($request);
+        return view('partials.cart' , compact('cart'));
 
     }
 
@@ -93,9 +93,9 @@ class CartController extends Controller
             unset($cart_list[$cable_id]);
             $request->session()->remove('cable_id');
             $request->session()->put('cable_id',$cart_list);
-            //dd($request->session()->get('cable_id'));
-            session()->flash('success', 'Успешно удалено из корзины!');
-            return redirect()->intended('/');
+
+            $cart  = CartController::init($request);
+            return view('partials.cart' , compact('cart'));
         }
     }
 
