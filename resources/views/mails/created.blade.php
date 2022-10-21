@@ -33,18 +33,17 @@
                                                     Ваш заказ № {{$order->order_id}} от {{Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $order->created_at)->format('d.m.y')}} :
                                                 </strong>
                                                 <br>
-                                                @if (!empty($cart))
-                                                    <?php $sum=0; $n=1;?>
-                                                    @foreach ($cart as $item)
 
-                                                        <?php $sum += $item->price*(session()->get('cable_id')?session()->get('cable_id')[$item->cable_id]:100); ?>
+                                                    @foreach ($order->cables as $item)
+
+                                                        @php $sum += $item->quantity*$item->price @endphp
                                                         <div class="list-group w-auto">
                                                             <div class="row ">
                                                                 <div class="col-md-12">
                                                                     <div  class="list-group-item list-group-item-action d-flex " aria-current="true">
                                                                         <div class="d-flex gap-2 w-100 justify-content-between">
                                                                             <p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:lato, 'helvetica neue', helvetica, arial, sans-serif;line-height:27px;color:#666666;font-size:12px">
-                                                                                {{$n}}. {{$item->title}}
+                                                                                {{$n}}. {{$item->cable->title}}
                                                                             {{$item->price}}₽ х  {{session()->get('cable_id')?session()->get('cable_id')[$item->cable_id]:100}}м
                                                                             {{$item->price*(session()->get('cable_id')?session()->get('cable_id')[$item->cable_id]:100)}}₽
                                                                             </p>

@@ -20,7 +20,7 @@ class Order extends Model
     protected $fillable = ['comment','status', 'user_id'];
 
     public function user(){
-        return $this->hasOne(User::class, 'id');
+        return $this->BelongsTo(User::class);
     }
 
     public function cables(){

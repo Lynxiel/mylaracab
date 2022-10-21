@@ -33,6 +33,6 @@ class OrderCreated extends Mailable
     public function build(Request $request)
     {
         $cart = CartController::init($request);
-        return $this->subject('Заказ Kabelopt71.ru')->view('mails.created')->with('cart',$cart)->with('order', $this->order);
+        return $this->subject('Заказ Kabelopt71.ru')->view('mails.created')->with('order', $this->order);
     }
 }

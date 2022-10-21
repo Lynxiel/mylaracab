@@ -10,6 +10,7 @@ class CableGroup extends Model
     use HasFactory;
 
     protected $primaryKey = 'cable_group_id';
+    protected $fillable = ['title', 'description', 'image'];
 
     public function cables(){
         return $this->hasMany(Cable::class, 'cable_group_id');

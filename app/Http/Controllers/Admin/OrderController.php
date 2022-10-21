@@ -11,10 +11,13 @@ use App\Models\User;
 
 class OrderController extends Controller
 {
-    //
-    public function index(?int $status=null){
-        if ($status===null)  $orders= Order::GetUserOrders();
-        else  $orders= Order::GetUserOrders(null, [$status] );
+    public function index(int $status=null){
+
+        $orders = Order::with('user')->with('cables.cable')
+            ->orderByDesc('created_at');
+
+        if ($status!==null){ $orders->where('status' , '=', $status);   }
+        $orders = $orders->paginate(20);
         return view('admin.index', compact('orders'));
     }
 
@@ -26,6 +29,8 @@ class OrderController extends Controller
     }
 
     public function updateOrder(Request $request){
+
+        // TODO: Validation
         $data = $request->all();
         $order = Order::find($data['order_id']);
         $user = User::find($order->user_id);

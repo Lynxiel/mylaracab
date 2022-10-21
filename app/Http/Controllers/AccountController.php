@@ -30,6 +30,7 @@ class AccountController extends Controller
         $orders = Order::with('cables.cable')
             ->orderByDesc('created_at')
             ->where('user_id','=',$user->id)
+            ->where('status', '<>' , Order::CANCELED)
             ->paginate(10);
 
         return view('account',compact('cart',  'user', 'orders'));
