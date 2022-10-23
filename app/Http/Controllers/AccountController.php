@@ -2,16 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\CableOrder;
 use App\Models\Order;
 use App\Models\User;
-use Illuminate\Http\Request;
 use App\Http\Requests\SaveUserDataRequest;
 use App\Http\Requests\AccountRequest;
+use App\Http\Requests\RecoverRequest;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Validator;
+
 class AccountController extends Controller
 {
     /**
@@ -20,7 +19,7 @@ class AccountController extends Controller
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
 
-    public function index(AccountRequest $request)
+    public function show(AccountRequest $request)
     {
         $user = auth()->user();
 
@@ -36,7 +35,7 @@ class AccountController extends Controller
         return view('account',compact('cart',  'user', 'orders'));
     }
 
-    public function deleteAccount(){
+    public function delete(){
 
         $user_id = auth()->user()->id;
         // Unbind user orders but save them for statistics
@@ -48,39 +47,21 @@ class AccountController extends Controller
         return redirect('/');
     }
 
-    public function saveUserData(SaveUserDataRequest $request){
-        $data = $request->only(['contact_name','company_name','address','postcode']);
-        User::where('id', auth()->user()->id)
-            ->update($data);
+    public function save(SaveUserDataRequest $request){
+        $data = $request->validated();
+        User::findOrFail(auth()->user()->id)->update($data);
         return Redirect::back();
     }
 
-    public function recoverPassword(Request $request){
-        $rules = ['email'=>['required','email:rfc,dns,strict', 'not_regex:/[^(\w)|(\@)|(\.)|(\-)]/']];
-        $data = $request->only('email');
-        $validator = Validator::make($data, $rules );
-        if ($validator->fails()) {
-            session()->flash('recoveryFailed');
-            return Redirect::back()
-                ->withErrors($validator)
-                ->withInput();
-        }
+    public function recover(RecoverRequest $request){
 
-        $user = User::where('email', '=' , $data['email'])->first();
-        if (!$user){
-            session()->flash('recoveryFailed');
-            return back()->withErrors([
-                'email' => 'Email '.$data['email'].' не найден',
-                'user_not_found' => true
-            ]);
-        }
-
+        $email = $request->input('email');
         $random_password = strtolower(Str::random(8));
-        $user->update( ['password' => Hash::make($random_password)]  );
-
+        $user = User::where('email','=',$email)->firstOrFail();
+        $user->update( ['password' => Hash::make($random_password)] );
         MailController::passwordChanged($user, $random_password);
         session()->flash( 'PasswordChanged');
-        session()->flash('emailrecover', $data['email']);
+        session()->flash('emailrecover', $email);
         return Redirect::back();
     }
 }

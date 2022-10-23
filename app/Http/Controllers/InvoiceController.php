@@ -13,7 +13,7 @@ class InvoiceController extends Controller
 {
 
     //
-    public function formInvoice(int $order_id, InvoiceRequest $request){
+    public function show(int $order_id, InvoiceRequest $request){
 
         $user_id = auth()->user()->id;
         $order = Order::with('cables.cable')->where('order_id', '=',$order_id)->firstOrFail();

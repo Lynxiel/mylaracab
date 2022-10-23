@@ -2,7 +2,7 @@
 <div class="row">
     @if ($order->status==1)
         <div class="col-lg-3 col-sm-6 col-xs-6 mb-4">
-            <a target="_blank" href="{{route('formInvoice', ['order_id' => $order->order_id])}}"><button class="btn btn-primary">Сформировать счет</button></a>
+            <a target="_blank" href="{{route('order.invoice.show', ['order_id' => $order->order_id])}}"><button class="btn btn-primary">Сформировать счет</button></a>
         </div>
         <div class="col-lg-4 col-sm-6 col-xs-6 mb-4">
             <!-- Button trigger modal -->
@@ -67,9 +67,9 @@
     @if ($order->status==0 || $order->status==1)
 
         <x-controls.modal label="Отменить заказ" >
-            <form action="{{route('cancelOrder')}}" method="post">
+            <form action="{{route('order.cancel')}}" method="post">
                 @csrf
-                @method('PUT')
+                @method('delete')
                 <h4>Действительно отменить заказ?</h4>
                 <p>Заказ будет удален из личного кабинета</p>
                 <div class="form-floating mb-3 mt-4">

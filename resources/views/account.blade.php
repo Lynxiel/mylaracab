@@ -72,20 +72,20 @@
 
                 </div>
             </div>
-            <form method="post" action="{{route('saveUserData')}}" class="mt-4">
+            <form method="post" action="{{route('account.save')}}" class="mt-4">
                 @csrf
                 <div class="row">
 
                     <div class="form-floating mb-3 col-lg-4 col-md-4 col-sm-6 col-xs-12">
-                        <input type="text" name="contact_name" required class="form-control rounded-3" id="name" value="{{$user->contact_name?:old('contact_name') }}">
+                        <input type="text" name="contact_name" required class="form-control rounded-3" id="name" value="{{old('contact_name')??$user->contact_name }}">
                         <label class="px-4" for="floatingInput">Имя контактного лица</label>
                     </div>
                     <div class="form-floating mb-3  col-lg-4 col-md-4 col-sm-6 col-xs-12">
-                        <input type="text" name="phone"  required class="form-control rounded-3" disabled id="phone" value="{{$user->phone?:old('phone')}}">
+                        <input type="text" name="phone"  required class="form-control rounded-3" disabled id="phone" value="{{old('phone')??$user->phone }}">
                         <label class="px-4" for="floatingInput">Телефон</label>
                     </div>
                     <div class="form-floating mb-3 col-lg-4 col-md-4 col-sm-12">
-                        <input type="email" name="email" required class="form-control rounded-3" id="email" value="{{$user->email }}" readonly>
+                        <input type="email" name="email" required class="form-control rounded-3" id="email" value="{{old('email')??$user->email }}" readonly>
                         <label class="px-4" for="floatingInput">Email</label>
                     </div>
                 </div>
@@ -96,11 +96,11 @@
                 @endif
                 <div class="row">
                     <div class="form-floating mb-3 col-8">
-                        <input type="text" name="company_name"  class="form-control rounded-3" id="company_name" value="{{$user->company_name?:old('company_name')}}">
+                        <input type="text" name="company_name"  class="form-control rounded-3" id="company_name" value="{{old('company_name')??$user->company_name}}">
                         <label class="px-4" for="floatingInput">Название компании </label>
                     </div>
                     <div class="form-floating mb-3 col-4">
-                        <input type="number" name="postcode"  class="form-control rounded-3" id="postcode" value="{{$user->postcode?:old('postcode')}}">
+                        <input type="number" name="postcode"  class="form-control rounded-3" id="postcode" value="{{old('postcode')??$user->postcode}}">
                         <label class="px-4" for="floatingInput">Индекс </label>
                     </div>
                 </div>
@@ -108,7 +108,7 @@
                 <div class="row">
 
                     <div class="form-floating mb-3 col-12">
-                        <textarea  name="address"  class="form-control rounded-3" id="address" >{{$user->address?:old('address')}}</textarea>
+                        <textarea  name="address"  class="form-control rounded-3" id="address" >{{old('address')??$user->address}}</textarea>
                         <label class="px-4" for="floatingInput">Юридический адрес </label>
                     </div>
 
@@ -144,7 +144,7 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Нет</button>
-                            <form action="{{route('deleteAccount')}}" method="post">
+                            <form action="{{route('account.delete')}}" method="post">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-danger">Да</button></a>

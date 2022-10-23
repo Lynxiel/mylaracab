@@ -4,6 +4,16 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
 use TCG\Voyager\Facades\Voyager;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\CartController;
+use App\Http\Controllers\OrderController;
+use App\Http\Controllers\InvoiceController;
+use App\Http\Controllers\AccountController;
+use App\Http\Controllers\LoginController;
+use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\LogoutController;
+
+use App\Http\Controllers\Admin\OrderController as AdminOrder;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -14,36 +24,42 @@ use TCG\Voyager\Facades\Voyager;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('', [\App\Http\Controllers\HomeController::class,'index'])->name('index');
-Route::get('delivery', [\App\Http\Controllers\HomeController::class,'delivery'])->name('delivery');
-Route::get('about_us', [\App\Http\Controllers\HomeController::class,'about_us'])->name('about_us');
-Route::post('addToCart', [\App\Http\Controllers\CartController::class,'addToCart'])->name('addToCart');
-Route::post('removeFromCart', [\App\Http\Controllers\CartController::class,'removeFromCart'])->name('removeFromCart');
-Route::post('updateQuantity', [\App\Http\Controllers\CartController::class,'updateQuantity'])->name('updateQuantity');
-Route::post('createOrder', [\App\Http\Controllers\OrderController::class,'createOrder'])->name('createOrder');
+Route::get('', [HomeController::class,'index'])->name('index');
+Route::get('delivery', [HomeController::class,'delivery'])->name('delivery');
+Route::get('about_us', [HomeController::class,'about_us'])->name('about_us');
 
-Route::get('account', [\App\Http\Controllers\AccountController::class,'index'])->name('account');
-Route::put('account/cancelOrder', [\App\Http\Controllers\OrderController::class,'cancelOrder'])->name('cancelOrder');
-Route::get('account/formInvoice/{order_id}', [\App\Http\Controllers\InvoiceController::class,'formInvoice'])->name('formInvoice');
-Route::post('account/saveUserData', [\App\Http\Controllers\AccountController::class,'saveUserData'])->name('saveUserData');
-Route::post('recoverPassword', [\App\Http\Controllers\AccountController::class,'recoverPassword'])->name('recoverPassword');
+Route::post('cart', [CartController::class,'add'])->name('cart.add');
+Route::put('cart', [CartController::class,'update'])->name('cart.update');
+Route::delete('cart', [CartController::class,'remove'])->name('cart.remove');
+
+Route::post('order', [OrderController::class,'create'])->name('order.create');
+Route::delete('order', [OrderController::class,'cancel'])->name('order.cancel');
+Route::get('order/invoice/{order_id}', [InvoiceController::class,'show'])->name('order.invoice.show');
+
+Route::get('account', [AccountController::class,'show'])->name('account.show');
+Route::post('account', [AccountController::class,'save'])->name('account.save');
+Route::put('account', [AccountController::class,'recover'])->name('account.recover');
+Route::delete('account', [AccountController::class,'delete'])->name('account.delete');
+
+
+Route::post('register', [RegisterController::class,'register'])->name('register');
+Route::post('login', [LoginController::class,'login'])->name('login');
+Route::get('logout', [LogoutController::class,'perform'])->name('logout');
 
 
 
-Route::post('user_login', [\App\Http\Controllers\LoginController::class,'login'])->name('login');
-Route::post('user_register', [\App\Http\Controllers\RegisterController::class,'register'])->name('register');
-Route::get('user_logout', [\App\Http\Controllers\LogoutController::class,'perform'])->name('logout');
-Route::delete('user_deleteAccount', [\App\Http\Controllers\AccountController::class,'deleteAccount'])->name('deleteAccount');
 
 
 
 Route::group(['prefix' => 'admin'], function () {
     Voyager::routes();
 
-    Route::get('orders',  [\App\Http\Controllers\Admin\OrderController::class,'index' ])->name('orders');
-    Route::get('/orders/status={status}',  [\App\Http\Controllers\Admin\OrderController::class,'index'])->name('filter_orders');
-    Route::post('order',  [\App\Http\Controllers\Admin\OrderController::class,'show', 'as' => 'order']);
-    Route::post('update_order',  [\App\Http\Controllers\Admin\OrderController::class,'updateOrder'])->name('updateOrder');
+    Route::get('orders',  [AdminOrder::class,'index' ])->name('orders');
+    Route::get('orders/status={status}',  [AdminOrder::class,'index'])->name('orders.filter');
+    Route::post('order',  [AdminOrder::class,'update'])->name('order.update');
+
+
+
     Route::get('cables',  [\App\Http\Controllers\Admin\CableController::class,'index'])->name('cables');
     Route::post('cables_save',  [\App\Http\Controllers\Admin\CableController::class,'store'])->name('cables_save');
 

@@ -35,7 +35,8 @@
 
                                                 </div>
                                                 <div class="col-lg-4 col-md-4 col-sm-4 col-4  text-center">
-                                                    <form method="post" action="{{route('updateQuantity')}}">
+                                                    <form method="post" action="{{route('cart.update')}}">
+                                                        @method("PUT")
                                                         @csrf
                                                         <input  required name="cable_id" readonly value="{{$item->cable_id}}" hidden>
                                                         <div class="qty pt-2 mt-2">
@@ -46,7 +47,7 @@
                                                     </form>
                                                 </div>
                                                 <div class="col-lg-2 col-md-2 col-sm-2 col-2">
-                                                    <form method="post" action="{{route('removeFromCart')}}">
+                                                    <form method="post" action="{{route('cart.remove')}}">
                                                         @csrf
                                                         <input  required name="cable_id" readonly value="{{$item->cable_id}}" hidden>
                                                         <button type="submit" class="btn btn-outline-danger btn-remove-cart mt-2">
@@ -68,7 +69,7 @@
 
                             <div class="col-lg-{{$col}} col-md-{{$col}} col-sm-{{$col}} col-{{$col}} badge bg-dark text-wrap text-center text-warning"><p class="fs-6 fw-bold d-inline-block mt-2 mb-0" >Итого:{{$sum}}₽</p> </div>
                             <div class="col-lg-{{$col}} col-md-{{$col}} col-sm-{{$col}} col-{{$col}}  ">
-                                <form method="post" action="{{route('createOrder')}}">
+                                <form method="post" action="{{route('order.create')}}">
                                     @csrf
                                     @if ($auth)
                                         <div class="row">

@@ -41,7 +41,7 @@
                                         <div class="accordion-body">
                                             <div class="row ">
                                                 <div  class="col-lg-6 col-sm-12 col-xs-12 col-md-6 ">
-                                                    <form method="post" action="{{route('updateOrder')}}" >
+                                                    <form method="post" action="{{route('order.update')}}" >
                                                         @csrf
                                                         <input type="text" class="form-control" hidden  name="order_id" readonly value="{{$order->order_id}}">
                                                         @if (!empty($order->user))
@@ -138,9 +138,9 @@
                                                                 <div class="modal-body">
                                                                     Действительно отменить заказ?
 
-                                                                    <form action="{{route('cancelOrder')}}" method="post">
+                                                                    <form action="{{route('order.cancel')}}" method="post">
                                                                         @csrf
-                                                                        @method('PUT')
+                                                                        @method('delete')
                                                                         <div class="form-floating mb-3 mt-4">
                                                                             <input type="hidden" name="order_id" readonly value="{{$order->order_id}}">
                                                                             <textarea type="text" class="form-control rounded-3" name="cancel_comment"> </textarea>

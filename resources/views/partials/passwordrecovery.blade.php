@@ -8,7 +8,8 @@
             </div>
             <div class="modal-body p-5 pt-0">
 
-                <form method="post" action="{{route('recoverPassword')}}">
+                <form method="post" action="{{route('account.recover')}}">
+                    @method('PUT')
                     @csrf
                     <div class="input-group mb-3">
                         <input type="email"  name="email" required class="form-control" id="email" placeholder="Email" aria-describedby="btn-recovery"  >

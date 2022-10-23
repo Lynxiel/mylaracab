@@ -7,11 +7,12 @@ use App\Models\Order;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
+use TCG\Voyager\Models\Role;
 
 
 class OrderController extends Controller
 {
-    public function createOrder(Request $request){
+    public function create(Request $request){
 
         $validated = $request->validate([
             'order_contact' => 'regex:/[0-9]+/',
@@ -43,15 +44,15 @@ class OrderController extends Controller
     }
 
 
-    public function cancelOrder(Request $request){
+    public function cancel(Request $request){
 
         //TODO validate
         $data = $request->only(['order_id','cancel_comment']);
 
         $order = Order::findOrFail($data['order_id']);
         $user = User::find($order->user_id);
-
-        if (auth()->user()->id != $order->user_id){ abort('404');}
+                                                     // not cool - temp
+        if (auth()->user()->id != $order->user_id && auth()->user()->role_id!=1 ){ abort('404');}
 
         $order->update([
             'status'=>Order::CANCELED,

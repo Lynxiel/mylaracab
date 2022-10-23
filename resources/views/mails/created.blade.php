@@ -30,10 +30,10 @@
                                                 </p>
                                                 <br>
                                                 <strong style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:lato, 'helvetica neue', helvetica, arial, sans-serif;line-height:18px;color:#666666;font-size:14px">
-                                                    Ваш заказ № {{$order->order_id}} от {{Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $order->created_at)->format('d.m.y')}} :
+                                                    Ваш заказ № {{$order->order_id}} от {{ $order->created_at->format('d.m.y')}} :
                                                 </strong>
                                                 <br>
-
+                                                    @php $sum=0; $n=1; @endphp
                                                     @foreach ($order->cables as $item)
 
                                                         @php $sum += $item->quantity*$item->price @endphp
@@ -44,8 +44,8 @@
                                                                         <div class="d-flex gap-2 w-100 justify-content-between">
                                                                             <p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:lato, 'helvetica neue', helvetica, arial, sans-serif;line-height:27px;color:#666666;font-size:12px">
                                                                                 {{$n}}. {{$item->cable->title}}
-                                                                            {{$item->price}}₽ х  {{session()->get('cable_id')?session()->get('cable_id')[$item->cable_id]:100}}м
-                                                                            {{$item->price*(session()->get('cable_id')?session()->get('cable_id')[$item->cable_id]:100)}}₽
+                                                                            {{$item->price}}₽ х  {{$item->quantity}}м
+                                                                            {{$sum}}₽
                                                                             </p>
                                                                             <hr>
                                                                         </div>
@@ -62,7 +62,6 @@
                                                         <div class="col-3">Ожидаемая дата доставки: {{date('d.m.y', strtotime(date('d.m.y').'+2 day'))}}</div>
 
                                                     </div>
-                                                @endif
                                             </td>
                                         </tr>
 

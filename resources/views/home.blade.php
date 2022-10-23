@@ -23,13 +23,13 @@
 
                 @foreach($groups as $group)
                 <div class="row">
-                    <div class="col-md-4 col-lg-4 col-sm-4 col-12" >
+                    <div class="col-md-4 col-lg-4 col-sm-12 col-12" >
                         <h3 class="group-title">{{$group->title}}</h3>
                         <p class="group-description">{{$group->description}}</p>
                         <img class="group-image"  src="{{ $group->image?:asset('images/default.jpg') }}">
                     </div>
 
-                    <div class="col-md-8 col-lg-8 col-sm-8 col-12" id="cables-container">
+                    <div class="col-md-8 col-lg-8 col-sm-12 col-12" id="cables-container">
                     @foreach($group->cables as $cable)
 
                                 <div  class="row mt-1 mb-1 pb-1 " aria-current="true">
@@ -45,7 +45,7 @@
                                         <div class="mt-1">{{$cable->price*$cable->footage}}₽/бухта</div>
                                     </div>
                                     <div class="col-md-2 col-lg-2  col-sm-2 col-3 text-end">
-                                        <form method="post" action="{{route('addToCart')}}">
+                                        <form method="post" action="{{route('cart.add')}}">
                                             @csrf
                                             <input  required name="cable_id" readonly value="{{$cable->cable_id}}" hidden>
                                             @if ( session()->get('cable_id')!=null && key_exists($cable->cable_id,session()->get('cable_id')) )

@@ -44,7 +44,7 @@ class CartController extends Controller
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function  addToCart(Request $request){
+    public function  add(Request $request){
 
         $cart_list = array();
         $cable_id = (int)$request->input("cable_id");
@@ -66,7 +66,7 @@ class CartController extends Controller
         return $cart_list;
     }
 
-    public function updateQuantity(Request $request){
+    public function update(Request $request){
 
         $cable_id = (int)$request->input("cable_id");
         $quantity = (int)$request->input("quantity");
@@ -86,7 +86,7 @@ class CartController extends Controller
 
     }
 
-    public function removeFromCart(Request $request){
+    public function remove(Request $request){
         $cable_id = (int)$request->input("cable_id");
         if ($cable_id){
             $cart_list = $this->getCartList($request);

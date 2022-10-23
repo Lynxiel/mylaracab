@@ -21,14 +21,29 @@ class OrderController extends Controller
         return view('admin.index', compact('orders'));
     }
 
+    public function cancel(Request $request){
 
-    public function show(){
+        //TODO validate
+        $data = $request->only(['order_id','cancel_comment']);
 
-        $orders= Order::GetUserOrders(null);
-        return  view('admin.orders', compact('orders'));
+        $order = Order::findOrFail($data['order_id']);
+        $user = User::find($order->user_id);
+
+        if (auth()->user()->id != $order->user_id){ abort('404');}
+
+        $order->update([
+            'status'=>Order::CANCELED,
+            'comment'=>$data['cancel_comment'] ]);
+
+        // Send notification to admin
+        MailController::orderCanceled($order,$user);
+        session()->flash('OrderCanceled');
+        return Redirect::back();
     }
 
-    public function updateOrder(Request $request){
+
+
+    public function update(Request $request){
 
         // TODO: Validation
         $data = $request->all();
