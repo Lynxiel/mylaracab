@@ -1,271 +1,100 @@
-@extends('voyager::master')
-
-
-@section('page_header')
-    <h1 class="page-title">
-        <i class="voyager-list"></i> Товары
-    </h1>
-
-@stop
-
-@section('content')
-    <div class="container-fluid" id="main-content">
-        @include('voyager::alerts')
-        @if ($groups)
-            <div class="accordion col-lg-12 col-md-12 col-sm-12 col-xs-12" id="accordionGroups">
-                <div class="row">
-                    <div class="col-4"><h4>Группы</h4></div>
-                    <div class="col-4"><button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#newGroupModal">Добавить новую группу</button> </div>
-                    <div class="col-4"></div>
-                </div>
-                <!-- Modal -->
-                <div class="modal fade" id="newGroupModal" tabindex="-1" aria-labelledby="newGroupModalLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">Новая группа</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                <form action="{{route('createGroup')}}" method="post" enctype="multipart/form-data">
-                                    @csrf
-                                    <div class="form-group">
-                                        <label>Название</label>
-                                        <input type="text" class="form-control" name="title" value="{{old('title')}}" required>
-                                        @error('title') <div class="alert alert-danger mt-1">{{$message}}</div>  @enderror
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label>Описание</label>
-                                        <textarea type="text" class="form-control" name="description"  value="{{old('description')}}" required> </textarea>
-                                        @error('description') <div class="alert alert-danger mt-1">{{$message}}</div>  @enderror
-                                    </div>
-
-
-                                    <div class="form-group">
-                                        <label>Изображение</label>
-                                        <input type="file" class="form-control" name="image" >
-                                        @error('image') <div class="alert alert-danger mt-1">{{$message}}</div>  @enderror
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label>Сертификат</label>
-                                        <input type="file" class="form-control" name="files" >
-                                        @error('files') <div class="alert alert-danger mt-1">{{$message}}</div>  @enderror
-                                    </div>
-
-                                    <div class="form-group">
-                                        <input type="submit" value="Создать группу" class="btn btn-outline-success ">
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-
-                @foreach($groups as $group)
-
-                    <div class="accordion-item">
-                        <h2 class="accordion-header" id="headinggr{{$group->cable_group_id}}">
-                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapsegr{{$group->cable_group_id}}" aria-expanded="true" aria-controls="collapsegr{{$group->cable_group_id}}">
-                                {{$group->cable_group_id}}. {{$group->title}}
-                            </button>
-                        </h2>
-                        <div id="collapsegr{{$group->cable_group_id}}" class="accordion-collapse collapse " aria-labelledby="headinggr{{$group->cable_group_id}}" data-bs-parent="#accordionGroups">
-                            <div class="accordion-body">
-                                <form action="{{route('updateGroup')}}" method="post" enctype="multipart/form-data">
-                                    @csrf
-                                    <input type="text" class="form-control" readonly hidden name="cable_group_id" value="{{$group->cable_group_id}}">
-                                    <div class="form-group">
-                                        <label>Название</label>
-                                        <input type="text" class="form-control" name="title" value="{{$group->title}}" required>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label>Описание</label>
-                                        <textarea type="text" rows="5" class="form-control" name="description"   required> {{$group->description}}</textarea>
-                                    </div>
-
-
-                                    <div class="form-group">
-                                        <label>Изображение</label>
-                                        <input type="file" class="form-control" name="image" >
-                                        @if ($group->image)
-                                            <div class="image-group">
-                                                <button  class="btn btn-danger image-delete">Удалить изображение</button>
-                                                <img class="category-image" src="{{$group->image}}">
-                                            </div>
-
-                                        @endif
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label>Сертификат</label>
-                                        <input type="file" class="form-control" name="files" >
-                                    </div>
-
-
-                                    <input type="submit" value="Сохранить" class="btn btn-outline-success mt-4">
-                                </form>
-                            </div>
-                        </div>
+<x-layouts.header/>
+<x-layouts.nav >
+    <x-controls.list text="Заказы" route="orders.index" classes="nav-link px-2 "/>
+    <x-controls.list text="Товары" route="cables.index" classes="nav-link px-2 "/>
+</x-layouts.nav>
+<body>
+<div class="content-container">
+    <div class="container mt-4">
+        @include('admin.partials.flashmessages')
+        <div class="row text-content-justify w-100">
+            <h2 class="mb-4 w-50">Группы</h2>
+            <div class="w-50 text-end">
+                <x-controls.modal label="Добавить новую группу">
+                    <div class="text-start">
+                        @include('admin.cablegroup.create')
                     </div>
 
-                @endforeach
-            </div>
+                </x-controls.modal>
 
-        @endif
+        </div>
 
+        @php  $i=1; @endphp
+        @if (!empty($groups))
+            <div class="table-responsive">
+                <table class="table table-striped table-sm">
+                    <thead>
+                    <tr>
+                        <th scope="col">№</th>
+                        <th scope="col">Название</th>
+                        <th scope="col">Описание</th>
+                        <th scope="col">Изображение</th>
+                    </tr>
+                    </thead>
+                    <tbody>
 
-
-        @if ($cables)
-
-            <div class="row">
-                <div class="accordion col-lg-12 col-md-12 col-sm-12 col-xs-12" id="accordionCables">
-                    <div class="row">
-                        <div class="col-4 mt-4"><h4>Кабели</h4></div>
-
-                        <div class="col-4"></div>
-                        <div class="col-4"></div>
-                    </div>
-                    @foreach($cables as $cable)
-
-                        <div class="accordion-item">
-                            <h2 class="accordion-header" id="heading{{$cable->cable_id}}">
-                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{$cable->cable_id}}" aria-expanded="true" aria-controls="collapse{{$cable->cable_id}}">
-                                    {{$cable->title}} -  {{$cable->cable_group_id}}
-                                </button>
-                            </h2>
-                            <div id="collapse{{$cable->cable_id}}" class="accordion-collapse collapse " aria-labelledby="heading{{$cable->cable_id}}" data-bs-parent="#accordionCables">
-                                <div class="accordion-body">
-                                    <form action="{{route('cables_save')}}" method="post" enctype="multipart/form-data">
-                                        @csrf
-                                        <input type="text" class="form-control" readonly hidden name="cable_id" value="{{$cable->cable_id}}">
-                                        <div class="form-group">
-                                            <label>Название</label>
-                                            <input type="text" class="form-control" name="title" value="{{$cable->title}}" required>
-                                        </div>
-
-                                        <div class="form-group">
-                                            <label>Группа кабеля</label>
-                                            <x-controls.select name="cable_group_id" label="title" class="App\Models\CableGroup" value="{{$cable->cable_group_id}}" />
-                                        </div>
-
-                                        <div class="form-group">
-                                            <label>Метраж</label>
-                                            <input type="text" class="form-control" name="footage"  value="{{$cable->footage}}" >
-                                        </div>
-
-                                        <div class="form-group">
-                                            <label>Сечение жилы</label>
-                                            <input type="text" class="form-control" name="coresize" value="{{$cable->coresize}}" >
-                                        </div>
-
-                                        <div class="form-group">
-                                            <label>Количество жил</label>
-                                            <input type="text" class="form-control" name="corecount"  value="{{$cable->corecount}}" >
-                                        </div>
-
-                                        <div class="form-group">
-                                            <label>Максимальная нагрузка </label>
-                                            <input type="text" class="form-control" name="capacity" value="{{$cable->capacity}}" >
-                                        </div>
-
-                                        <div class="form-group">
-                                            <label>Наличие </label>
-                                            <input type="text" class="form-control" name="instock"  value="{{$cable->instock}}" >
-                                        </div>
-
-                                        <div class="form-group">
-                                            <label>Цена </label>
-                                            <input type="text" class="form-control" name="price"  value="{{$cable->price}}" >
-                                        </div>
-
-                                        <input type="submit" value="Сохранить" class="btn btn-outline-success cable_save w-25">
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
+                    @foreach($groups as $group)
+                        @php  $summ = 0;   @endphp
+                        <tr>
+                            <td>{{$i++}}</td>
+                            <td><a class="" href="{{route('groups.edit',['group'=>$group->cable_group_id])}}">{{$group->title}}</a></td>
+                            <td>{{$group->description}}</td>
+                            <td><img class="group-image" src="{{$group->image}}"></td>
+                        </tr>
 
                     @endforeach
-                </div>
-
-        @endif
-
-
-
-
+                    @else
+                        <p>Кабелей пока нет</p>
+                    @endif
+                    </tbody>
+                </table>
             </div>
 
+
+
+
+        <h2 class="mb-4">Кабели</h2>
+        @php  $i=1; @endphp
+        @if (!empty($cables))
+            <div class="table-responsive">
+                <table class="table table-striped table-sm">
+                    <thead>
+                    <tr>
+                        <th scope="col">№</th>
+                        <th scope="col">Название</th>
+                        <th scope="col">Группа</th>
+                        <th scope="col">Метраж</th>
+                        <th scope="col">Наличие</th>
+                        <th scope="col">Цена</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    @foreach($cables as $cable)
+                        @php  $summ = 0;   @endphp
+                        <tr>
+                            <td>{{$i++}}</td>
+                            <td><a class="" href="{{route('cables.edit',['cable'=>$cable->cable_id])}}">{{$cable->title}}</a></td>
+                            <td>{{$cable->group->title?? ''}}</td>
+                            <td>{{$cable->footage}}м</td>
+                            <td>{{$cable->instock}}м</td>
+                            <td>{{$cable->price}}₽</td>
+                        </tr>
+
+                    @endforeach
+                    @else
+                        <p>Кабелей пока нет</p>
+                    @endif
+                    </tbody>
+                </table>
+            </div>
+
+
     </div>
-    <script>
-        $('.image-delete').on('click', function (e){
-
-            e.preventDefault();
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-            var formData = {
-                cable_group_id: $(this).closest('form').find('input[name="cable_group_id"]').val(),
-                image: $(this).closest('.form-group').find('img').attr('src'),
-            };
-            var type = "POST";
-            var ajaxurl = 'deleteImage';
-
-            $.ajax({
-                type: type,
-                url: ajaxurl,
-                data: formData,
-                success: function (data) {
-                   $('.image-group').remove();
-                    console.log(data);
-                },
-                error: function (data) {
-                    console.log(data);
-                }
-            });
-        })
-
-
-        $('.cable_save').on('click', function (e){
-            e.preventDefault();
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
+</div>
+</body>
 
 
 
-            var formData={};
-            var type = "POST";
-            var ajaxurl = 'cables_save';
-
-            var form = $(this).closest('form');
-            form.find(".form-control").each(function() {
-                formData[$(this).attr("name")] = $(this).val();
-            });
-            console.log(formData);
-            $.ajax({
-                type: type,
-                url: ajaxurl,
-                data: formData,
-                success: function (data) {
-                    form.find('.cable_save').val('Сохранено!');
-                },
-                error: function (data) {
-                    form.find('.cable_save').val('Возникла ошибка');
-                    console.log(data.responseText);
-                }
-            });
-        })
-    </script>
-
-
-
-@stop
 
 

@@ -6,10 +6,11 @@
                 <x-controls.list text="Главная"           route="index"    classes="nav-link px-2 "/>
                 <x-controls.list text="Доставка и оплата" route="delivery" classes="nav-link px-2 "/>
                 <x-controls.list text="О нас"             route="about_us" classes="nav-link px-2 "/>
-
+                {{$slot}}
             </ul>
 
             <div>
+
                 @if (isset(auth()->user()->email))
                     @include('partials.logout')
                 @else

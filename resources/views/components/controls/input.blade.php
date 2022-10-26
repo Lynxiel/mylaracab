@@ -1,6 +1,7 @@
 @props([
     'name',
-    'label',
+    'label'   =>'',
+    'value'   =>'',
     'type'    => 'text',
     'id'      => null,
     'required'=>  null,
@@ -19,11 +20,11 @@
     {{$required?'required':''}}
     class="{{$class}}"
     id="{{$id}}"
-    value="{{old($name)}}" />
-<label
+    value="{{old($name)?? $value}}" />
+    @if ($label)<label
     for="{{$id}}">
     {{$label}}
-</label>
+</label> @endif
 {{$slot}}
 @error($name)
     <div class="alert alert-danger mt-1">

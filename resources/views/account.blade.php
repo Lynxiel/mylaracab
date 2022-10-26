@@ -3,9 +3,8 @@
     <x-layouts.nav :cart="$cart" />
 
 <div class="content-container">
-    @include('partials.flashmessages')
-
     <div class="container" id="account">
+        @include('partials.flashmessages')
         <h2 class="mt-4 text-center">Личный кабинет</h2>
         <h4>История заказов</h4>
         <div class="d-flex justify-content-end">

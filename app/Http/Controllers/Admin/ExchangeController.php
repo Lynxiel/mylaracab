@@ -23,6 +23,7 @@ class ExchangeController extends Controller
         try {
             $data = $this->xmltoArray(public_path('/exchange/elCabel.xml'));
             if ($data){
+                dd($data);
                 foreach ($data as $row){
                     //for some reason, laravel update return 0 if nothing is changed!
 //                $rowaffected = DB::table('cables')->where('1ccode','=', $row['1cCode'])->update([
@@ -32,7 +33,8 @@ class ExchangeController extends Controller
                     $rawquery = 'UPDATE cables SET price='.  $row['price'] . ', instock='. $row['quantity']. ',
                 active = '. $row['active'] .', updated_at = "'. date('y-m-d H:i:s') . '"
                 WHERE `1ccode`="' . $row['1cCode'] .'" ';
-                    $rowaffected = DB::unprepared($rawquery);
+
+                    $rowaffected = DB::update($rawquery);
                     if (!$rowaffected){
                         DB::insert("insert into cables (title, instock, price, 1ctitle, 1ccode, active)  Values(?, ?, ?, ?, ?, ?)"
                             ,[$row['1ctitle'], $row['quantity'], $row['price'],$row['1ctitle'], $row['1cCode'], $row['active']] );

@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Admin;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Str;
 
-class CableGroupRequest extends FormRequest
+class OrderRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -16,6 +17,7 @@ class CableGroupRequest extends FormRequest
         return true;
     }
 
+
     /**
      * Get the validation rules that apply to the request.
      *
@@ -24,10 +26,10 @@ class CableGroupRequest extends FormRequest
     public function rules()
     {
         return [
-            'title'=>'required|min:3|max:40',
-            'description'=>'required|min:50|max:550',
-            'image'=>'mimes:jpeg,jpg,png|max:5000',
-            'files'=>'mimes:jpeg,jpg,png|max:5000',
+            'status'=>['size:1'],
+            'comment'=>['nullable','max:200'],
+            'address'=>['nullable','max:200', 'not_regex:/[^(\w)|(\x7F-\xFF)|(\s)".,]/'],
+            'pay_link'=>['nullable','max:100'],
         ];
     }
 }

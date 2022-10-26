@@ -3,14 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\CableRequest;
+use App\Http\Requests\Admin\CableRequest;
 use App\Models\Cable;
 use App\Models\CableGroup;
+use App\Models\Order;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Redirect;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Auth;
 
 class CableController extends Controller
 {
@@ -19,18 +16,25 @@ class CableController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index()
     {
+        $cables = Cable::with('group')->where('active', '=' , 1)
+            ->orderByDesc('cable_group_id')->get();
 
-        $cables = Cable::orderby('cable_group_id', 'desc')->where('active','=', 1)->get();
         $groups = CableGroup::all();
 
-        return view('admin.cables', compact('cables', 'groups'));
-
+        return view('admin.cables',compact('cables', 'groups' ));
     }
 
-
-
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        //
+    }
 
     /**
      * Store a newly created resource in storage.
@@ -38,21 +42,9 @@ class CableController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(CableRequest $request)
+    public function store(Request $request)
     {
-        $cable = Cable::find($request->cable_id);
-
-        if ($cable){
-            $cable->title = $request->title  ;
-            $cable-> cable_group_id  = $request->cable_group_id;
-            $cable->footage = $request->footage;
-            $cable->coresize= $request->coresize;
-            $cable->corecount = $request->corecount;
-            $cable->capacity = $request->capacity;
-            $cable->instock = $request->instock;
-            $cable->price = $request->price;
-            $cable->save();
-        }
+        //
     }
 
     /**
@@ -63,7 +55,7 @@ class CableController extends Controller
      */
     public function show($id)
     {
-        //
+
     }
 
     /**
@@ -74,7 +66,9 @@ class CableController extends Controller
      */
     public function edit($id)
     {
-        //
+        $cable = Cable::findOrFail($id);
+        $groups  = CableGroup::all();
+        return view('admin.cable.edit' ,compact('cable','groups'));
     }
 
     /**
@@ -86,7 +80,11 @@ class CableController extends Controller
      */
     public function update(CableRequest $request, $id)
     {
-        //
+        $cable = Cable::findOrFail($id)->update($request->validated());
+
+        session()->flash('cableUpdated');
+        return redirect()->back();
+
     }
 
     /**

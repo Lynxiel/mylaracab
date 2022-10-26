@@ -24,4 +24,15 @@ class CableOrder extends Model
         return $this->belongsTo(Order::class, 'order_id');
     }
 
+
+
+
+
+// this will give the number model a totals attribute, which will be the sum of both total_calls and total_bids
+
+    public function getTotalAttribute()
+    {
+        return $this->price * $this->quantity;
+    }
+
 }

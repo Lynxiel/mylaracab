@@ -12,65 +12,61 @@ use Illuminate\Support\Facades\Storage;
 class CableGroupController extends Controller
 {
 
-
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function createGroup(CableGroupRequest $request)
+    public function store(CableGroupRequest $request)
     {
-        $group = $request->only('title','description','image');
+
+        $data = $request->validated();
+
         if ($request->file('image')){
             $path = Storage::putFile('public/group_images',$request->file('image'));
             $url = Storage::url($path);
-            $group->image =$url;
+            $data['image'] =$url;
         }
-        CableGroup::create($group);
-
-       return Redirect::back();
+        CableGroup::create($data);
+        session()->flash('groupCreated');
+        return redirect()->back();
     }
 
 
+     function edit($id){
+        $cablegroup = CableGroup::findOrFail($id);
+        return view('admin.cablegroup.edit', compact('cablegroup'));
+    }
 
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function updateGroup(Request $request)
+    public function update(CableGroupRequest $request, $id)
     {
-
-        $data = $request->all();
-        $cableGroup = CableGroup::find($data['cable_group_id']);
-        if ($cableGroup){
-            $cableGroup->title = $data['title'];
-            $cableGroup->description = $data['description'];
-            if ($request->file('image')){
-                $path = Storage::putFile('public/group_images',$request->file('image'));
-                $url = Storage::url($path);
-                $cableGroup->image =$url;
-            }
-            $cableGroup->save();
-            return Redirect::back();
-
+        $data = $request->validated();
+        $cableGroup = CableGroup::findOrFail($id);
+        if ($request->file('image')){
+            $path = Storage::putFile('public/group_images',$request->file('image'));
+            $url = Storage::url($path);
+            $data['image'] =$url;
         }
-        return Redirect::back()->with('error','Возникла ошибка, попробуйте еще раз');
-
+        $cableGroup->update($data);
+        session()->flash('groupUpdated');
+        return Redirect::back();
     }
 
-    public function deleteImage(Request $request){
+    public function destroy($id){
+        CableGroup::findOrFail($id)->delete();
+        session()->flash('groupDeleted');
+        return redirect(route('cables.index'));
+    }
 
-        $data = $request->all();
-        $cableGroup = CableGroup::find($data['cable_group_id']);
-        if ($cableGroup && isset($data['image'])){
-            Storage::delete($data['image']);
-            $cableGroup->image= '';
-            $cableGroup->save();
-        }
+    public function deleteImage($id){
 
+        $cableGroup = CableGroup::findOrFail($id);
+        $cableGroup->image= '';
+        $cableGroup->save();
+        session()->flash('imageDeleted');
+        return redirect()->back();
     }
 
 

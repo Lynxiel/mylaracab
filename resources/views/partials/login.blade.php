@@ -3,12 +3,17 @@
                 <!-- Modal -->
                 <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog">
-                        <div class="modal-content rounded-4 shadow">
+                        <div class="modal-content rounded-4 shadow ">
                             <div class="modal-header p-5 pb-4 border-bottom-0">
-                                <h2 class="modal-title fw-bold mb-0">Войти</h2>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                <h2 class="modal-title fw-bold mb-0 text-white">ВОЙТИ В АЙТИ</h2>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-power" viewBox="0 0 16 16">
+                                        <path d="M7.5 1v7h1V1h-1z"/>
+                                        <path d="M3 8.812a4.999 4.999 0 0 1 2.578-4.375l-.485-.874A6 6 0 1 0 11 3.616l-.501.865A5 5 0 1 1 3 8.812z"/>
+                                    </svg>
+                                </button>
                             </div>
-                            <div class="modal-body p-5 pt-0">
+                            <div class="modal-body p-5 pt-0 mt-4">
                                 <form method="post" action="{{route('login')}}">
                                     @csrf
                                     <div class="form-floating mb-3">
@@ -35,7 +40,7 @@
                                         </div>
                                     </div>
 
-                                    <button class="w-100 mb-2 btn btn-lg rounded-3 btn-primary" type="submit">Войти</button>
+                                    <button class="w-100 mb-2 btn btn-lg rounded-3 btn-orange text-uppercase" type="submit">Войти</button>
                                     @error('auth_failed') <div class="alert alert-danger mt-1">{{$message}}</div>  @enderror
                                     @if (session('loginFailed') )
 
@@ -49,15 +54,15 @@
                                         </script>
                                     @endif
 
-
-                                    <hr>
-                                    <small class="text-muted">Нет учетной записи? </small>
-                                    <button id="btn-register" type="button" class="btn btn-warning modal-btn" data-bs-toggle="modal" data-bs-target="#regModal">Зарегистрируйтесь</button>
-
                                 </form>
-                                <div class="mt-2">
-                                    <small class="text-muted pt-2">Забыли пароль? </small>
-                                    <button id="btn-recover" type="button" class="btn btn-warning modal-btn" data-bs-toggle="modal" data-bs-target="#recoverModal">Восстановить</button>
+                                <div class="modal-footer mt-4">
+                                    <small class=" text-white">Нет учетной записи? </small>
+                                    <button id="btn-register" type="button" class="btn btn-orange modal-btn text-uppercase" data-bs-toggle="modal" data-bs-target="#regModal">Зарегистрируйтесь</button>
+
+                                    <div class="mt-2">
+                                        <small class=" pt-2 text-white">Забыли пароль? </small>
+                                        <button id="btn-recover" type="button" class="btn btn-orange modal-btn text-white text-uppercase" data-bs-toggle="modal" data-bs-target="#recoverModal">Восстановить</button>
+                                    </div>
 
                                 </div>
 

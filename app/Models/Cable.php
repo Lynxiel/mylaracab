@@ -8,6 +8,9 @@ use Illuminate\Support\Facades\DB;
 
 class Cable extends Model
 {
+    protected $fillable = [
+        'title', 'cable_group_id', 'instock', 'price', 'footage'
+    ];
 
     protected $primaryKey = 'cable_id';
 

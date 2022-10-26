@@ -1,14 +1,19 @@
-<button id="btn-register" type="button" class="btn btn-warning modal-btn" data-bs-toggle="modal" data-bs-target="#regModal">Регистрация</button>
+<button id="btn-register" type="button" class="btn btn-outline-light modal-btn " data-bs-toggle="modal" data-bs-target="#regModal">Регистрация</button>
 <!-- Modal registration -->
 <div class="modal fade" id="regModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content rounded-4 shadow">
             <div class="modal-header p-5 pb-4 border-bottom-0">
-                <h2 class="modal-title fw-bold mb-0">Регистрация</h2>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <h2 class="modal-title fw-bold mb-0 text-white ">РЕГИСТРАЦИЯ</h2>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-power" viewBox="0 0 16 16">
+                        <path d="M7.5 1v7h1V1h-1z"/>
+                        <path d="M3 8.812a4.999 4.999 0 0 1 2.578-4.375l-.485-.874A6 6 0 1 0 11 3.616l-.501.865A5 5 0 1 1 3 8.812z"/>
+                    </svg>
+                </button>
             </div>
 
-            <div class="modal-body p-5 pt-0">
+            <div class="modal-body p-5 pt-0 mt-4">
 
                 <form method="post" action="{{route('register')}}" class="user_register">
                     @csrf
@@ -36,8 +41,8 @@
                         </x-controls.input>
 
                     </div>
-                    <button class="w-100 mb-2 btn btn-lg rounded-3 btn-primary" type="submit">Зарегистрироваться</button>
-                    <small class="text-muted">Нажимая "Зарегистрироваться", Вы соглашаетесь с <a href="###">условиями использования</a></small>
+                    <button class="w-100 mb-2 btn btn-lg rounded-3 btn-orange text-uppercase" type="submit">Зарегистрироваться</button>
+                    <small class="text-white-50">Нажимая "Зарегистрироваться", Вы соглашаетесь с <a href="###" class="text-orange">условиями использования</a></small>
 
                     @if (session('registerFailed') )
                             <script>
@@ -52,8 +57,8 @@
                             </script>
                     @endif
                     <hr>
-                    <small class="text-muted text-center">Уже зарегистрированы?</small>
-                    <button type="button" id="btn-login" class="btn btn-warning modal-btn" data-bs-toggle="modal" data-bs-target="#loginModal">Вход</button>
+                    <small class="text-white text-center ">Уже зарегистрированы?</small>
+                    <button type="button" id="btn-login" class="btn btn-orange modal-btn text-white text-uppercase" data-bs-toggle="modal" data-bs-target="#loginModal">Вход</button>
 
                 </form>
             </div>

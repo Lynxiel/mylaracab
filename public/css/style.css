@@ -1,5 +1,85 @@
+@font-face {
+    font-family: RubikRegular;
+    src: url("fonts/Rubik-Regular.ttf");
+}
+@font-face {
+    font-family: RubikLight;
+    src: url("fonts/Rubik-Light.ttf");
+}
+@font-face {
+    font-family: RubikBold;
+    src: url("fonts/Rubik-Bold.ttf");
+}
+body{
+    background: #333;
+    font-family: RubikLight;
+}
+.rubik{
+    font-family: RubikRegular;
+}
+
+.rubik-light{
+    font-family: RubikLight;
+}
+
+.rubik-bold{
+    font-family: RubikBold;
+}
 .active{
-    color: #ffc107;
+    color: #ffc107!important;
+}
+.site-nav{
+    border-bottom: 5px solid #f89538;
+}
+.site-nav li{
+    font-family: RubikLight;
+}
+footer{
+    border-bottom: 5px solid #f89538;
+    border-top: 5px solid #f89538;
+}
+.groups-container thead{
+    background: #f89538;
+    border: 5px solid #f89538;
+    border-radius: 10px;
+}
+
+.bg-orange{
+    background: #f89538;
+}
+.text-orange{
+    color: #f89538;
+}
+.border-orange{
+    border: 5px solid #f89538;
+    border-radius: 15px;
+}
+
+.btn-orange {
+    --bs-btn-color: #fff;
+    --bs-btn-bg: #f89538;
+    --bs-btn-border-color: #f89538;
+    --bs-btn-hover-color: #fff;
+    --bs-btn-hover-bg: #f89538;
+    --bs-btn-hover-border-color: #f89538;
+    --bs-btn-focus-shadow-rgb: 49, 132, 253;
+    --bs-btn-active-color: #fff;
+    --bs-btn-active-bg: #f89538;
+    --bs-btn-active-border-color: #f89538;
+    --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+    --bs-btn-disabled-color: #fff;
+    --bs-btn-disabled-bg: #f89538;
+    --bs-btn-disabled-border-color: #f89538;
+}
+.cable-category{
+    border: 5px solid #f89538;
+    border-radius: 15px;
+}
+
+
+#lines, #linesf{
+    width: 40%;
+    z-index: -1;
 }
 .alert-dismissible{
     text-align: center;
@@ -73,13 +153,20 @@
 
 
 /*--- MODAL -----*/
+.modal-header {
+    background: #f89538;
+}
+
 #regModal .modal-header, #loginModal .modal-header{
     padding-top: 15px!important;
 }
 
 #loginModal .modal-title{
-    color:#666;
 }
+.modal-title{
+    font-family: RubikBold;
+}
+
 #loginModal, #CartModal, #regModal, #recoverModal {
     color: #666;
 }
@@ -98,7 +185,9 @@
 #regModal input[type=number] {
     -moz-appearance:textfield; /* Firefox */
 }
-
+.modal-header {
+    border: none;
+}
 #cart-container{
     text-align: left;
 }
@@ -154,8 +243,8 @@
     width: 100%;
 }
 .cart-add, .cart-added{
-    width: 100%;
-    height: 45px;
+    height: 30px;
+    padding: 0 10px 0 10px;
 }
 
 @media (max-width: 450px) {
@@ -205,7 +294,15 @@
     margin-bottom: 5px;
 }
 
+.modal-content{ background: currentColor}
+/*.modal-content input{*/
+/*    background: #333;*/
+/*}*/
 
+.btn-close{
+    background: white;
+    line-height: 0;
+}
 
 /*-------------- ACCOUNT --------------*/
 #account .accordion-button{
@@ -233,7 +330,6 @@ footer{
 footer .company-name{
     margin: 0 0 10px 0;
     padding: 5px 0 0 0;
-    border-top:1px dotted #aaa;
 }
 footer .company-contacts, footer .footer-menu{
 }
@@ -244,6 +340,18 @@ footer .mb-2{
 @media (max-width: 575px) {
     footer #map-container{
         margin-top: 30px;
+    }
+
+    .groups-container{
+        font-size: 10px;
+    }
+    .cable-category h2{
+        font-size: 16px;
+    }
+
+    .cart-add, .cart-added{
+        height: 28px;
+        margin-top: -5px;
     }
 }
 
@@ -264,7 +372,7 @@ footer .mb-2{
 
 /*------------------- Quantity input ------------------*/
 .qty .count {
-    color: #333;
+    color: white;
     display: inline-block;
     vertical-align: top;
     font-size: 14px;
@@ -273,6 +381,7 @@ footer .mb-2{
     padding: 0 2px;
     width: 20px;
     text-align: center;
+    background: #666;
 }
 .qty .plus {
     cursor: pointer;
@@ -306,20 +415,20 @@ footer .mb-2{
     background-color: #717fe0 !important;
 }
 /*Prevent text selection*/
-span{
+.qty span{
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
 }
-input{
+.qty input{
     border: 0;
     width: 2%;
 }
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
+.qty input::-webkit-outer-spin-button,
+.qty input::-webkit-inner-spin-button {
     -webkit-appearance: none;
     margin: 0;
 }
-input:disabled{
+.qty input:disabled{
     background-color:white;
 }

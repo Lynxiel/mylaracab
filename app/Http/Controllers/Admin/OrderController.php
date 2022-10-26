@@ -6,67 +6,100 @@ use App\Http\Controllers\Controller;
 use App\Http\Controllers\MailController;
 use App\Models\Order;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Redirect;
-use App\Models\User;
+use App\Http\Requests\Admin\OrderRequest;
 
 class OrderController extends Controller
 {
-    public function index(int $status=null){
-
-        $orders = Order::with('user')->with('cables.cable')
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index(string $status = Order::CREATED)
+    {
+        $orders = Order::with('user')
+            //->where('status', '=' , $status)
             ->orderByDesc('created_at');
 
-        if ($status!==null){ $orders->where('status' , '=', $status);   }
         $orders = $orders->paginate(20);
-        return view('admin.index', compact('orders'));
+        return view('admin.orders',compact('orders'));
     }
 
-    public function cancel(Request $request){
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        //
+    }
 
-        //TODO validate
-        $data = $request->only(['order_id','cancel_comment']);
-
-        $order = Order::findOrFail($data['order_id']);
-        $user = User::find($order->user_id);
-
-        if (auth()->user()->id != $order->user_id){ abort('404');}
-
-        $order->update([
-            'status'=>Order::CANCELED,
-            'comment'=>$data['cancel_comment'] ]);
-
-        // Send notification to admin
-        MailController::orderCanceled($order,$user);
-        session()->flash('OrderCanceled');
-        return Redirect::back();
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        //
     }
 
 
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        $order = Order::with('cables.cable')->with('user')->findOrFail($id);
+        return view('admin.order.edit', compact('order'));
+    }
 
-    public function update(Request $request){
-
-        // TODO: Validation
-        $data = $request->all();
-        $order = Order::find($data['order_id']);
-        $user = User::find($order->user_id);
-        $order->comment = $data['comment'];
-        $order->address = $data['address'];
-        $order->pay_link = $data['pay_link'];
-        if (isset($data['status']) && $data['status'])        {
-            $order->status = $data['status'];
-            if ($order->user_id)
-            switch ($order->status) {
-                case 1:
-                    MailController::OrderConfirmed($user['email'], $order);
-                    break;
-                case 2:
-                    MailController::OrderPayed($user['email'], $order);
-                    break;
-                case 3:
-                    MailController::OrderFinished($user['email'], $order);
-                    break;
-            }
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(OrderRequest $request, $id)
+    {
+        $validated = $request->validated();
+        $order = Order::with('user')->findOrFail($id);
+        $order->update($validated);
+        if (isset($validated['status']) && $validated['status'])        {
+                if ($order->user_id)
+                switch ($validated['status']) {
+                    case 1:
+                        MailController::OrderConfirmed($order->user->email, $order);
+                        break;
+                    case 2:
+                        MailController::OrderPayed($order->user->email, $order);
+                        break;
+                    case 3:
+                        MailController::OrderFinished($order->user->email, $order);
+                        break;
+                }
         }
-        $order->save();
+
+        session()->flash('orderEdited',true);
+        return redirect()->back();
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        Order::findOrFail($id)->delete();
+        session()->flash('orderDeleted',true);
+        return redirect()->back();
     }
 }
