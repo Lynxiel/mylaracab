@@ -4,7 +4,7 @@
     <x-controls.list text="Товары" route="cables.index" classes="nav-link px-2 "/>
 </x-layouts.nav>
 
-<div class="content-container">
+<div class="content-container bg-light">
     <div class="px-4 py-5 mt-5  container">
         <h2 class="mb-4">Редактировать заказ №{{$order->order_id}} от {{$order->created_at->format('d-m-y')}}
         <span class="badge bg-primary text-end px-4">{{$order->getStatusTitle($order->status)}}</span></h2>
@@ -87,7 +87,6 @@
                             <th scope="col">Количество</th>
                             <th scope="col">Цена</th>
                             <th scope="col">Сумма</th>
-                            <th scope="col">Удалить</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -98,7 +97,6 @@
                                     <td class="py-2">{{$cable->quantity}}м</td>
                                     <td class="py-2">{{sprintf("%.2f",$cable->price)}}₽</td>
                                     <td class="py-2">{{sprintf("%.2f",$cable->quantity*$cable->price)}}₽</td>
-                                    <td class="py-2">Удалить</td>
                                 </tr>
 
                                         @php  $sum += $cable->price*$cable->quantity;  @endphp

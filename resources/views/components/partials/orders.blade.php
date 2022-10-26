@@ -28,31 +28,10 @@
             @foreach($orders as $order)
                 @php  $summ = 0;   @endphp
                 <tr>
-                    <td><a href="{{route('orders.edit',['order'=>$order->order_id])}}">{{$order->order_id}}</a></td>
+                    <td>{{$order->order_id}}</td>
                     <td>{{$order->created_at->format('d.m.y')}}</td>
                     <td>сумма</td>
-                    <td>@switch($order->status)
-                            @case(0)
-                            <p class="text-danger m-0 p-0"> Создан </p>
-                            @break
-
-                            @case(1)
-                            <p class="text-primary  m-0 p-0">Подтвержден, ожидает оплаты</p>
-                            @break
-
-                            @case(2)
-                            <p class="text-success  m-0 p-0">Оплачен</p>
-                            @break
-
-                            @case(3)
-                            <p class="text-light  m-0 p-0">Завершен</p>
-                            @break
-
-                            @case(4)
-                            <p class="text-danger  m-0 p-0">Отменен</p>
-                            @break
-
-                        @endswitch</td>
+                    <td><a href="{{route('orders.edit',['order'=>$order->order_id])}}">{{$order->getStatusTitle($order->status)}}</a></td>
 
                     <td>{{$order->user->email??''}}</td>
                     <td>{{$order->user->phone??''}}</td>

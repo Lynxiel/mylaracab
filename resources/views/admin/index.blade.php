@@ -7,7 +7,7 @@
     <x-controls.list text="Товары" route="cables.index" classes="nav-link px-2 "/>
 </x-layouts.nav>
 <body>
-<div class="content-container">
+<div class="content-container bg-light">
     <div class="container">
             @include('partials.flashmessages')
 

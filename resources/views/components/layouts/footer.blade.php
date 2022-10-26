@@ -19,10 +19,10 @@
                     <li class="nav-item mb-2 text-white"><a class="text-white" href="tel:+7-953-954-20-16">+7-953-954-20-16</a> </li>
                     <li class="nav-item mb-2 text-white">г.Новомосковск</li>
                     <li class="nav-item mb-2 text-white">ул. Садовского д.34</li>
-                    <ul class="nav col-md-12 justify-content-start list-unstyled d-flex">
-                        <li class="ms-3"><a class="text-white" href="https://vk.com/elektrika71"><img src="{{asset('images/vk.png')}}"></a></li>
-                        <li class="ms-3"><a class="text-white" href="https://t.me/elektrikanmk"><img src="{{asset('images/tg.png')}}"> </a></li>
-                        <li class="ms-3"><a class="text-white" href="https://t.me/elektrikanmk"><svg class="bi" width="24" height="24"><use xlink:href="#facebook"></use></svg></a></li>
+                    <ul class="nav col-md-12 justify-content-start list-unstyled d-flex social-links mt-2">
+                        <li class="m-0"><a id="vk" class="text-white" href="https://vk.com/elektrika71"><img src="{{asset('images/vk.png')}}"></a></li>
+                        <li class="m-0"><a id="tg" class="text-white" href="https://t.me/elektrikanmk"><img src="{{asset('images/tg.png')}}"> </a></li>
+                        <li class="m-0"><a id="wa" class="text-white" href="https://t.me/elektrikanmk"><img src="{{asset('images/wa.png')}}"></a></li>
                     </ul>
                 </ul>
             </div>

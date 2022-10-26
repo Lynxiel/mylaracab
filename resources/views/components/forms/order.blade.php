@@ -1,86 +1,89 @@
+    <div class="row border-bottom bottom-secondary pb-4">
 
-<div class="row">
-    @if ($order->status==1)
-        <div class="col-lg-3 col-sm-6 col-xs-6 mb-4">
-            <a target="_blank" href="{{route('order.invoice.show', ['order_id' => $order->order_id])}}"><button class="btn btn-primary">Сформировать счет</button></a>
+        @if ($order->status==0)
+            <div class="mb-4 text-start">В ближайшее время с Вами свяжется наш менеджер для подтверждения заказа. </div>
+        @endif
+
+        <div class="col-md-9">
+            @php $summ =  0; $i=1; @endphp
+
+            @foreach($order->cables as $cable )
+                <div class="row border border-1 order-cable">
+                    <div class="d-none d-sm-block col-sm-1  col-md-1 col-lg-1">{{$i++}}</div>
+                    <div class="col-6 col-sm-5 col-md-5 col-lg-7 fw-bold ">{{$cable->cable->title}}</div>
+                    <div class="col-3 col-sm-3 col-md-4 p-0 col-lg-2 text-end">{{$cable->quantity}}м х {{$cable->price}}₽</div>
+                    <div class="col-3 col-sm-3 col-md-2 col-lg-2 text-end">{{($cable->quantity*$cable->price)}}₽</div>
+                </div>
+
+
+                @php  $summ += $cable->price*$cable->quantity;  @endphp
+            @endforeach
+            <h4 class="summ mt-2 text-dark fw-bold text-end">Сумма: {{$summ}}₽</h4>
         </div>
-        <div class="col-lg-4 col-sm-6 col-xs-6 mb-4">
-            <!-- Button trigger modal -->
-            @if ($order->pay_link)
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#qrmodal{{$order->order_id}}">
-                    Получить QR-код
-                </button>
+        <div class="col-md-3">
 
-                <!-- Modal -->
-                <div class="modal fade" id="qrmodal{{$order->order_id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">QR-код для оплаты через Ваше банковское приложение</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                <a target="_blank" href="{{$order->pay_link}}">{{$order->pay_link}}</a>
-                            </div>
+            @if ($order->status==1)
+                <a target="_blank" href="{{route('order.invoice.show', ['order_id' => $order->order_id])}}"><button class="btn btn-secondary w-100 mb-2">Сформировать счет</button></a>
 
+                @if ($order->pay_link)
+                    <button type="button" class="btn btn-secondary mb-2 w-100" data-bs-toggle="modal" data-bs-target="#qrmodal{{$order->order_id}}">
+                        Оплата по QR-коду
+                    </button>
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="qrmodal{{$order->order_id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title text-white text-uppercase" id="exampleModalLabel">Отсканируйте QR-код по ссылке:</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <a class="active" target="_blank" href="{{$order->pay_link}}">Перейти</a>
+                                </div>
+
+                            </div>
                         </div>
                     </div>
-                </div>
+                @endif
+
+            @endif
+
+            @if ($order->status==0 || $order->status==1)
+
+                <x-controls.modal classes="w-100"  label="Отменить заказ" >
+                    <form action="{{route('order.cancel')}}" method="post">
+                        @csrf
+                        @method('delete')
+                        <h4 class="text-white">Действительно отменить заказ?</h4>
+                        <p class="text-white">Заказ будет удален из личного кабинета</p>
+                        <div class="form-floating mb-3 mt-4">
+                            <input type="hidden" name="order_id" readonly value="{{$order->order_id}}">
+                            <textarea type="text" class="form-control rounded-3" name="cancel_comment"> </textarea>
+                            <label class="px-4" for="cancel_comment">Оставьте комментарий</label>
+                        </div>
+                        <button type="submit" class="btn btn-danger">Да</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                    </form>
+                </x-controls.modal>
+
             @endif
         </div>
-
-    @endif
-    @if ($order->status==0)
-        <div class="p-3 mb-2 bg-warning text-dark">В ближайшее время с Вами свяжется наш менеджер для подтверждения заказа. После этого станет доступна оплата и формирование счета.</div>
-    @endif
-
-    @if ($order->delivery_address)
-        <div class="form-floating mb-3  col-lg-6 col-md-6 col-sm-6 col-xs-12">
-            <input type="text" class="form-control rounded-3" disabled value="{{$order->delivery_address}}">
-            <label class="px-4" for="floatingInput">Адрес доставки</label>
-        </div>
-    @endif
-    @if ($order->comment)
-        <div class="form-floating mb-3  col-lg-6 col-md-6 col-sm-6 col-xs-12">
-            <input type="text" class="form-control rounded-3" disabled value="{{$order->comment}}">
-            <label class="px-4" for="floatingInput">Комментарий</label>
-        </div>
-    @endif
-
-
-    @php $summ =  0; @endphp
-
-    @foreach($order->cables as $cable )
-        <div  class="list-group-item list-group-item-action d-flex gap-3 py-1" aria-current="true">
-            <div class="d-flex gap-2 w-100 justify-content-between">
-                <div>
-                    <h6 class="mb-0">{{$cable->cable->title}} </h6>
+            <div class="row mt-4 px-0">
+                <div class="col-12 col-sm-6  form-floating">
+                    @if ($order->comment)
+                        <input type="text" class="form-control rounded-3 w-100" disabled value="{{$order->comment}}">
+                        <label class="px-4 " for="floatingInput">Комментарий</label>
+                    @endif
                 </div>
-                <small class="opacity-50 text-nowrap cable-price">{{$cable->quantity}}м х {{$cable->price}}₽</small>
-                <small class="opacity-50 text-nowrap cable-price">{{($cable->quantity*$cable->price)}}₽</small>
-                @php  $summ += $cable->price*$cable->quantity;  @endphp
+                <div class="col-12 col-sm-6 form-floating">
+                    @if ($order->address)
+                        <input type="text" class="form-control rounded-3 w-100" disabled value="{{$order->address}}">
+                        <label class="px-4 " for="floatingInput">Адрес доставки</label>
+                    @endif
+                </div>
             </div>
-        </div>
-    @endforeach
-    <strong class="summ mt-3 text-end">Сумма: {{$summ}}₽</strong>
 
-    @if ($order->status==0 || $order->status==1)
 
-        <x-controls.modal label="Отменить заказ" >
-            <form action="{{route('order.cancel')}}" method="post">
-                @csrf
-                @method('delete')
-                <h4>Действительно отменить заказ?</h4>
-                <p>Заказ будет удален из личного кабинета</p>
-                <div class="form-floating mb-3 mt-4">
-                    <input type="hidden" name="order_id" readonly value="{{$order->order_id}}">
-                    <textarea type="text" class="form-control rounded-3" name="cancel_comment"> </textarea>
-                    <label class="px-4" for="cancel_comment">Оставьте комментарий</label>
-                </div>
-                <button type="submit" class="btn btn-danger">Да</button>
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
-            </form>
-        </x-controls.modal>
+    </div>
 
-    @endif
-</div>

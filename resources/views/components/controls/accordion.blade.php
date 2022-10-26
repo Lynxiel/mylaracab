@@ -1,5 +1,5 @@
 
-<div class="accordion-item">
+<div class="accordion-item mb-2">
     <h2 class="accordion-header" id="panelsStayOpen-heading{{$id}}">
         <button class="accordion-button {{$collapsed?'collapsed':''}}" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapse{{$id}}" aria-expanded="{{$collapsed?'false':'true'}}" aria-controls="panelsStayOpen-collapse{{$id}}">
             {{$header}}

@@ -2,6 +2,7 @@
     'heading',
     'label'=> 'Модальная форма',
     'id' => null,
+    'classes' => ''
 
 ])
 
@@ -14,7 +15,7 @@
 
 
 <!-- Button trigger modal -->
-<button type="button" class="btn btn-danger mt-4" data-bs-toggle="modal" data-bs-target="#{{$id}}">
+<button type="button" class="btn btn-danger {{$classes}}" data-bs-toggle="modal" data-bs-target="#{{$id}}">
     {{$label}}
 </button>
 

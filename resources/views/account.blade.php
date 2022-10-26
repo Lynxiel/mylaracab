@@ -2,12 +2,11 @@
 <body>
     <x-layouts.nav :cart="$cart" />
 
-<div class="content-container">
+<div class="content-container bg-light">
     <div class="container" id="account">
         @include('partials.flashmessages')
-        <h2 class="mt-4 text-center">Личный кабинет</h2>
-        <h4>История заказов</h4>
-        <div class="d-flex justify-content-end">
+        <h2 class="mt-4 text-start text-uppercase mt-5 pt-4">История заказов</h2>
+        <div class="d-flex justify-content-end mb-4">
             {{ $orders->links() }}
         </div>
 
@@ -21,29 +20,8 @@
                         @php  $summ = 0;  @endphp
             <x-controls.accordion  collapsed="{{$i==1?false:true}}" >
                 <x-slot:header>
-                    <h6 class="group-title">№{{$order->order_id}} от {{$order->created_at->format('d.m.y')}} -
-                        @switch($order->status)
-                            @case(0)
-                            <span class="text-bg-danger p-1">Создан</span>
-                            @break
-
-                            @case(1)
-                            <span class="text-bg-warning p-1">Подтвержден, ожидает оплаты</span>
-                            @break
-
-                            @case(2)
-                            <span class="text-bg-primary p-1">Оплачен</span>
-                            @break
-
-                            @case(3)
-                            <span class="text-bg-success p-1">Завершен</span>
-                            @break
-
-                            @case(4)
-                            <span class="text-bg-dark p-1">Отменен</span>
-                            @break
-
-                        @endswitch </h6>
+                    <h6 class="group-title text-dark">№{{$order->order_id}} от {{$order->created_at->format('d.m.y')}} -
+                        {{$order->getStatusTitle($order->status)}}
                 </x-slot:header>
 
                 <x-forms.order :order="$order" />
@@ -62,15 +40,7 @@
                 <p>Заказов пока нет</p>
             @endif
 
-            <div class="row panel-heading">
-                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 offset-md-4">
-                    <h4 class="mt-4">Личные данные</h4>
-                </div>
-
-                <div class="col-lg-4 col-md-4 col-sm-6 col-xs-6 mt-4">
-
-                </div>
-            </div>
+            <h4 class="mt-5 text-uppercase">Личные данные</h4>
             <form method="post" action="{{route('account.save')}}" class="mt-4">
                 @csrf
                 <div class="row">
@@ -129,7 +99,7 @@
 
 
             <!-- Button trigger modal -->
-            <button type="button" class="btn btn-secondary mt-4" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            <button type="button" class="btn btn-secondary mt-4 mb-4 text-white" data-bs-toggle="modal" data-bs-target="#exampleModal">
                 Удалить аккаунт
             </button>
 
@@ -138,8 +108,8 @@
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-body mt-3">
-                            <h4>Действительно удалить аккаунт?</h4>
-                            <p>Это действие нельзя будет обратить</p>
+                            <h4 class="text-white">Действительно удалить аккаунт?</h4>
+                            <p class="text-white">Это действие нельзя будет обратить</p>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Нет</button>

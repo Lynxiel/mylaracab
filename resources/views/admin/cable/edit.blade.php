@@ -4,7 +4,7 @@
     <x-controls.list text="Товары" route="cables.index" classes="nav-link px-2 "/>
 </x-layouts.nav>
 
-<div class="content-container">
+<div class="content-container bg-light">
     <div class="container">
         <a class="btn btn-secondary text-end" href="{{route('cables.index')}}">Назад</a>
         <h2 class="mb-4">Редактировать кабель {{$cable->title}}</h2>

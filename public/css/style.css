@@ -25,6 +25,10 @@ body{
 .rubik-bold{
     font-family: RubikBold;
 }
+
+.accordion-item{
+    border: none;
+}
 .active{
     color: #ffc107!important;
 }
@@ -37,6 +41,20 @@ body{
 footer{
     border-bottom: 5px solid #f89538;
     border-top: 5px solid #f89538;
+}
+.social-links #vk img, .social-links #wa img{
+    width: 40px;
+    height: 40px;
+}
+
+.social-links #tg img{
+    width: 55px;
+    height: 55px;
+    margin-top: -7px;
+}
+.social-links #vk img{
+    width: 40px;
+    height: 40px;
 }
 .groups-container thead{
     background: #f89538;
@@ -149,6 +167,14 @@ footer{
         max-width: 110px;
 
     }
+
+footer    .col-6{
+        width: 100%;
+    }
+
+footer .company-contacts{
+    margin-top: 10px;
+}
 }
 
 
@@ -294,21 +320,43 @@ footer{
     margin-bottom: 5px;
 }
 
-.modal-content{ background: currentColor}
+.modal-content{ background: #666666}
 /*.modal-content input{*/
 /*    background: #333;*/
 /*}*/
 
 .btn-close{
-    background: white;
+    background: url(/images/power.svg) center/2em auto no-repeat;
     line-height: 0;
+    opacity: 0.8;
+}
+.btn-close:hover {
+    color: white;
+    opacity: 1;
 }
 
 /*-------------- ACCOUNT --------------*/
 #account .accordion-button{
-    background: #666;
+    background: transparent;
     color: white;
+    font-family: RubikBold;
+    text-transform: uppercase;
+    padding: 0;
+    box-shadow: none;
+    border-bottom: 5px solid orange;
+    border-top: 1px solid white;
+    padding-top: 8px;
+    border-radius: 0;
 }
+
+#account .accordion-item{
+    background: transparent;
+}
+#account .accordion-header{
+    border:none;
+    background: transparent;
+}
+
 #account .panel-heading button{
     width: 100%;
 }
@@ -352,6 +400,9 @@ footer .mb-2{
     .cart-add, .cart-added{
         height: 28px;
         margin-top: -5px;
+    }
+    .order-cable{
+        font-size: 12px;
     }
 }
 
