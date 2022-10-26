@@ -30,6 +30,8 @@ use App\Http\Controllers\Admin\CableGroupController as AdminCableGroup;
 Route::get('/', [HomeController::class,'index'])->name('index');
 Route::get('delivery', [HomeController::class,'delivery'])->name('delivery');
 Route::get('about_us', [HomeController::class,'about_us'])->name('about_us');
+Route::get('politics', [HomeController::class,'politics'])->name('politics');
+Route::get('agreement', [HomeController::class,'agreement'])->name('agreement');
 
 Route::post('cart', [CartController::class,'add'])->name('cart.add');
 Route::put('cart', [CartController::class,'update'])->name('cart.update');

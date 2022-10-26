@@ -42,7 +42,7 @@
 
                     </div>
                     <button class="w-100 mb-2 btn btn-lg rounded-3 btn-orange text-uppercase" type="submit">Зарегистрироваться</button>
-                    <small class="text-white-50">Нажимая "Зарегистрироваться", Вы соглашаетесь с <a href="###" class="text-orange">условиями использования</a></small>
+                    <small class="text-white-50">Нажимая "Зарегистрироваться", Вы даете согласие на <a href="{{route('agreement')}}" class="text-orange"> обработку персональных данных</a></small>
 
                     @if (session('registerFailed') )
                             <script>

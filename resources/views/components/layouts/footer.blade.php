@@ -1,17 +1,19 @@
 <footer>
     <div class="container mt-5">
         <div class="row mb-4">
-            <div class="col-lg-2  col-sm-4 col-6  footer-menu">
-                <h4 class="rubik-bold text-white">Меню</h4>
+            <div class="col-lg-3 col-md-3 col-sm-4 col-6  footer-menu">
+                <h4 class="rubik-bold text-white text-uppercase">Меню</h4>
                 <ul class="nav flex-column justify-content-between">
                     <x-controls.list text="Главная" route="index" classes=" nav-link p-0 m-0 text-white" color="secondary"/>
                     <x-controls.list text="Доставка и оплата" route="delivery" classes="nav-link p-0 m-0 text-white" color="secondary"/>
-                    <x-controls.list text="О нас" route="about_us" classes="nav-link p-0 m-0 text-white" color="secondary" />
+                    <x-controls.list text="О нас" route="about_us" classes="nav-link p-0 m-0 text-white " color="secondary" />
+                    <x-controls.list text="Политика конфиденциальности" route="politics" classes="nav-link p-0 m-0 text-white fs-6" color="secondary" />
+                    <x-controls.list text="Согласие на обработку персональных данных" route="agreement" classes="nav-link p-0 m-0 text-white" color="secondary" />
                 </ul>
             </div>
 
-            <div class="col-lg-2 col-sm-4 col-6 company-contacts">
-                <h4 class="rubik-bold text-white">Контакты</h4>
+            <div class="col-lg-3 col-md-3 col-sm-4 col-6 company-contacts">
+                <h4 class="rubik-bold text-white text-uppercase">Контакты</h4>
                 <ul class="nav flex-column ">
                     <li class="nav-item mb-2 text-white">+7-953-954-20-16</li>
                     <li class="nav-item mb-2 text-white">tricolor-nsk@mail.ru</li>
@@ -22,7 +24,7 @@
 
 
 
-            <div class="col-lg-8 col-sm-4 ">
+            <div class="col-lg-6 col-md-6 col-sm-4  col-12">
             </div>
         </div>
 
