@@ -4,9 +4,11 @@
     'value'   =>'',
     'type'    => 'text',
     'id'      => null,
+    'placeholder' =>'',
     'required'=>  null,
     'class'   => 'form-control rounded-3',
     'addon'   => null
+
 ])
 
 @php
@@ -17,14 +19,17 @@
 <input
     type="{{$type}}"
     name="{{$name}}"
+    {{$placeholder?'placeholder='.$placeholder:''}}
     {{$required?'required':''}}
     class="{{$class}}"
     id="{{$id}}"
     value="{{old($name)?? $value}}" />
-    @if ($label)<label
-    for="{{$id}}">
-    {{$label}}
-</label> @endif
+    @if ($label)
+        <label
+        for="{{$id}}">
+        {{$label}}
+        </label>
+    @endif
 {{$slot}}
 @error($name)
     <div class="alert alert-danger mt-1">

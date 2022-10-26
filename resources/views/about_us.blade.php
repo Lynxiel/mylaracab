@@ -1,6 +1,6 @@
 <x-layouts.header title="КабельОпт71" />
-<x-layouts.nav :cart="$cart" />
 <body>
+<x-layouts.nav-front :cart="$cart" />
     <div class="content-container">
         @include('partials.flashmessages')
 
