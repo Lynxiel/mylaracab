@@ -1,10 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Illuminate\Foundation\Auth\EmailVerificationRequest;
-use Illuminate\Http\Request;
-use TCG\Voyager\Facades\Voyager;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ContactUsController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\InvoiceController;
@@ -32,6 +30,8 @@ Route::get('delivery', [HomeController::class,'delivery'])->name('delivery');
 Route::get('about_us', [HomeController::class,'about_us'])->name('about_us');
 Route::get('politics', [HomeController::class,'politics'])->name('politics');
 Route::get('agreement', [HomeController::class,'agreement'])->name('agreement');
+
+Route::post('contact_us', [ContactUsController::class,'index'])->name('contact_us');
 
 Route::post('cart', [CartController::class,'add'])->name('cart.add');
 Route::put('cart', [CartController::class,'update'])->name('cart.update');

@@ -31,12 +31,14 @@
 
             <div class="col-lg-6 col-md-6 col-sm-12  col-12 mt-4 mt-md-0">
                 <h4 class="rubik-bold text-white text-uppercase">Связаться с нами</h4>
-                <form action="" method="post">
+                <form action="{{route('contact_us')}}" method="post">
+                    @csrf
                     <div class="form-group ">
-                        <x-controls.input name="name" placeholder="Имя" type="text" required="1" type="text"  value="{{old('name')}}" />
+                        <x-controls.input name="email" placeholder="Email" type="email" required="1" type="text"  value="{{old('name')}}" />
                     </div>
                     <div class="form-group mt-2">
                         <textarea placeholder="Ваше сообщение" class="form-control" name="message" required></textarea>
+                        @error('message')<div class="alert alert-danger mt-1">{{$message}}</div>@enderror
                     </div>
                     <input type="submit" class="btn btn-orange mt-2">
                 </form>
