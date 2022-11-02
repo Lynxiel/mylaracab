@@ -126,13 +126,10 @@ window.onload = function() {
     }
 
     function cartRefreshCallback(data){
-        $('#cart-replace').empty().append(data);
-        $('#cart-replace').find('#CartModal').addClass('d-block show');
-        // Temp, not cool
-        // bootstrap not working on recieved ajax dom
-        $("#CartModal .btn-close, .modal-backdrop").click(function (){
-            $('#CartModal , .modal-backdrop').removeClass('d-block show');
-        })
+        console.log(data);
+        var newdata = $(data).find('.modal-content');
+        $('#CartModal').find('.modal-content').empty().append(newdata);
+        $('#cart-btn').replaceWith($(data).closest('button'));
     }
 
 
