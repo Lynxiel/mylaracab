@@ -25,6 +25,15 @@ body{
 .rubik-bold{
     font-family: RubikBold;
 }
+.lead{
+    font-family: system-ui;
+}
+#featured h2, #requisites h2{
+    border-bottom: 5px solid #f89538;
+}
+#requisites p{
+    font-family: system-ui;
+}
 
 .accordion-item{
     border: none;

@@ -2,7 +2,7 @@
         <img id="lines" class="position-absolute top-0 start-50 translate-middle-x" src="{{asset('images/lines.svg')}}">
 
     <div class="col-sm-6 col-xs-12 mt-sm-5 col-xs-12">
-        <img id="logo" src="{{asset('images/logo2.svg')}}" />
+        <a href="{{route('index')}}"> <img id="logo" src="{{asset('images/logo2.svg')}}" /></a>
     </div>
     <div class="col-sm-6 col-xs-12 my-sm-5 pt-sm-5">
         <h1 class="text-white rubik">Оптовая продажа</h1>
