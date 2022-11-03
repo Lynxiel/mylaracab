@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Order;
 use Illuminate\Http\Request;
+use Illuminate\Database\Query\Builder;
 
 class AdminController extends Controller
 {
@@ -14,12 +15,12 @@ class AdminController extends Controller
      */
     public function index()
     {
-        $orders = Order::with('user')
+        $orders = Order::with(['user', 'cables'])
             ->orderByDesc('created_at')
             ->orderBy('status');
-
         $orders = $orders->limit(10)->get();
-        //dd($orders);
+
+
         return view('admin.index' , compact('orders'));
     }
 

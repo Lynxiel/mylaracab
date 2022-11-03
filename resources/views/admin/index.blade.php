@@ -1,6 +1,4 @@
 <x-layouts.header>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.min.js"></script>
 </x-layouts.header>
 <x-layouts.nav >
     <x-controls.list text="Заказы" route="orders.index" classes="nav-link px-2 "/>
@@ -25,9 +23,6 @@
                     </button>
                 </div>
             </div>
-
-            <canvas class="my-4 w-100 chartjs-render-monitor" id="myChart" width="989" height="417" style="display: block; width: 989px; height: 417px;"></canvas>
-
             <x-partials.orders title="Последние заказы" :orders="$orders" />
         </main>
 
