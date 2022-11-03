@@ -4,7 +4,7 @@
         <div class="position-absolute top-0 end-0 ">
             <p class="text-white  text-center text-md-end text-uppercase fw-bolder mb-0">Нужна помощь? Звоните</p>
             <a href="tel:+79539542016">
-                <h2 class="text-uppercase text-orange text-center text-md-end">+7 (953)-954-20-16</h2>
+                <h4 class="text-uppercase text-orange text-center text-md-end">+7 (953)-954-20-16</h4>
             </a>
             <div class="text-center text-md-end work-hours">
                 <small class="text-white">Пн-пт:10-19</small>

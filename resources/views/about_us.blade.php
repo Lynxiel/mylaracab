@@ -4,7 +4,7 @@
     <div class="content-container">
         @include('partials.flashmessages')
 
-        <div class="px-4  text-center ">
+        <div class="px-4 mt-5  text-center ">
             <h1 class="display-4 fw-bold text-white text-uppercase">Кабель оптом</h1>
             <div class="col-lg-8 mx-auto">
                 <p class="lead text-white">Мы небольшой семейный магазин
