@@ -76,6 +76,7 @@ footer{
 }
 .text-orange{
     color: #f89538;
+    text-decoration: inherit;
 }
 .border-orange{
     border: 5px solid #f89538;
@@ -114,6 +115,9 @@ footer{
 .right-label{
     position: absolute;
     right: -60px;
+}
+.work-hours{
+    margin-top:-10px;
 }
 .group-container{
     margin-bottom: 20px;

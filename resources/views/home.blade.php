@@ -2,7 +2,10 @@
 <body>
     <x-layouts.nav-front :cart="$cart" />
 
+    <div class="container mt-4">
         @include('partials.flashmessages')
+    </div>
+
 
         <div class="container mt-5 groups-container">
             @foreach($groups as $group)
