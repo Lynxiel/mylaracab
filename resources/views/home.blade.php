@@ -2,40 +2,43 @@
 <body>
     <x-layouts.nav-front :cart="$cart" />
 
+    <div class="container mt-4">
         @include('partials.flashmessages')
+    </div>
 
-        <div class="container mt-5 groups-container">
-            @foreach($groups as $group)
-                @php  $summ = 0; $i=1;  @endphp
 
-                <div class="row px-2 text-white ">
-                    <div class="col-3 text-center  border-5 cable-category"><h2 class="mt-4 rubik-bold">{{$group->title}}</h2></div>
-                    <div class="col-9"><p class="ps-4">{{$group->description}}</p></div>
+    <div class="container mt-5 groups-container">
+        @foreach($groups as $group)
+            @php  $summ = 0; $i=1;  @endphp
+
+            <div class="row px-2 text-white ">
+                <div class="col-3 text-center  border-5 cable-category"><h2 class="mt-4 rubik-bold">{{$group->title}}</h2></div>
+                <div class="col-9"><p class="ps-4">{{$group->description}}</p></div>
+            </div>
+
+            <div class="my-5">
+                <div class="row text-white border-orange bg-orange rubik-bold ">
+                    <div class="col-0 col-md-1 text-white d-none d-md-block p-0">№</div>
+                    <div class="col-3 col-sm-4 col-lg-4 p-0 text-white">НАЗВАНИЕ</div>
+                    <div class="col-3 col-sm-2 col-lg-2 p-0 text-white">БУХТОВКА</div>
+                    <div class="col-3 col-sm-2 col-lg-2 p-0 text-white">НАЛИЧИЕ</div>
+                    <div class="col-2 col-sm-2 col-lg-2 p-0 text-white">ЦЕНА</div>
+                    <div class="col-2 col-sm-2 col-lg-1 p-0 text-white"></div>
                 </div>
-
-                <div class="my-5">
-                    <div class="row text-white border-orange bg-orange rubik-bold ">
-                            <div class="col-0 col-md-1 text-white d-none d-md-block p-0">№</div>
-                            <div class="col-3 col-sm-4 col-lg-4 p-0 text-white">НАЗВАНИЕ</div>
-                            <div class="col-3 col-sm-2 col-lg-2 p-0 text-white">БУХТОВКА</div>
-                            <div class="col-3 col-sm-2 col-lg-2 p-0 text-white">НАЛИЧИЕ</div>
-                            <div class="col-2 col-sm-2 col-lg-2 p-0 text-white">ЦЕНА</div>
-                            <div class="col-2 col-sm-2 col-lg-1 p-0 text-white"></div>
-                    </div>
-                        <div class="row mt-4">
-                            @foreach($group->cables as $cable)
-                            <div class="row cable-row">
-                                <div class="               col-md-1 col-lg-1 p-0 px-md-3 text-white d-none d-md-block">{{$i++}}</div>
-                                <div class="col-4 col-sm-4 col-md-4 col-lg-4 px-3 px-md-3 text-white">{{$cable->title}}</div>
-                                <div class="col-2 col-sm-2 col-md-2 col-lg-2 p-0 px-md-3 text-white">{{$cable->footage}}м</div>
-                                <div class="col-2 col-sm-2 col-md-2 col-lg-2 p-0 px-md-3 text-white">{{$cable->instock}}м</div>
-                                <div class="col-2 col-sm-2 col-md-2 col-lg-2 p-0 px-md-3 text-white">{{$cable->price}}₽/м</div>
-                                <div class="col-2 col-sm-2 col-md-1 col-lg-1 p-0 mb-3">
-                                    <form method="post" action="{{route('cart.add')}}">
-                                        @csrf
-                                        <input  required name="cable_id" readonly value="{{$cable->cable_id}}" hidden>
-                                        @if ( session()->get('cable_id')!=null && key_exists($cable->cable_id,session()->get('cable_id')) )
-                                            <span class="d-inline-block " tabindex="0" data-bs-toggle="tooltip" title="Уже в корзине">
+                <div class="row mt-4">
+                    @foreach($group->cables as $cable)
+                        <div class="row cable-row">
+                            <div class="               col-md-1 col-lg-1 p-0 px-md-3 text-white d-none d-md-block">{{$i++}}</div>
+                            <div class="col-4 col-sm-4 col-md-4 col-lg-4 px-3 px-md-3 text-white">{{$cable->title}}</div>
+                            <div class="col-2 col-sm-2 col-md-2 col-lg-2 p-0 px-md-3 text-white">{{$cable->footage}}м</div>
+                            <div class="col-2 col-sm-2 col-md-2 col-lg-2 p-0 px-md-3 text-white">{{$cable->instock}}м</div>
+                            <div class="col-2 col-sm-2 col-md-2 col-lg-2 p-0 px-md-3 text-white">{{$cable->price}}₽/м</div>
+                            <div class="col-2 col-sm-2 col-md-1 col-lg-1 p-0 mb-3">
+                                <form method="post" action="{{route('cart.add')}}">
+                                    @csrf
+                                    <input  required name="cable_id" readonly value="{{$cable->cable_id}}" hidden>
+                                    @if ( session()->get('cable_id')!=null && key_exists($cable->cable_id,session()->get('cable_id')) )
+                                        <span class="d-inline-block " tabindex="0" data-bs-toggle="tooltip" title="Уже в корзине">
                                                     <button  type="button" disabled class="btn btn-outline-warning text-white cart-added" id="cart_{{$cable->cable_id}}"  >
                                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart-check" viewBox="0 0 16 16">
                                                             <path d="M11.354 6.354a.5.5 0 0 0-.708-.708L8 8.293 6.854 7.146a.5.5 0 1 0-.708.708l1.5 1.5a.5.5 0 0 0 .708 0l3-3z"/>
@@ -43,23 +46,23 @@
                                                         </svg>
                                                     </button>
                                                 </span>
-                                        @else
-                                            <button  type="submit"  class="btn btn-outline-warning text-white bg-orange cart-add" data-bs-toggle="tooltip" data-bs-placement="top" title="Добавить в корзину">
-                                                <svg  xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart" viewBox="0 0 16 16">
-                                                    <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"></path>
-                                                </svg>
-                                                @endif
+                                    @else
+                                        <button  type="submit"  class="btn btn-outline-warning text-white bg-orange cart-add" data-bs-toggle="tooltip" data-bs-placement="top" title="Добавить в корзину">
+                                            <svg  xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart" viewBox="0 0 16 16">
+                                                <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"></path>
+                                            </svg>
+                                            @endif
 
-                                            </button>
-                                    </form>
-                                </div>
+                                        </button>
+                                </form>
                             </div>
-
-                            @endforeach
                         </div>
-                    </div>
-            @endforeach
+
+                    @endforeach
+                </div>
             </div>
+        @endforeach
+    </div>
 
 
 <x-layouts.footer />

@@ -25,6 +25,15 @@ body{
 .rubik-bold{
     font-family: RubikBold;
 }
+.lead{
+    font-family: system-ui;
+}
+#featured h2, #requisites h2{
+    border-bottom: 5px solid #f89538;
+}
+#requisites p{
+    font-family: system-ui;
+}
 
 .accordion-item{
     border: none;
@@ -67,6 +76,7 @@ footer{
 }
 .text-orange{
     color: #f89538;
+    text-decoration: inherit;
 }
 .border-orange{
     border: 5px solid #f89538;
@@ -106,6 +116,9 @@ footer{
     position: absolute;
     right: -60px;
 }
+.work-hours{
+    margin-top:-10px;
+}
 .group-container{
     margin-bottom: 20px;
     padding-bottom: 20px;
@@ -141,7 +154,7 @@ footer{
 }
 
 .content-container{
-    margin-top: 80px;
+
 }
 
 @media (max-width: 992px) {
@@ -280,7 +293,7 @@ footer .company-contacts{
 
     #cables-container .cable-title, #cables-container .cable-instock,
     #cables-container .cable-footage,
-    #cables-container .cable-price{
+    #cables-container .cable-price {
         font-size: 10px;
     }
     #cables-container .cable-price{
@@ -302,7 +315,7 @@ footer .company-contacts{
         height: 40px;
     }
 
-    #cart-container h6{
+    #cart-container h6, .regions{
         font-size: 12px;
     }
 

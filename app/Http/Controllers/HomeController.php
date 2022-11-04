@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Cable;
 use App\Models\CableGroup;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Config;
 
 class HomeController extends Controller
 {
@@ -21,7 +22,8 @@ class HomeController extends Controller
     {
         //Cart
         $cart=CartController::init($request);
-        return view('delivery',compact( 'cart'));
+        $regions = Config::get('regions');
+        return view('delivery',compact( 'cart', 'regions'));
     }
 
     public function about_us(Request $request)
