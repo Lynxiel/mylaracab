@@ -49,6 +49,7 @@ Route::delete('account', [AccountController::class,'delete'])->name('account.del
 
 Route::post('register', [RegisterController::class,'register'])->name('register');
 Route::post('login', [LoginController::class,'login'])->name('login');
+Route::get('login', [LoginController::class,'admin'])->name('admin');
 Route::get('logout', [LogoutController::class,'perform'])->name('logout');
 
 

@@ -28,4 +28,10 @@ class LoginController extends Controller
         Auth::login($user);
         return Redirect::back();
     }
+
+    public function admin()
+    {
+
+        return view('admin.login');
+    }
 }

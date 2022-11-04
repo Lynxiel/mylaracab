@@ -177,7 +177,10 @@ footer .company-contacts{
 }
 }
 
-
+.form-signin {
+    max-width: 330px;
+    padding: 15px;
+}
 /*--- MODAL -----*/
 .modal-header {
     background: #f89538;
