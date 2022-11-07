@@ -15,23 +15,26 @@ class LoginController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+
+
     public function login(LoginRequest $request)
     {
         $credentials = $request->validated();
-        if(!Auth::validate($credentials)){
+        if(!Auth::attempt($credentials)){
             session()->flash('loginFailed');
             return back()->withErrors([
                 'auth_failed' => 'Неверный логин или пароль',
             ]);
         }
-        $user = Auth::getProvider()->retrieveByCredentials($credentials);
-        Auth::login($user);
-        return Redirect::back();
+        return redirect()->route('account.show');
     }
 
-    public function admin()
+    public function destroy(Request $request)
     {
-
-        return view('admin.login');
+        Auth::guard('web')->logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        return redirect('/');
     }
+
 }

@@ -40,10 +40,12 @@ class LoginRequest extends FormRequest
      */
     protected function prepareForValidation()
     {
-        $credentials =$this->getCredentials();
-        $this->merge(
-            $credentials
-        );
+        if ($this->has('emailorphone')){
+            $credentials =$this->getCredentials();
+            $this->merge(
+                $credentials
+            );
+        }
 
     }
 

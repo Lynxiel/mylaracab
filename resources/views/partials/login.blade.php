@@ -5,7 +5,7 @@
                     <div class="modal-dialog">
                         <div class="modal-content rounded-4 shadow ">
                             <div class="modal-header p-5 pb-4 border-bottom-0">
-                                <h2 class="modal-title fw-bold mb-0 text-white">ВОЙТИ В АЙТИ</h2>
+                                <h2 class="modal-title fw-bold mb-0 text-white">ВОЙТИ</h2>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
                                 </button>
                             </div>
@@ -38,7 +38,7 @@
 
                                     <button class="w-100 mb-2 btn btn-lg rounded-3 btn-orange text-uppercase" type="submit">Войти</button>
                                     @error('auth_failed') <div class="alert alert-danger mt-1">{{$message}}</div>  @enderror
-                                    @if (session('loginFailed') )
+                                    @if (session('loginFailed') || session('LoginRequired'))
 
                                         <script>
                                             $(function() {

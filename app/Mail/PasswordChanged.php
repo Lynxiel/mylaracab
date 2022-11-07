@@ -5,12 +5,13 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 
 class PasswordChanged extends Mailable
 {
     use Queueable, SerializesModels;
-    protected User $user;
+    protected  User $user;
     protected string $password;
 
 
@@ -19,7 +20,7 @@ class PasswordChanged extends Mailable
      *
      * @return void
      */
-    public function __construct( User $user, string $password ){
+    public function __construct( User $user,  string $password ){
         $this->user = $user;
         $this->password = $password;
     }

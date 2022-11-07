@@ -1,7 +1,8 @@
-/*------------------- CART----------------------*/
+
 window.onload = function() {
     if (window.jQuery) {
 
+        /*------------------- CART----------------------*/
         $('.cart-add').on('click',function(e){
 
             e.preventDefault();

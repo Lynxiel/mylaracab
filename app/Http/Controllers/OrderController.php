@@ -38,7 +38,7 @@ class OrderController extends Controller
         session()->flash('OrderSend');
         if ($user) {
             MailController::orderSend($request,$order);
-            return redirect()->intended('/account');
+            return redirect()->route('account.show');
         }
         return redirect()->back();
     }

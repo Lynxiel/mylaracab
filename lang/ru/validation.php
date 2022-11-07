@@ -154,7 +154,9 @@ return [
         'cable_group_id'=>'Группа кабеля',
         'footage'=>'Метраж',
         'instock'=>'Наличие',
-        'price'=>'Цена'
+        'price'=>'Цена',
+        'new_password'=>'Новый пароль',
+        'new_password_confirmation'=>'Подтверждение нового пароля'
     ],
 
 ];

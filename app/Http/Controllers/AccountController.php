@@ -50,7 +50,7 @@ class AccountController extends Controller
     public function save(SaveUserDataRequest $request){
         $data = $request->validated();
         User::findOrFail(auth()->user()->id)->update($data);
-        return Redirect::back();
+        return Redirect::route('account.show');
     }
 
     public function recover(RecoverRequest $request){
@@ -64,4 +64,5 @@ class AccountController extends Controller
         session()->flash('emailrecover', $email);
         return Redirect::back();
     }
+
 }

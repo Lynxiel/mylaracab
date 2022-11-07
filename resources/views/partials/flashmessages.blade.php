@@ -22,7 +22,7 @@
 
 @if (session('PasswordChanged'))
     <div class="alert bg-orange alert-dismissible fade show text-white" role="alert">
-        Письмо с учетными данными было отправлено на {{session('emailrecover')}}!
+        Письмо с учетными данными было отправлено на {{session('emailrecover')??auth()->user()->email}}!
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
 @endif

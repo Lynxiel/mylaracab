@@ -48,6 +48,7 @@ body{
     font-family: RubikLight;
 }
 footer{
+    background: #333;
     border-bottom: 5px solid #f89538;
     border-top: 5px solid #f89538;
 }
@@ -154,7 +155,7 @@ footer{
 }
 
 .content-container{
-
+    margin-top: 70px;
 }
 
 @media (max-width: 992px) {
@@ -179,6 +180,10 @@ footer{
     #top-menu .lk-btn{
         max-width: 110px;
 
+    }
+
+    #top-menu li{
+        font-size: 12px;
     }
 
 footer    .col-6{
