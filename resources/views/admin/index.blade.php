@@ -1,12 +1,9 @@
 <x-layouts.header>
 </x-layouts.header>
-<x-layouts.nav >
-    <x-controls.list text="Заказы" route="orders.index" classes="nav-link px-2 "/>
-    <x-controls.list text="Товары" route="cables.index" classes="nav-link px-2 "/>
-</x-layouts.nav>
+<x-layouts.nav-back />
 <body>
-<div class="content-container bg-light">
-    <div class="container">
+<div class="bg-light">
+    <div class="container py-4">
             @include('partials.flashmessages')
 
         <main class="col-md-12 ms-sm-auto col-lg-12 px-md-12"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>

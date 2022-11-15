@@ -1,8 +1,5 @@
 <x-layouts.header/>
-<x-layouts.nav >
-    <x-controls.list text="Заказы" route="orders.index" classes="nav-link px-2 "/>
-    <x-controls.list text="Товары" route="cables.index" classes="nav-link px-2 "/>
-</x-layouts.nav>
+<x-layouts.nav-back />
 
 <div class="content-container bg-light">
     <div class="px-4  container">

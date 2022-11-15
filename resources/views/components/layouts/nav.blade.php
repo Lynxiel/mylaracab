@@ -7,19 +7,15 @@
                 <x-controls.list text="Доставка и оплата" route="delivery" classes="nav-link px-2 "/>
                 <x-controls.list text="О нас"             route="about_us" classes="nav-link px-2 "/>
                 {{$slot}}
+
             </ul>
 
             <div>
-
-                @if (isset(auth()->user()->email))
-                    @include('partials.logout')
-                @else
-                    @include('partials.login')
-                    @include('partials.register')
+                @can('dashboard')
+                    <a class="btn btn-outline-light me-2 lk-btn" href="{{route('admin.index')}}">Админ панель</a>
                 @endif
-                <span id="cart-replace">
-                    @include('partials.cart')
-                </span>
+                <a class="btn btn-outline-light me-2 lk-btn" href="{{route('account.show')}}">{{auth()->user()->email}}</a>
+                <a href="{{ route('logout') }}" class="btn btn-outline-light me-2">Выйти</a>
             </div>
         </div>
     </div>

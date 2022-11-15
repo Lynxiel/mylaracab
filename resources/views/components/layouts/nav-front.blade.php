@@ -34,6 +34,9 @@
             </ul>
 
             <div>
+                @can('dashboard')
+                    <a class="btn btn-outline-light me-2 lk-btn" href="{{route('admin.index')}}">Админ панель</a>
+                @endif
 
                 @if (isset(auth()->user()->email))
                     @include('partials.logout')

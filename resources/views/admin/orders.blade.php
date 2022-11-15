@@ -1,11 +1,8 @@
 <x-layouts.header/>
-<x-layouts.nav >
-    <x-controls.list text="Заказы" route="orders.index" classes="nav-link px-2 "/>
-    <x-controls.list text="Товары" route="cables.index" classes="nav-link px-2 "/>
-</x-layouts.nav>
+<x-layouts.nav-back />
 <body>
-<div class="content-container bg-light">
-    <div class="container mt-4">
+<div class="bg-light">
+    <div class="container py-4">
         @include('admin.partials.flashmessages')
 
        <x-partials.orders title="Заказы" :orders="$orders" />
