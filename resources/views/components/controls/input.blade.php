@@ -6,7 +6,7 @@
     'id'      => null,
     'placeholder' =>'',
     'required'=>  null,
-    'class'   => 'form-control rounded-3',
+    'class'   => 'form-control ',
     'addon'   => null
 
 ])

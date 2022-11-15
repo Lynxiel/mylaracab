@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Order;
 use Illuminate\Http\Request;
 use Illuminate\Database\Query\Builder;
+use Illuminate\Support\Facades\Gate;
 
 class AdminController extends Controller
 {

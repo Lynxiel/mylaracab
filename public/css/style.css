@@ -293,7 +293,9 @@ footer .company-contacts{
     height: 30px;
     padding: 0 10px 0 10px;
 }
-
+.error-404{
+    font-size: 7em;
+}
 @media (max-width: 450px) {
 
     #cables-container .cable-title, #cables-container .cable-instock,

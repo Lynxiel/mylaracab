@@ -11,7 +11,7 @@
                 <form method="post" action="{{route('account.recover')}}">
                     @method('PUT')
                     @csrf
-                    <div class="input-group mb-3">
+                    <div class="input-group my-3">
                         <input type="email"  name="email" required class="form-control" id="email" placeholder="Email" aria-describedby="btn-recovery"  >
                         <button type="submit" class="btn btn-success" type="button" id="btn-recovery">Отправить</button>
                     </div>
@@ -34,8 +34,7 @@
                         </div>
                     @endif
                 @endif
-                <hr>
-                <p class="text-center text-muted fs-6 mb-0">
+                <p class="text-center  fs-6 mb-0 text-white">
                     На указанный email-адрес придёт новый пароль, который вы сможете изменить в личном кабинете.
                 </p>
             </div>

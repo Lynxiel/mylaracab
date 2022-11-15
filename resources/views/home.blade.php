@@ -1,4 +1,4 @@
-<x-layouts.header title="КабельОпт71" description="оптовая прожада электрического кабеля и провода в тульской области" />
+<x-layouts.header title="КабельОпт71" description="оптовая продажа электрического кабеля и провода в тульской области" />
 <body>
     <x-layouts.nav-front :cart="$cart" />
 
@@ -31,8 +31,8 @@
                             <div class="               col-md-1 col-lg-1 p-0 px-md-3 text-white d-none d-md-block">{{$i++}}</div>
                             <div class="col-4 col-sm-4 col-md-4 col-lg-4 px-3 px-md-3 text-white">{{$cable->title}}</div>
                             <div class="col-2 col-sm-2 col-md-2 col-lg-2 p-0 px-md-3 text-white">{{$cable->footage}}м</div>
-                            <div class="col-2 col-sm-2 col-md-2 col-lg-2 p-0 px-md-3 text-white">{{$cable->instock}}м</div>
-                            <div class="col-2 col-sm-2 col-md-2 col-lg-2 p-0 px-md-3 text-white">{{$cable->price}}₽/м</div>
+                            <div class="col-2 col-sm-2 col-md-2 col-lg-2 p-0 px-md-3 text-white">{{floor($cable->instock/$cable->footage)*$cable->footage}}м</div>
+                            <div class="col-2 col-sm-2 col-md-2 col-lg-2 p-0 px-md-3 text-white">{{sprintf("%.2f",$cable->price) }}₽/м</div>
                             <div class="col-2 col-sm-2 col-md-1 col-lg-1 p-0 mb-3">
                                 <form method="post" action="{{route('cart.add')}}">
                                     @csrf

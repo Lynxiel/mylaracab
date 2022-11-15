@@ -26,7 +26,10 @@ class LoginController extends Controller
                 'auth_failed' => 'Неверный логин или пароль',
             ]);
         }
-        return redirect()->route('account.show');
+
+        return auth()->user()->isAdmin!=true?
+            redirect()->route('account.show'):
+            redirect()->route('admin.index');
     }
 
     public function destroy(Request $request)
