@@ -9,13 +9,12 @@
                 {{$slot}}
 
             </ul>
-
-            <div>
-                @can('dashboard')
-                    <a class="btn btn-outline-light me-2 lk-btn" href="{{route('admin.index')}}">Админ панель</a>
-                @endif
-                <a class="btn btn-outline-light me-2 lk-btn" href="{{route('account.show')}}">{{auth()->user()->email}}</a>
-                <a href="{{ route('logout') }}" class="btn btn-outline-light me-2">Выйти</a>
+        <div>
+            @can('dashboard')
+                <a class="btn btn-outline-light me-2 lk-btn" href="{{route('admin.index')}}">Админ панель</a>
+            @endif
+            <a class="btn btn-outline-light me-2 lk-btn" href="{{route('account.show')}}">{{auth()->user()->email}}</a>
+            <a href="           {{ route('logout') }}" class="btn btn-outline-light me-2">Выйти</a>
             </div>
         </div>
     </div>

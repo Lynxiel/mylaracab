@@ -26,7 +26,7 @@
                                             <div class="row">
                                                 <div class="col-lg-4 col-md-4 col-sm-4 col-4 ">
                                                     <h6 class="mb-0 text-white">{{$item->title}} </h6>
-                                                    <p class="mb-0 opacity-75 text-orange">Доступно: {{$item->instock}}м</p>
+                                                    <p class="mb-0 opacity-75 text-orange">Доступно:{{floor($item->instock/$item->footage)*$item->footage}}м</p>
 
                                                 </div>
                                                 <div class="col-lg-2 col-md-2 col-sm-2 col-2 ">
