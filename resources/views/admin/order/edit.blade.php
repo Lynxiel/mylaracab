@@ -2,8 +2,9 @@
 <x-layouts.nav-back />
 
 
-<div class="content-container bg-light">
-    <div class="px-4 py-5 mt-5  container">
+<div class=" bg-light">
+    <div class="px-4 py-3   container">
+        <a class="btn btn-secondary text-end mb-3" href="{{route('orders.index')}}">Назад</a>
         <h2 class="mb-4">Редактировать заказ №{{$order->order_id}} от {{$order->created_at->format('d-m-y')}}
         <span class="badge bg-primary text-end px-4">{{$order->getStatusTitle($order->status)}}</span></h2>
         @if (!empty($order->user))
@@ -23,27 +24,28 @@
 
                     <div class="row">
 
-                        <div class="col-lg-12 mb-3">
-                            <label class="px-4" for="address">Адрес</label>
-                            <textarea  name="address"  class="form-control rounded-3"  id="address">{{$order->address}}</textarea>
+                        <div class="form-floating mb-3 col-12">
+                            <textarea  id="address" name="address" class="form-control rounded-3" id="address">{{$order->address}}</textarea>
+                            <label class="px-4" for="floatingInput">Адрес </label>
                             @error('address')
                             <div class="alert alert-danger mt-1">
                                 {{$message}}
                             </div>
                             @enderror
                         </div>
-                        <div class="col-lg-12 mb-3">
-                            <label class="px-4" for="comment">Комментарий</label>
+
+                        <div class="col-lg-12 mb-3 form-floating">
                             <textarea  name="comment"  class="form-control rounded-3"  id="comment">{{$order->comment}}</textarea>
+                            <label class="px-4" for="floatingInput">Комментарий</label>
                             @error('comment')
                             <div class="alert alert-danger mt-1">
                                 {{$message}}
                             </div>
                             @enderror
                         </div>
-                        <div class="col-lg-12 mb-3">
-                            <label class="px-4" for="pay_link">Ссылка для оплаты</label>
+                        <div class="col-lg-12 mb-3 form-floating">
                             <input  name="pay_link"  class="form-control rounded-3"  id="pay_link" value="{{$order->pay_link}}">
+                            <label class="px-4" for="floatingInput">Ссылка для оплаты</label>
                             @error('pay_link')
                             <div class="alert alert-danger mt-1">
                                 {{$message}}
@@ -52,7 +54,7 @@
                         </div>
 
                         <div class="col-12 mb-3">
-                            <div class="form-check mt-2">
+                            <div class="form-check mt-2 px-0">
                                 <input  type="checkbox" value="{{$order->status+1}}" id="status" name="status">
                                 <label class="form-check-label" for="status">
                                     {{$order->getStatusTitle($order->status+1)}}
