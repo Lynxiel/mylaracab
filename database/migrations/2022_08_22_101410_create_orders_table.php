@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use App\Models\User;
 
 return new class extends Migration
 {
@@ -14,15 +15,14 @@ return new class extends Migration
     public function up()
     {
         Schema::create('orders', function (Blueprint $table) {
-            $table->id('order_id')->autoIncrement()->unsigned();
-            $table->bigInteger('user_id')->unsigned()->nullable();
-            $table->integer('status');
+            $table->id()->unsigned();
+            $table->tinyInteger('status')->default(0);
             $table->boolean('delivery')->default(0);
             $table->string('address')->nullable();
             $table->string('comment')->nullable();
             $table->string('pay_link')->nullable();
             $table->timestamps();
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreignIdFor(User::class);
         });
     }
 

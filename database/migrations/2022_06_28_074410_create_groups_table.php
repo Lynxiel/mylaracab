@@ -13,9 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('posts', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
+        Schema::create('groups', function (Blueprint $table) {
+            $table->id()->unsigned();
+            $table->string('title');
+            $table->mediumText('description');
+            $table->string('cert')->nullable();
         });
     }
 
@@ -26,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('posts');
+        Schema::dropIfExists('groups');
     }
 };

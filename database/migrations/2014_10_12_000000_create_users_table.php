@@ -21,7 +21,6 @@ return new class extends Migration
             $table->string('password');
             $table->string('phone')->unique();
             $table->string('company_name')->nullable();
-            $table->string('contact_name')->nullable();
             $table->string('postcode')->nullable();
             $table->string('address')->nullable();
             $table->rememberToken();
