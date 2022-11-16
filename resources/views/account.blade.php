@@ -80,7 +80,7 @@
                 <div class="row">
 
                     <div class="form-floating mb-3 col-lg-4 col-md-4 col-sm-6 col-xs-12">
-                        <input type="text" name="contact_name" required class="form-control rounded-3" id="name" value="{{old('contact_name')??$user->contact_name }}">
+                        <input type="text" name="name" required class="form-control rounded-3" id="name" value="{{old('name')??$user->name }}">
                         <label class="px-4" for="floatingInput">Имя контактного лица</label>
                     </div>
                     <div class="form-floating mb-3  col-lg-4 col-md-4 col-sm-6 col-xs-12">

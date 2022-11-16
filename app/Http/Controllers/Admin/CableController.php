@@ -5,8 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\CableRequest;
 use App\Models\Cable;
-use App\Models\CableGroup;
-use App\Models\Order;
+use App\Models\Group;
 use Illuminate\Http\Request;
 
 class CableController extends Controller
@@ -19,9 +18,9 @@ class CableController extends Controller
     public function index()
     {
         $cables = Cable::with('group')->where('active', '=' , 1)
-            ->orderByDesc('cable_group_id')->get();
+            ->orderByDesc('group_id')->get();
 
-        $groups = CableGroup::all();
+        $groups = Group::all();
 
         return view('admin.cables',compact('cables', 'groups' ));
     }

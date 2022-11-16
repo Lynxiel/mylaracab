@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\DB;
 
 class Order extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory;
     CONST CREATED = 0;
     CONST CONFIRMED = 1;
     CONST PAID = 2;
@@ -26,8 +26,6 @@ class Order extends Model
     ];
 
 
-    protected $primaryKey = 'order_id';
-
     protected $fillable = ['comment','status', 'user_id', 'address','pay_link'];
 
     public function user(){
@@ -37,7 +35,7 @@ class Order extends Model
 
 
     public function cables(){
-        return $this->hasMany(CableOrder::class, 'order_id');
+        return $this->belongsToMany(Cable::class );
     }
 
 

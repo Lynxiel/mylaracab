@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cable;
-use App\Models\CableGroup;
+use App\Models\Group;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Config;
 
@@ -12,7 +12,7 @@ class HomeController extends Controller
     public function index(Request $request)
     {
 
-        $groups = CableGroup::with('cables')->get();
+        $groups = Group::with('cables')->get();
         //Cart
         $cart=CartController::init($request);
         return view('home',compact('groups','cart'));

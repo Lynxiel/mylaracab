@@ -12,14 +12,13 @@ class Cable extends Model
         'title', 'cable_group_id', 'instock', 'price', 'footage'
     ];
 
-    protected $primaryKey = 'cable_id';
 
     public function group(){
-        return $this->belongsTo(CableGroup::class,'cable_group_id');
+        return $this->belongsTo(Group::class);
     }
 
     public function orders(){
-        return $this->hasMany(CableOrder::class,'order_id');
+        return $this->hasMany(Cable::class);
     }
 
 
