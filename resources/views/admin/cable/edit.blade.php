@@ -1,32 +1,40 @@
 <x-layouts.header/>
 <x-layouts.nav-back />
 
-<div class="content-container bg-light">
-    <div class="container">
+
+<div class="bg-light">
+    <div class="container py-4">
+        @include('admin.partials.flashmessages')
+
         <a class="btn btn-secondary text-end" href="{{route('cables.index')}}">Назад</a>
         <h2 class="mb-4">Редактировать кабель {{$cable->title}}</h2>
-        <form action="{{route('cables.update' ,['cable'=>$cable->cable_id])}}" method="post" enctype="multipart/form-data">
+        <form action="{{route('cables.update' ,['cable'=>$cable->id])}}" method="post" enctype="multipart/form-data">
         @method('PUT')
         @csrf
         <div class="form-group mb-4">
             <label>Название</label>
-            <input type="text" class="form-control" name="title" value="{{$cable->title}}" required>
+            <x-controls.input type="text" class="form-control" name="title" :value="$cable->title" required />
         </div>
 
         <div class="form-group mb-4">
             <label>Группа кабеля</label>
-            <select class="form-control" name="cable_group_id">
+            <select class="form-control" name="group_id">
                 <option disabled>Выберите группу</option>
                 <option></option>
 
                 @foreach($groups as $group)
-                    <option value="{{$group->cable_group_id}}"
-                            @if ($group->cable_group_id == (old('cable_group_id') ?? $cable->cable_group_id))
+                    <option value="{{$group->id}}"
+                            @if ($group->id == (old('group_id') ?? $cable->group_id))
                                 selected
                                 @endif
                     >{{$group->title}}</option>
                 @endforeach
             </select>
+            @error('group_id')
+            <div class="alert alert-danger mt-1">
+                {{$message}}
+            </div>
+            @enderror
         </div>
 
         <div class="form-group mb-4">
@@ -47,9 +55,6 @@
     </form>
     </div>
     </div>
-<div class="container">
-    @include('admin.partials.flashmessages')
-</div>
 
 </body>
 

@@ -26,8 +26,7 @@ class CableGroupRequest extends FormRequest
         return [
             'title'=>'required|min:3|max:40',
             'description'=>'required|min:50|max:550',
-            'image'=>'mimes:jpeg,jpg,png|max:5000',
-            'files'=>'mimes:jpeg,jpg,png|max:5000',
+            'cert'=>'mimes:jpeg,jpg,png|max:5000',
         ];
     }
 }

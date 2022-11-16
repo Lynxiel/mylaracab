@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CableGroupRequest;
-use App\Models\CableGroup;
+use App\Models\Group;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
@@ -23,19 +23,19 @@ class CableGroupController extends Controller
 
         $data = $request->validated();
 
-        if ($request->file('image')){
-            $path = Storage::putFile('public/group_images',$request->file('image'));
+        if ($request->file('cert')){
+            $path = Storage::putFile('public/cert',$request->file('cert'));
             $url = Storage::url($path);
-            $data['image'] =$url;
+            $data['cert'] =$url;
         }
-        CableGroup::create($data);
+        Group::create($data);
         session()->flash('groupCreated');
         return redirect()->back();
     }
 
 
      function edit($id){
-        $cablegroup = CableGroup::findOrFail($id);
+        $cablegroup = Group::findOrFail($id);
         return view('admin.cablegroup.edit', compact('cablegroup'));
     }
 
@@ -43,11 +43,11 @@ class CableGroupController extends Controller
     public function update(CableGroupRequest $request, $id)
     {
         $data = $request->validated();
-        $cableGroup = CableGroup::findOrFail($id);
-        if ($request->file('image')){
-            $path = Storage::putFile('public/group_images',$request->file('image'));
+        $cableGroup = Group::findOrFail($id);
+        if ($request->file('cert')){
+            $path = Storage::putFile('public/cert',$request->file('cert'));
             $url = Storage::url($path);
-            $data['image'] =$url;
+            $data['cert'] =$url;
         }
         $cableGroup->update($data);
         session()->flash('groupUpdated');
@@ -55,15 +55,16 @@ class CableGroupController extends Controller
     }
 
     public function destroy($id){
-        CableGroup::findOrFail($id)->delete();
+        dd(1);
+        Group::findOrFail($id)->delete();
         session()->flash('groupDeleted');
         return redirect(route('cables.index'));
     }
 
     public function deleteImage($id){
 
-        $cableGroup = CableGroup::findOrFail($id);
-        $cableGroup->image= '';
+        $cableGroup = Group::findOrFail($id);
+        $cableGroup->cert= '';
         $cableGroup->save();
         session()->flash('imageDeleted');
         return redirect()->back();

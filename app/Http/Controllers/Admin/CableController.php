@@ -66,7 +66,7 @@ class CableController extends Controller
     public function edit($id)
     {
         $cable = Cable::findOrFail($id);
-        $groups  = CableGroup::all();
+        $groups  = Group::all();
         return view('admin.cable.edit' ,compact('cable','groups'));
     }
 
@@ -80,7 +80,6 @@ class CableController extends Controller
     public function update(CableRequest $request, $id)
     {
         $cable = Cable::findOrFail($id)->update($request->validated());
-
         session()->flash('cableUpdated');
         return redirect()->back();
 

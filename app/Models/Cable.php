@@ -8,8 +8,11 @@ use Illuminate\Support\Facades\DB;
 
 class Cable extends Model
 {
+
+    use HasFactory;
+
     protected $fillable = [
-        'title', 'cable_group_id', 'instock', 'price', 'footage'
+        'title', 'group_id', 'instock', 'price', 'footage'
     ];
 
 
@@ -22,13 +25,6 @@ class Cable extends Model
     }
 
 
-
-    public function __construct(array $attributes = [])
-    {
-        parent::__construct($attributes);
-    }
-
-    use HasFactory;
 
 
 }

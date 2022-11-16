@@ -27,7 +27,7 @@ return new class extends Migration
             $table->string('1ctitle')->nullable();
             $table->boolean('active')->default(0);
             $table->timestamps();
-            $table->foreignIdFor(Group::class);
+            $table->foreignIdFor(Group::class)->nullable();
         });
     }
 

@@ -70,6 +70,6 @@ Route::prefix('admin')->middleware('auth.admin')->group(function () {
     Route::resource('orders', AdminOrder::class );
     Route::resource('cables', AdminCable::class )->only(['index', 'edit', 'update']);
     Route::resource('groups', AdminCableGroup::class )->only(['edit','update', 'store', 'destroy']);
-    Route::delete('groups/deleteImage/{group_id}', [AdminCableGroup::class, 'deleteImage'] )->name('deleteImage');
+    Route::delete('deleteImage/{group_id}', [AdminCableGroup::class, 'deleteImage'] )->name('deleteImage');
 });
 

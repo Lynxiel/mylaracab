@@ -25,7 +25,6 @@
                         <th scope="col">№</th>
                         <th scope="col">Название</th>
                         <th scope="col">Описание</th>
-                        <th scope="col">Изображение</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -34,9 +33,8 @@
                         @php  $summ = 0;   @endphp
                         <tr>
                             <td>{{$i++}}</td>
-                            <td><a class="" href="{{route('groups.edit',['group'=>$group->cable_group_id])}}">{{$group->title}}</a></td>
+                            <td><a class="" href="{{route('groups.edit',['group'=>$group->id])}}">{{$group->title}}</a></td>
                             <td>{{$group->description}}</td>
-                            <td><img class="group-image" src="{{$group->image}}"></td>
                         </tr>
 
                     @endforeach
@@ -71,7 +69,7 @@
                         @php  $summ = 0;   @endphp
                         <tr>
                             <td>{{$i++}}</td>
-                            <td><a class="" href="{{route('cables.edit',['cable'=>$cable->cable_id])}}">{{$cable->title}}</a></td>
+                            <td><a class="" href="{{route('cables.edit',['cable'=>$cable->id])}}">{{$cable->title}}</a></td>
                             <td>{{$cable->group->title?? ''}}</td>
                             <td>{{$cable->footage}}м</td>
                             <td>{{$cable->instock}}м</td>

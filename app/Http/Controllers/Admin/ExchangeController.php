@@ -115,33 +115,6 @@ class ExchangeController extends Controller
     }
 
 
-    public function xmltoArray(string $filepath):?array{
-        $data =[];
-        if (file_exists($filepath)) {
-            $xml = simplexml_load_file($filepath);
-            $i=0;
-            foreach ($xml as $node){
-                $data[$i]['1cCode']= $node->Code->__toString();
-                $data[$i]['1ctitle'] = $node->ProductName->__toString();
-                $data[$i]['quantity'] = (int)$node->Quantity->__toString();
-                $data[$i]['price'] = ((float)$node->Price->__toString()*0.9); // Special price from 1c price
-                $data[$i]['active'] = ($data[$i]['quantity']=='0'?0:1);
-                $i++;
-
-            }
-        }else{
-            throw new Exception('file not exist');
-        }
-        return $data?:null;
-    }
-
-    public function copyExternalFile($link){
-        $filename = 'arsenalPrice.xlsx';
-        $temp = tempnam(sys_get_temp_dir(), $filename);
-        copy($link, $temp);
-
-        return response()->download($temp, $filename);
-    }
 
 
 

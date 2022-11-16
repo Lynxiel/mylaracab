@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests\Admin;
 
+use App\Models\Cable;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class CableRequest extends FormRequest
 {
@@ -25,11 +27,11 @@ class CableRequest extends FormRequest
     public function rules()
     {
         return [
-            'title'=>['required','max:200', 'not_regex:/[^(\w)|(\x7F-\xFF)|(\s)".,]/'],
-            'cable_group_id'=>'nullable|exists:cable_groups',
-            'footage'=>['regex:/^[+]?\d+$/'],
+            'title'=>['required','max:200', Rule::unique('cables')->ignore($this->route('cable'))],
+            'group_id'=>'nullable|exists:groups,id',
+            'footage'=>['nullable','regex:/^[+]?\d+$/'],
             'instock'=>['regex:/^[+]?\d+$/'],
-            'price'=>['regex:/^[+]?\d+$/'],
+            'price'=>['regex:/^(?:[1-9]\d*|0)?(?:\.\d+)?$/'],
 
         ];
     }

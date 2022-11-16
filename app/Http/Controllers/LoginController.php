@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\LoginRequest;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Gate;
 
 class LoginController extends Controller
 {
@@ -26,10 +27,12 @@ class LoginController extends Controller
                 'auth_failed' => 'Неверный логин или пароль',
             ]);
         }
+        if ( Gate::allows('dashboard')) {
+          return  redirect()->route('admin.index');
+        }
 
-        return auth()->user()->isAdmin!=true?
-            redirect()->route('account.show'):
-            redirect()->route('admin.index');
+          return  redirect()->route('account.show');
+
     }
 
     public function destroy(Request $request)
