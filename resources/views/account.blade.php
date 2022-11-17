@@ -2,10 +2,10 @@
 <body>
     <x-layouts.nav :cart="$cart" />
 
-<div class="content-container bg-light">
-    <div class="container  mt-5" id="account">
+<div class=" bg-light">
+    <div class="container" id="account">
         @include('partials.flashmessages')
-        <h2 class="mt-4 text-start text-uppercase mt-5 pt-4">История заказов</h2>
+        <h2 class="text-start text-uppercase pt-4">История заказов</h2>
             @php  $summ = 0; $i=1; @endphp
             @if (!$orders->isEmpty())
                 <div class="d-flex justify-content-end mb-4">
@@ -116,6 +116,14 @@
                     </div>
 
                 </div>
+
+                @if ($errors->any() && !$errors->has('action')  )
+                    @foreach($errors->all() as $error)
+                        <div class="alert alert-danger alert-dismissible mt-1" role="alert">
+                            <div>{{ $error }}</div>
+                        </div>
+                    @endforeach
+                @endif
 
                 <div class="col-12">
                     <input type="submit" class="btn btn-success" value="Сохранить изменения">
