@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('comment')->nullable();
             $table->string('pay_link')->nullable();
             $table->timestamps();
-            $table->foreignIdFor(User::class);
+            $table->foreignIdFor(User::class)->nullable();
         });
     }
 

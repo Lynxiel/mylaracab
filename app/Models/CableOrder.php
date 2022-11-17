@@ -10,7 +10,7 @@ class CableOrder extends Model
 {
     use HasFactory;
 
-    protected $table = 'cables_order';
+    protected $table = 'cable_order';
 
 
     protected $fillable = ['cable_id','order_id', 'price', 'quantity'];

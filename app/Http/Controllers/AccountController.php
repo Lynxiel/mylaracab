@@ -24,13 +24,14 @@ class AccountController extends Controller
         $user = auth()->user();
 
         //Cart
-        $cart=CartController::init($request);
+        $cart = CartController::get();
         //Orders
-        $orders = Order::with('cables.cable')
+        $orders = Order::with('cables')
             ->orderByDesc('created_at')
             ->where('user_id','=',$user->id)
             ->where('status', '<>' , Order::CANCELED)
             ->paginate(10);
+
 
         return view('account',compact('cart',  'user', 'orders'));
     }

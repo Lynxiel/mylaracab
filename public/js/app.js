@@ -14,7 +14,9 @@ window.onload = function() {
                 headers: { 'X-CSRF-TOKEN': cartbtn.closest('form').find('input[name=_token]').val()  },
                 type: type,
                 url: ajaxurl,
-                data: {cable_id : cartbtn.closest('form').find('input[name=cable_id]').val()},
+                data: {cable_id : cartbtn.closest('form').find('input[name=cable_id]').val(),
+                       price : cartbtn.closest('form').find('input[name=price]').val()
+                },
                 success: function (data) {
                     $('#cart-replace').empty().append(data);
                     cartbtn.removeClass('btn-warning').addClass('btn-light').attr('disabled',true)
@@ -116,7 +118,9 @@ window.onload = function() {
             type: type,
             url: ajaxurl,
             data: {cable_id : context.closest('form').find('input[name=cable_id]').val(),
-                quantity: context.closest('.qty').find('.count').val()},
+                quantity: context.closest('.qty').find('.count').val(),
+                price : context.closest('form').find('input[name=price]').val()},
+
             success: function (data) {
                 cartRefreshCallback(data)
             },

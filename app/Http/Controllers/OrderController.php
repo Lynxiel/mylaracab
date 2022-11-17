@@ -18,23 +18,18 @@ class OrderController extends Controller
             'order_contact' => 'regex:/[0-9]+/',
         ]);
 
-        $cables = CartController::init($request);
-        if (!$cables) Redirect::back();
-
+        $cables = session()->get('cart');
         $user = auth()->user();
-        $order= Order::create([
+        $order= (new Order)->create([
                 'user_id' => $user?$user->id:$user,
                 'status' => Order::CREATED,
                 'comment' => isset($validated['order_contact'])?$validated['order_contact']:'',
             ]);
 
-        $cables = CartController::prepareForSave($cables, $order->order_id);
-        $order->cables()->saveMany(
-            $cables
-        );
+        $order->cables()->attach($cables);
 
         MailController::orderReceived($order,$user);
-        session()->remove('cable_id');
+        session()->remove('cart');
         session()->flash('OrderSend');
         if ($user) {
             MailController::orderSend($request,$order);

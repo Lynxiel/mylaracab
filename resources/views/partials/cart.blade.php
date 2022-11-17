@@ -3,7 +3,7 @@
     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart" viewBox="0 0 16 16">
         <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"></path>
     </svg>
-    <span class="cart-count">{{(!empty($cart))?count($cart):''}}</span>
+    <span class="cart-count">{{(count($cart))?:''}}</span>
 </button>
 
 <div class="modal fade" id="CartModal" tabindex="-1" aria-labelledby="CartModal" aria-hidden="true">
@@ -15,18 +15,19 @@
                     </button>
                 </div>
                 <div class="modal-body" id="cart-container">
-                    @if (!empty($cart))
+                    @if (count($cart))
                         @php $sum=0; @endphp
                         @foreach ($cart as $item)
                             @php
-                                $quantity =session()->get('id')?session()->get('id')[$item->id]:1;
-                                $sum += $item->price*$quantity*$item->footage;
+                                $quantity =session()->get('cart.'.$item->id)['quantity'];
+                                $price =session()->get('cart.'.$item->id)['price'];
+                                $sum += $price*$quantity*$item->footage;
 
                             @endphp
                                             <div class="row">
                                                 <div class="col-lg-4 col-md-4 col-sm-4 col-4 ">
                                                     <h6 class="mb-0 text-white">{{$item->title}} </h6>
-                                                    <p class="mb-0 opacity-75 text-orange">Доступно:{{floor($item->instock/$item->footage)*$item->footage}}м</p>
+{{--                                                    <p class="mb-0 opacity-75 text-orange">Доступно:{{floor($item->instock/$item->footage)*$item->footage}}м</p>--}}
 
                                                 </div>
                                                 <div class="col-lg-2 col-md-2 col-sm-2 col-2 ">
@@ -40,6 +41,7 @@
                                                         @method("PUT")
                                                         @csrf
                                                         <input  required name="cable_id" readonly value="{{$item->id}}" hidden>
+                                                        <input  required name="price" readonly value="{{$item->price}}" hidden>
                                                         <div class="qty pt-2 mt-2">
                                                             <span class="minus bg-dark">-</span>
                                                             <input type="number" readonly class="count quantity_edit" name="quantity" value="{{$quantity}}">

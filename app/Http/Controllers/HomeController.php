@@ -13,37 +13,32 @@ class HomeController extends Controller
     {
 
         $groups = Group::with('cables')->get();
-        //Cart
-        $cart=CartController::init($request);
+        $cart = CartController::get();
         return view('home',compact('groups','cart'));
     }
 
     public function delivery(Request $request)
     {
-        //Cart
-        $cart=CartController::init($request);
+        $cart = CartController::get();
         $regions = Config::get('regions');
         return view('delivery',compact( 'cart', 'regions'));
     }
 
     public function about_us(Request $request)
     {
-        //Cart
-        $cart=CartController::init($request);
+        $cart = CartController::get();
         return view('about_us',compact( 'cart'));
     }
 
     public function agreement(Request $request)
     {
-        //Cart
-        $cart=CartController::init($request);
+        $cart = CartController::get();
         return view('agreement',compact( 'cart'));
     }
 
     public function politics(Request $request)
     {
-        //Cart
-        $cart=CartController::init($request);
+        $cart = CartController::get();
         return view('politics',compact( 'cart'));
     }
 }

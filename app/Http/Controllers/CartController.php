@@ -8,94 +8,57 @@ use App\Models\CableOrder;
 use http\Env\Response;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Session;
 
 class CartController extends Controller
 {
 
-    /**
-     *
-     * Return cart data for view
-     *
-     */
-    public static function init(Request $request)
-    {
-        $cables=[];
-        $ids = self::getCartList($request);
-        if ($ids)
-            $cables =  Cable::whereIN('id', array_keys($ids))->get();
-         return $cables;
+
+    public function init(){
+        $cart = self::get();
+        return view('partials.cart', compact('cart'));
     }
 
-    public static function prepareForSave($cables, $order_id){
 
-        foreach ( $cables as $key=>$cable)    {
-            $cableOrder[] = (new CableOrder())->fill($cable->toArray());
-            $cableOrder[$key]['quantity'] =  session()->get('id') ? (session()->get('id')[$cable->id]*$cable->footage) : $cable->footage;
-            $cableOrder[$key]['order_id'] =  $order_id;
-        }
-
-        return $cableOrder;
-}
+    public static function get():Collection {
+        $items = session()->get('cart');
+        return Cable::whereIN('id', $items?array_keys($items):[] )->get();
+    }
 
 
-    /**
-     * Add product to cart and store it in session
-     * @param Request $request
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
     public function  add(Request $request){
 
-        $cart_list = array();
-        $id = (int)$request->input("cable_id");
+       $id = (int)$request->input("cable_id");
         if ($id){
-            $current_list = $this->getCartList($request);
-            if ($current_list) $cart_list = $current_list;
-            $cart_list[$id] = 1; //initial quantity
-            $request->session()->put('id',$cart_list);
-
-            session()->flash('success', 'Успешно добавлено в корзину!');
-            $cart  = self::init($request);
-            return view('partials.cart', compact('cart'));
+            session()->put('cart.'.$id,[
+                'cable_id'=>$id,
+                'price'=>(float)$request->input("price"),
+                'quantity'=>1, //initial
+            ]);
         }
-
+        return $this->init();
     }
 
-    protected static function  getCartList(Request $request){
-        $cart_list = $request->session()->get('id');
-        return $cart_list;
-    }
 
     public function update(Request $request){
 
         $id = (int)$request->input("cable_id");
-        $quantity = (int)$request->input("quantity");
-
-        if ($quantity==0) {
-            $this->removeFromCart($request);
+        if ($id){
+            $request->session()->put('cart.'.$id,[
+                'cable_id'=>$id,
+                'price'=>(float)$request->input("price"),
+                'quantity'=>(int)$request->input("quantity")] );
         }
 
-        $cart_list = $request->session()->get('id');
-        $cart_list[$id] = $quantity;
-
-        $request->session()->remove('id');
-        $request->session()->put('id',$cart_list);
-
-        $cart  = CartController::init($request);
-        return view('partials.cart' , compact('cart'));
-
+        return $this->init();
     }
 
     public function remove(Request $request){
         $id = (int)$request->input("cable_id");
         if ($id){
-            $cart_list = $this->getCartList($request);
-            unset($cart_list[$id]);
-            $request->session()->remove('id');
-            $request->session()->put('id',$cart_list);
-
-            $cart  = CartController::init($request);
-            return view('partials.cart' , compact('cart'));
+            $request->session()->remove('cart.'.$id);
+            return $this->init();
         }
     }
 
