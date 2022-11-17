@@ -36,13 +36,7 @@
                     <div class="alert alert-danger mt-1">{{$message}}</div>
                     @enderror
                     @if ($cablegroup->cert)
-
                         <img class="group-image" src="{{$cablegroup->cert}}">
-                        <form method="post" action="{{route('deleteImage', ['group_id'=>$cablegroup->id])}}">
-                            @method('delete')
-                            @csrf
-                            <input class="btn btn-danger mb-4" type="submit" value="Удалить сертификат" />
-                        </form>
                     @endif
 
 
@@ -55,11 +49,22 @@
     <input type="submit" value="Сохранить изменения" class="btn btn-outline-success mb-4">
 </form>
 
+        @if ($cablegroup->cert)
+
+            <form method="post" action="{{route('deleteImage', ['group_id'=>$cablegroup->id])}}">
+                @method('delete')
+                @csrf
+                <input class="btn btn-danger mb-4" type="submit" value="Удалить сертификат" />
+            </form>
+        @endif
+
         <form method="post" action="{{route('groups.destroy', ['group'=>$cablegroup->id])}}">
             @method('delete')
             @csrf
             <input class="btn btn-danger" type="submit" value="Удалить группу" />
         </form>
+
+
 
 
     </div>

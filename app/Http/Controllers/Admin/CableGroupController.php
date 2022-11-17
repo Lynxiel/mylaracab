@@ -55,14 +55,13 @@ class CableGroupController extends Controller
     }
 
     public function destroy($id){
-        dd(1);
+
         Group::findOrFail($id)->delete();
         session()->flash('groupDeleted');
         return redirect(route('cables.index'));
     }
 
     public function deleteImage($id){
-
         $cableGroup = Group::findOrFail($id);
         $cableGroup->cert= '';
         $cableGroup->save();
