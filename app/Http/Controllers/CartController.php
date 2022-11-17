@@ -27,32 +27,25 @@ class CartController extends Controller
     }
 
 
-    public function  add(Request $request){
+    public function  update(Request $request){
 
        $id = (int)$request->input("cable_id");
-        if ($id){
+       $quantity = (int)$request->input("quantity");
+
+
+       $cable = Cable::findOrFail($id);
+       if ($id){
             session()->put('cart.'.$id,[
                 'cable_id'=>$id,
-                'price'=>(float)$request->input("price"),
-                'quantity'=>1, //initial
+                'price'=>$cable->price,
+                'quantity'=>$quantity?:1,
+                'footage'=>$cable->footage
             ]);
+
         }
         return $this->init();
     }
 
-
-    public function update(Request $request){
-
-        $id = (int)$request->input("cable_id");
-        if ($id){
-            $request->session()->put('cart.'.$id,[
-                'cable_id'=>$id,
-                'price'=>(float)$request->input("price"),
-                'quantity'=>(int)$request->input("quantity")] );
-        }
-
-        return $this->init();
-    }
 
     public function remove(Request $request){
         $id = (int)$request->input("cable_id");

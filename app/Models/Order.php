@@ -35,7 +35,7 @@ class Order extends Model
 
 
     public function cables(){
-        return $this->belongsToMany(Cable::class );
+        return $this->belongsToMany(Cable::class )->withPivot(['quantity', 'price','footage']);
     }
 
 

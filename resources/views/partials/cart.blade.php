@@ -27,7 +27,7 @@
                                             <div class="row">
                                                 <div class="col-lg-4 col-md-4 col-sm-4 col-4 ">
                                                     <h6 class="mb-0 text-white">{{$item->title}} </h6>
-{{--                                                    <p class="mb-0 opacity-75 text-orange">Доступно:{{floor($item->instock/$item->footage)*$item->footage}}м</p>--}}
+                                                    <p class="mb-0 opacity-75 text-orange">Доступно:{{floor($item->instock/$item->footage)*$item->footage}}м</p>
 
                                                 </div>
                                                 <div class="col-lg-2 col-md-2 col-sm-2 col-2 ">
@@ -41,7 +41,6 @@
                                                         @method("PUT")
                                                         @csrf
                                                         <input  required name="cable_id" readonly value="{{$item->id}}" hidden>
-                                                        <input  required name="price" readonly value="{{$item->price}}" hidden>
                                                         <div class="qty pt-2 mt-2">
                                                             <span class="minus bg-dark">-</span>
                                                             <input type="number" readonly class="count quantity_edit" name="quantity" value="{{$quantity}}">
@@ -106,7 +105,7 @@
                                 </form>
 
                             </div>
-                            <p class="text-center text-white">Ожидаемая дата доставки: {{date('d.m.y', strtotime(date('d.m.y').'+2 day'))}}</p>
+                            <p class="text-center text-white">Ожидаемая дата доставки: {{date('d.m.y', strtotime(date('d.m.y').'+1 day'))}}</p>
 
                         </div>
 

@@ -8,14 +8,13 @@ window.onload = function() {
             e.preventDefault();
             $('.tooltip').remove();
             var cartbtn = $(this);
-            var type = "POST";
+            var type = "PUT";
             var ajaxurl = 'cart';
             $.ajax({
                 headers: { 'X-CSRF-TOKEN': cartbtn.closest('form').find('input[name=_token]').val()  },
                 type: type,
                 url: ajaxurl,
                 data: {cable_id : cartbtn.closest('form').find('input[name=cable_id]').val(),
-                       price : cartbtn.closest('form').find('input[name=price]').val()
                 },
                 success: function (data) {
                     $('#cart-replace').empty().append(data);
@@ -118,9 +117,7 @@ window.onload = function() {
             type: type,
             url: ajaxurl,
             data: {cable_id : context.closest('form').find('input[name=cable_id]').val(),
-                quantity: context.closest('.qty').find('.count').val(),
-                price : context.closest('form').find('input[name=price]').val()},
-
+                   quantity: context.closest('.qty').find('.count').val()},
             success: function (data) {
                 cartRefreshCallback(data)
             },

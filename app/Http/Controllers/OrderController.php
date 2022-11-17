@@ -6,6 +6,7 @@ use App\Models\CableOrder;
 use App\Models\Order;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Redirect;
 use TCG\Voyager\Models\Role;
 
@@ -46,9 +47,8 @@ class OrderController extends Controller
 
         $order = Order::findOrFail($data['order_id']);
         $user = User::find($order->user_id);
-                                                     // not cool - temp
-        if (auth()->user()->id != $order->user_id && auth()->user()->role_id!=1 ){ abort('404');}
 
+        Gate::authorize('order-edit', $order);
         $order->update([
             'status'=>Order::CANCELED,
             'comment'=>$data['cancel_comment'] ]);

@@ -29,7 +29,6 @@ class AccountController extends Controller
         $orders = Order::with('cables')
             ->orderByDesc('created_at')
             ->where('user_id','=',$user->id)
-            ->where('status', '<>' , Order::CANCELED)
             ->paginate(10);
 
 

@@ -5,6 +5,7 @@ namespace App\Providers;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
 use App\Models\User;
+use App\Models\Order;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -27,6 +28,10 @@ class AuthServiceProvider extends ServiceProvider
         $this->registerPolicies();
         Gate::define('dashboard', function (User $user) {
             return (bool)$user->is_admin;
+        });
+
+        Gate::define('order-edit', function (User $user, Order $order) {
+            return ($user->is_admin || $user->id==$order->user_id);
         });
         //
     }

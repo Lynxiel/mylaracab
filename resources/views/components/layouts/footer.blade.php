@@ -34,7 +34,7 @@
                 <form action="{{route('contact_us')}}" method="post">
                     @csrf
                     <div class="form-group ">
-                        <x-controls.input name="email" placeholder="Email" type="email" required="1" type="text"  value="{{old('name')}}" />
+                        <x-controls.input name="email" placeholder="Email" type="email" required="1" type="text"  value="{{ auth()->user()->email ?? ''}}" />
                     </div>
                     <div class="form-group mt-2">
                         <textarea placeholder="Ваше сообщение" class="form-control" name="message" required></textarea>

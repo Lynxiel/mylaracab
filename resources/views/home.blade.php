@@ -5,6 +5,7 @@
     <div class="container mt-4">
         @include('partials.flashmessages')
     </div>
+
     <div class="container mt-5 groups-container">
         @foreach($groups as $group)
             @php  $summ = 0; $i=1;  @endphp
@@ -36,7 +37,6 @@
                                     @csrf
 
                                     <input  required name="cable_id" readonly value="{{$cable->id}}" hidden>
-                                    <input  required name="price" readonly value="{{$cable->price}}" hidden>
                                     @if ( session()->get('cart')!=null && key_exists($cable->id,session()->get('cart')) )
                                         <span class="d-inline-block " tabindex="0" data-bs-toggle="tooltip" title="Уже в корзине">
                                                     <button  type="button" disabled class="btn btn-outline-warning text-white cart-added" id="cart_{{$cable->id}}"  >

@@ -7,31 +7,32 @@
         <div class="col-md-9">
             @php $summ =  0; $i=1; @endphp
 
+
             @foreach($order->cables as $cable )
                 <div class="row border border-1 order-cable">
                     <div class="d-none d-sm-block col-sm-1  col-md-1 col-lg-1">{{$i++}}</div>
-                    <div class="col-6 col-sm-5 col-md-5 col-lg-7 fw-bold ">{{$cable->cable->title}}</div>
-                    <div class="col-3 col-sm-3 col-md-4 p-0 col-lg-2 text-end">{{$cable->quantity}}м х {{$cable->price}}₽</div>
-                    <div class="col-3 col-sm-3 col-md-2 col-lg-2 text-end">{{($cable->quantity*$cable->price)}}₽</div>
+                    <div class="col-6 col-sm-5 col-md-5 col-lg-7 fw-bold ">{{$cable->title}}</div>
+                    <div class="col-3 col-sm-3 col-md-4 p-0 col-lg-2 text-end">{{$cable->pivot->quantity*$cable->pivot->footage}}м х {{$cable->pivot->price}}₽</div>
+                    <div class="col-3 col-sm-3 col-md-2 col-lg-2 text-end">{{$cable->pivot->quantity*$cable->pivot->footage*$cable->pivot->price}}₽</div>
                 </div>
 
 
-                @php  $summ += $cable->price*$cable->quantity;  @endphp
+                @php  $summ += $cable->pivot->quantity*$cable->pivot->footage*$cable->pivot->price;  @endphp
             @endforeach
             <h4 class="summ mt-2 text-dark fw-bold text-end">Сумма: {{$summ}}₽</h4>
         </div>
         <div class="col-md-3">
 
             @if ($order->status==1)
-                <a target="_blank" href="{{route('order.invoice.show', ['order_id' => $order->order_id])}}"><button class="btn btn-secondary w-100 mb-2">Сформировать счет</button></a>
+                <a target="_blank" href="{{route('order.invoice.show', ['order_id' => $order->id])}}"><button class="btn btn-secondary w-100 mb-2">Сформировать счет</button></a>
 
                 @if ($order->pay_link)
-                    <button type="button" class="btn btn-secondary mb-2 w-100" data-bs-toggle="modal" data-bs-target="#qrmodal{{$order->order_id}}">
+                    <button type="button" class="btn btn-secondary mb-2 w-100" data-bs-toggle="modal" data-bs-target="#qrmodal{{$order->id}}">
                         Оплата по QR-коду
                     </button>
 
                     <!-- Modal -->
-                    <div class="modal fade" id="qrmodal{{$order->order_id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal fade" id="qrmodal{{$order->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-header">
@@ -56,9 +57,8 @@
                         @csrf
                         @method('delete')
                         <h4 class="text-white">Действительно отменить заказ?</h4>
-                        <p class="text-white">Заказ будет удален из личного кабинета</p>
                         <div class="form-floating mb-3 mt-4">
-                            <input type="hidden" name="order_id" readonly value="{{$order->order_id}}">
+                            <input type="hidden" name="order_id" readonly value="{{$order->id}}">
                             <textarea type="text" class="form-control rounded-3" name="cancel_comment"> </textarea>
                             <label class="px-4" for="cancel_comment">Оставьте комментарий</label>
                         </div>

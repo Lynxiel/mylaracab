@@ -8,7 +8,7 @@
 
 </head>
 <body class="antialiased">
-Заказ №{{$order->order_id}}
+Заказ №{{$order->id}}
 @if ($user)
 Пользователь: {{$user->email}} {{$user->phone}} {{$user->contact_name}}
 @endif

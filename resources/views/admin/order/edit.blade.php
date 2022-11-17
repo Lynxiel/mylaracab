@@ -5,7 +5,7 @@
 <div class=" bg-light">
     <div class="px-4 py-3   container">
         <a class="btn btn-secondary text-end mb-3" href="{{route('orders.index')}}">Назад</a>
-        <h2 class="mb-4">Редактировать заказ №{{$order->order_id}} от {{$order->created_at->format('d-m-y')}}
+        <h2 class="mb-4">Редактировать заказ №{{$order->id}} от {{$order->created_at->format('d-m-y')}}
         <span class="badge bg-primary text-end px-4">{{$order->getStatusTitle($order->status)}}</span></h2>
         @if (!empty($order->user))
 
@@ -18,7 +18,7 @@
         <div class="row">
             <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
 
-                <form method="post" action="{{route('orders.update', ['order'=>$order->order_id])}}" >
+                <form method="post" action="{{route('orders.update', ['order'=>$order->id])}}" >
                     @method('PUT')
                     @csrf
 

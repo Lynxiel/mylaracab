@@ -71,7 +71,7 @@
     </tr>
     </tbody>
 </table>
-<h1>Счет на оплату № {{$order->order_id}} от {{$order->created_at->format('d.m.y')}} </h1>
+<h1>Счет на оплату № {{$order->id}} от {{$order->created_at->format('d.m.y')}} </h1>
 
 <table class="contract">
     <tbody>

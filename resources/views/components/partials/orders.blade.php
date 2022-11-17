@@ -28,10 +28,10 @@
             @foreach($orders as $order)
                 @php  $summ = 0;   @endphp
                 <tr>
-                    <td>{{$order->order_id}}</td>
+                    <td>{{$order->id}}</td>
                     <td>{{$order->created_at->format('d.m.y')}}</td>
                     <td>сумма</td>
-                    <td><a href="{{route('orders.edit',['order'=>$order->order_id])}}">{{$order->getStatusTitle($order->status)}}</a></td>
+                    <td><a href="{{route('orders.edit',['order'=>$order->id])}}">{{$order->getStatusTitle($order->status)}}</a></td>
 
                     <td>{{$order->user->email??''}}</td>
                     <td>{{$order->user->phone??''}}</td>

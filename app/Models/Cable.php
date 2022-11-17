@@ -21,7 +21,7 @@ class Cable extends Model
     }
 
     public function orders(){
-        return $this->hasMany(Cable::class);
+        return $this->belongsToMany(Order::class);
     }
 
 

@@ -8,7 +8,7 @@
 
 </head>
 <body class="antialiased">
-Заказ №{{$order->order_id}} от {{Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $order->created_at)->format('d.m.y')}} был отменен!
+Заказ №{{$order->id}} от {{Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $order->created_at)->format('d.m.y')}} был отменен!
 @if ($user)
 Пользователь: {{$user->email}} {{$user->phone}} {{$user->contact_name}}
 @endif
