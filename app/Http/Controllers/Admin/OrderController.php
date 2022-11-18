@@ -55,7 +55,7 @@ class OrderController extends Controller
      */
     public function edit($id)
     {
-        $order = Order::with('cables.cable')->with('user')->findOrFail($id);
+        $order = Order::with('cables')->with('user')->findOrFail($id);
         return view('admin.order.edit', compact('order'));
     }
 

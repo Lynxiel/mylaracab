@@ -93,13 +93,13 @@
                             @foreach($order->cables as $cable)
                                 <tr>
                                     <td class="py-2">{{$i++}}</td>
-                                    <td class="py-2">{{$cable->cable->title}}</td>
-                                    <td class="py-2">{{$cable->quantity}}м</td>
-                                    <td class="py-2">{{sprintf("%.2f",$cable->price)}}₽</td>
-                                    <td class="py-2">{{sprintf("%.2f",$cable->quantity*$cable->price)}}₽</td>
+                                    <td class="py-2">{{$cable->title}}</td>
+                                    <td class="py-2">{{$cable->pivot->quantity}}м</td>
+                                    <td class="py-2">{{sprintf("%.2f",$cable->pivot->price)}}₽</td>
+                                    <td class="py-2">{{sprintf("%.2f",$cable->pivot->quantity*$cable->pivot->price*$cable->pivot->footage)}}₽</td>
                                 </tr>
 
-                                        @php  $sum += $cable->price*$cable->quantity;  @endphp
+                                        @php  $sum += $cable->pivot->quantity*$cable->pivot->price*$cable->pivot->footage;  @endphp
                             @endforeach
                         </tbody>
                     </table>
