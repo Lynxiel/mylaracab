@@ -1,25 +1,26 @@
 @props([
     'name',
-    'value',
-    'class',
+    'title',
+    'options',
+    'value'=>'',
+    'class'=>'',
+    'fieldname'=>['title'],
     'nullable' =>true
 ])
-@php
-    $obj = new $class();
-    $data  = $obj->all();
-    $fieldname = $obj->getKeyName();
 
-@endphp
-<select class="form-control" name="{{$name}}">
+<select class="form-control {{$class}}" name="{{$name}}">
+    <option disabled selected>{{$title}}</option>
     @if ($nullable)
-        <option value="" {{$value?'':'selected'}} ></option>
+        <option></option>
     @endif
 
-    @foreach($data as $key=>$item)
+    @foreach($options as $key=>$item)
         <option
-            value="{{$item->$fieldname}}"
-            {{($value==$item->$fieldname)?' selected ':''}}  >
-            {{$item->title}}
+            value="{{$item->id}}"
+            {{($value==$item)?' selected ':''}}  >
+            @foreach ($fieldname as $title)
+                {{$item->$title }}
+            @endforeach
         </option>
     @endforeach
 </select>

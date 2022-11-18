@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\MailController;
+use App\Http\Requests\OrderPivotRequest;
+use App\Models\Cable;
 use App\Models\Order;
 use Illuminate\Http\Request;
 use App\Http\Requests\Admin\OrderRequest;
@@ -17,7 +19,7 @@ class OrderController extends Controller
      */
     public function index(string $status = Order::CREATED)
     {
-        $orders = Order::with('user')
+        $orders = Order::with(['user','cables'])
             //->where('status', '=' , $status)
             ->orderByDesc('created_at');
 
@@ -56,8 +58,12 @@ class OrderController extends Controller
     public function edit($id)
     {
         $order = Order::with('cables')->with('user')->findOrFail($id);
-        return view('admin.order.edit', compact('order'));
+        $cables = Cable::where('group_id','<>', null)->get();
+        return view('admin.order.edit', compact('order','cables'));
     }
+
+
+
 
     /**
      * Update the specified resource in storage.
@@ -89,6 +95,31 @@ class OrderController extends Controller
         session()->flash('orderEdited',true);
         return redirect()->back();
     }
+
+    function pivotAttach(OrderPivotRequest $request, $id){
+        $validated = $request->validated();
+        $order = Order::findOrFail($id);
+        $cable = Cable::find($validated['cable_id']);
+        $order->cables()->attach($validated['cable_id'] ,[
+              'quantity'=> $validated['quantity'],
+              'footage'=>$cable->footage,
+              'price' =>$cable->price,
+            ]
+        );
+        session()->flash('orderEdited');
+        return redirect()->route('orders.edit',['order'=>$id]);
+    }
+
+    function pivotDetach(OrderPivotRequest $request, $id){
+        $validated = $request->validated();
+        $order = Order::findOrFail($id);
+        $cable = Cable::find($validated['cable_id']);
+        $order->cables()->detach($validated['cable_id']);
+        session()->flash('orderEdited');
+        return redirect()->route('orders.edit',['order'=>$id]);
+    }
+
+
 
     /**
      * Remove the specified resource from storage.

@@ -30,13 +30,13 @@
                 <tr>
                     <td>{{$order->id}}</td>
                     <td>{{$order->created_at->format('d.m.y')}}</td>
-                    <td>сумма</td>
+                    <td>{{$order->cables->sum(function($cable){ return $cable->pivot->quantity*$cable->pivot->price*$cable->pivot->footage ;})}}₽</td>
                     <td><a href="{{route('orders.edit',['order'=>$order->id])}}">{{$order->getStatusTitle($order->status)}}</a></td>
 
                     <td>{{$order->user->email??''}}</td>
                     <td>{{$order->user->phone??''}}</td>
 
-                    <td>{{$order->user->contact_name??''}}</td>
+                    <td>{{$order->user->name??''}}</td>
                     <td>{{$order->user->company_name??''}}</td>
                     <td>{{$order->comment}}</td>
 

@@ -68,6 +68,8 @@ Route::prefix('admin')->middleware('auth.admin')->group(function () {
     Route::get('', [AdminController::class, 'index'] )->name('admin.index');
     Route::get('exchange', [ExchangeController::class, 'index'] )->name('admin.exchange');
     Route::resource('orders', AdminOrder::class );
+    Route::patch('orders/{order_id}/edit', [AdminOrder::class, 'pivotAttach'] )->name('orders.pivot.attach');
+    Route::delete('orders/{order_id}/edit', [AdminOrder::class, 'pivotDetach'] )->name('orders.pivot.detach');
     Route::resource('cables', AdminCable::class )->only(['index', 'edit', 'update']);
     Route::resource('groups', AdminCableGroup::class )->only(['edit','update', 'store', 'destroy']);
     Route::delete('deleteImage/{group_id}', [AdminCableGroup::class, 'deleteImage'] )->name('deleteImage');
