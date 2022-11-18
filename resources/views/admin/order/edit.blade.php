@@ -4,14 +4,15 @@
 
 <div class=" bg-light">
     <div class="px-4 py-3   container">
+        @include('admin.partials.flashmessages')
         <a class="btn btn-secondary text-end mb-3" href="{{route('orders.index')}}">Назад</a>
         <h2 class="mb-4">Редактировать заказ №{{$order->id}} от {{$order->created_at->format('d-m-y')}}
         <span class="badge bg-primary text-end px-4">{{$order->getStatusTitle($order->status)}}</span></h2>
         @if (!empty($order->user))
 
             <ul class="list-group list-group-horizontal mb-2 w-100">
-                <li class="list-group-item">{{old('contact_name') ?? $order->user->contact_name }}</li>
-                <li class="list-group-item">{{old('phone')??$order->user->phone }}</li>
+                <li class="list-group-item">{{$order->user->contact_name }}</li>
+                <li class="list-group-item">{{$order->user->phone }}</li>
                 <li class="list-group-item">{{$order->user->email }}</li>
             </ul>
         @endif
@@ -64,17 +65,17 @@
                         <div class="col-6">
                             <input type="submit" class="btn btn-success" value="Сохранить изменения">
                         </div>
-                        @if ($order->status==0 || $order->status==1)
-                            <div class="col-6 text-end">
-
-                                <x-controls.modal label="Отменить заказ" heading="Отменить заказ?" >
-                                    @include('admin.order.cancel')
-                                </x-controls.modal>
-
-                            </div>
-                        @endif
                     </div>
                 </form>
+                @if ($order->status==0 || $order->status==1)
+                    <div class="col-12 text-start mt-4">
+
+                        <x-controls.modal label="Отменить заказ" heading="Отменить заказ?" >
+                            @include('admin.order.cancel')
+                        </x-controls.modal>
+
+                    </div>
+                @endif
             </div>
             <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                 @php $sum = 0; $i=1; @endphp
@@ -94,7 +95,7 @@
                                 <tr>
                                     <td class="py-2">{{$i++}}</td>
                                     <td class="py-2">{{$cable->title}}</td>
-                                    <td class="py-2">{{$cable->pivot->quantity}}м</td>
+                                    <td class="py-2">{{$cable->pivot->quantity}}*{{$cable->pivot->footage}}м</td>
                                     <td class="py-2">{{sprintf("%.2f",$cable->pivot->price)}}₽</td>
                                     <td class="py-2">{{sprintf("%.2f",$cable->pivot->quantity*$cable->pivot->price*$cable->pivot->footage)}}₽</td>
                                 </tr>
@@ -110,9 +111,7 @@
 
     </div>
 </div>
-<div class="container">
-    @include('admin.partials.flashmessages')
-</div>
+
 
 </body>
 

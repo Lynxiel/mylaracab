@@ -33,10 +33,9 @@
                                                     Ваш заказ № {{$order->id}} от {{ $order->created_at->format('d.m.y')}} :
                                                 </strong>
                                                 <br>
-                                                    @php $sum=0; $n=1; @endphp
+                                                @php $sum=0; $n=1; @endphp
                                                     @foreach ($order->cables as $item)
-
-                                                        @php $sum += $item->pivot->quantity*$item->pivot->price*$item->pivot->quantity @endphp
+                                                        @php $sum += $item->pivot->quantity*$item->pivot->price*$item->pivot->footage @endphp
                                                         <div class="list-group w-auto">
                                                             <div class="row ">
                                                                 <div class="col-md-12">
@@ -45,7 +44,7 @@
                                                                             <p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:lato, 'helvetica neue', helvetica, arial, sans-serif;line-height:27px;color:#666666;font-size:12px">
                                                                                 {{$n++}}. {{$item->title}}
                                                                             {{$item->pivot->price}}₽ х  {{$item->pivot->footage*$item->pivot->quantity}}м
-                                                                            {{$sum}}₽
+                                                                                {{$item->pivot->price*$item->pivot->footage*$item->pivot->quantity}}₽
                                                                             </p>
                                                                             <hr>
                                                                         </div>

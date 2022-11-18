@@ -35,7 +35,7 @@
 
             <div>
                 @can('dashboard')
-                    <a class="btn btn-outline-light me-2 lk-btn" href="{{route('admin.index')}}">Админ панель</a>
+                    <a class="btn btn-outline-light me-2 lk-btn" href="{{route('admin.index')}}">В панель</a>
                 @endif
 
                 @if (isset(auth()->user()->email))

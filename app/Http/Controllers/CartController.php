@@ -21,9 +21,11 @@ class CartController extends Controller
     }
 
 
-    public static function get():Collection {
+    public static function get():Collection|null {
         $items = session()->get('cart');
-        return Cable::whereIN('id', $items?array_keys($items):[] )->get();
+        if ($items)
+            $items = Cable::whereIN('id', $items?array_keys($items):[] )->get();
+        return $items;
     }
 
 

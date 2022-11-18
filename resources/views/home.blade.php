@@ -33,7 +33,7 @@
                             <div class="col-2 col-sm-2 col-md-2 col-lg-2 p-0 px-md-3 text-white">{{floor($cable->instock/$cable->footage)*$cable->footage}}м</div>
                             <div class="col-2 col-sm-2 col-md-2 col-lg-2 p-0 px-md-3 text-white">{{sprintf("%.2f",$cable->price) }}₽/м</div>
                             <div class="col-2 col-sm-2 col-md-1 col-lg-1 p-0 mb-3">
-                                <form method="post" action="{{route('cart.add')}}">
+                                <form method="post" action="{{route('cart.update')}}">
                                     @csrf
 
                                     <input  required name="cable_id" readonly value="{{$cable->id}}" hidden>

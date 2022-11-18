@@ -98,8 +98,8 @@ class OrderController extends Controller
      */
     public function destroy($id)
     {
-        Order::findOrFail($id)->delete();
-        session()->flash('orderDeleted',true);
+        Order::findOrFail($id)->update(['status'=>Order::CANCELED]);
+        session()->flash('orderCancelled',true);
         return redirect()->back();
     }
 }
