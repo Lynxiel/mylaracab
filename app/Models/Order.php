@@ -26,7 +26,7 @@ class Order extends Model
     ];
 
 
-    protected $fillable = ['comment','status', 'user_id', 'address','pay_link'];
+    protected $fillable = ['comment','status', 'user_id', 'address','pay_link', 'delivery_cost'];
 
     public function user(){
         return $this->BelongsTo(User::class);

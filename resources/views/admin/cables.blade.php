@@ -61,6 +61,7 @@
                         <th scope="col">Метраж</th>
                         <th scope="col">Наличие</th>
                         <th scope="col">Цена</th>
+                        <th scope="col">Обновлен</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -74,6 +75,7 @@
                             <td>{{$cable->footage}}м</td>
                             <td>{{$cable->instock}}м</td>
                             <td>{{$cable->price}}₽</td>
+                            <td>{{$cable->updated_at->format("d-m-y H:i")}}</td>
                         </tr>
 
                     @endforeach

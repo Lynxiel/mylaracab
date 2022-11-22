@@ -6,8 +6,8 @@
     <div class="px-4 py-3   container">
         @include('admin.partials.flashmessages')
         <a class="btn btn-secondary text-end mb-3" href="{{route('orders.index')}}">Назад</a>
-        <h2 class="my-4 d-inline">Редактировать заказ №{{$order->id}} от {{$order->created_at->format('d-m-y')}}</h2>
-        <span class="badge bg-primary text-end fs-3 mb-4">{{$order->getStatusTitle($order->status)}}</span>
+        <h2 class="my-4 px-4 d-inline">Редактировать заказ №{{$order->id}} от {{$order->created_at->format('d-m-y')}}</h2>
+        <span class="badge bg-primary text-end fs-4 mb-4">{{$order->getStatusTitle($order->status)}}</span>
 
         <div class="row">
             <div class="col-12">
@@ -22,7 +22,9 @@
                             <th scope="col">Количество</th>
                             <th scope="col">Цена</th>
                             <th scope="col">Сумма</th>
-                            <th scope="col">Удалить</th>
+                            @can('cable-order-edit', $order)
+                                <th scope="col">Удалить</th>
+                            @endcan
                         </tr>
                         </thead>
                         <tbody>
@@ -33,16 +35,18 @@
                                 <td class="py-2">{{$cable->pivot->quantity}}*{{$cable->pivot->footage}}м</td>
                                 <td class="py-2">{{sprintf("%.2f",$cable->pivot->price)}}₽</td>
                                 <td class="py-2 cable-sum" >{{sprintf("%.2f",$cable->pivot->quantity*$cable->pivot->price*$cable->pivot->footage)}}₽</td>
-                                <td class="py-2 px-3">
-                                    <form method="post" action="{{route('orders.pivot.detach',['order_id'=>$order->id])}}">
-                                        @method('delete')
-                                        @csrf
-                                        <input type="text" hidden name="cable_id" value="{{$cable->id}}">
-                                        <input class="btn btn-warning btn-remove-cart" type="submit" value="Х">
+                                @can('cable-order-edit', $order)
+                                    <td class="py-2 px-3">
+                                        <form method="post" action="{{route('orders.pivot.detach',['order_id'=>$order->id])}}">
+                                            @method('delete')
+                                            @csrf
+                                            <input type="text" hidden name="cable_id" value="{{$cable->id}}">
+                                            <input class="btn btn-warning btn-remove-cart" type="submit" value="Х">
 
-                                    </form>
+                                        </form>
 
-                                </td>
+                                    </td>
+                                @endcan
                             </tr>
                             @php  $sum += $cable->pivot->quantity*$cable->pivot->price*$cable->pivot->footage;  @endphp
                         @endforeach
@@ -51,22 +55,26 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-12 col-sm-6">
-                        <strong class="order-sum mt-3 text-end">Сумма: {{sprintf("%.2f",$sum)}}₽</strong>
+                    <div class="col-12 col-sm-12 text-end">
+                        <span class="px-4 order-sum mt-3 fw-bold text-end">Сумма: {{sprintf("%.2f",$sum)}}₽</span>
+                        <span class="px-4 order-sum mt-3 fw-bold  text-end">Доставка: {{sprintf("%.2f",$order->delivery_cost)}}₽</span>
+                        <span class="px-4 order-sum mt-3 fw-bold  text-end">Итого: {{sprintf("%.2f",$sum+$order->delivery_cost)}}₽</span>
                     </div>
-                    <div class="col-12 col-sm-6 text-sm-end mt-2 mt-sm-0">
-                        <x-controls.modal label="Добавить кабель" classes="text-start" >
-                            <form method="post" action="{{route('orders.pivot.attach',['order_id'=>$order->id])}}">
-                                @method('PATCH')
-                                @csrf
-                                <h2 class="text-white mb-3">Добавить к заказу</h2>
-                                <x-controls.select name="cable_id" :fieldname="['title', 'footage', 'price']" class="mb-3" nullable="0" title="Выберите кабель" :options="$cables"></x-controls.select>
-                                <div class="form-floating mb-3">
-                                    <x-controls.input label="Количество бухт"  name="quantity" value="" required="1" />
-                                </div>
-                                <button class="btn btn-orange btn-add-row">Добавить</button>
-                            </form>
-                        </x-controls.modal>
+                    <div class="col-12 col-sm-12 text-sm-end mt-2 mt-2 text-end">
+                        @can('cable-order-edit', $order)
+                            <x-controls.modal label="Добавить кабель" classes="text-start" >
+                                <form method="post" action="{{route('orders.pivot.attach',['order_id'=>$order->id])}}">
+                                    @method('PATCH')
+                                    @csrf
+                                    <h2 class="text-white mb-3">Добавить к заказу</h2>
+                                    <x-controls.select name="cable_id" :fieldname="['title', 'footage', 'price']" class="mb-3" nullable="0" title="Выберите кабель" :options="$cables"></x-controls.select>
+                                    <div class="form-floating mb-3">
+                                        <x-controls.input label="Количество бухт"  name="quantity" value="" required="1" />
+                                    </div>
+                                    <button class="btn btn-orange btn-add-row">Добавить</button>
+                                </form>
+                            </x-controls.modal>
+                            @endcan
                     </div>
                 </div>
 
@@ -74,7 +82,7 @@
             </div>
 
 
-            <div class="col-12  mt-5">
+            <div class="col-12 ">
                 <h2>Данные заказа</h2>
                 @if (!empty($order->user))
                 <div class="row mb-3">
@@ -98,6 +106,13 @@
                             </div>
                             @enderror
                         </div>
+
+                        <div class="col-12 col-md-6 mb-3 form-floating">
+                            <x-controls.input  name="delivery_cost"  class="form-control rounded-3"  id="delivery_cost" value="{{$order->delivery_cost}}" />
+                            <label class="px-4" for="floatingInput">Стоимость доставки, ₽.</label>
+                        </div>
+
+
 
                         <div class="col-12 col-md-6 mb-3 form-floating">
                             <textarea  name="comment"  class="form-control rounded-3"  id="comment">{{$order->comment}}</textarea>

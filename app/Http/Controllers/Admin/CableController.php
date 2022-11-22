@@ -79,9 +79,10 @@ class CableController extends Controller
      */
     public function update(CableRequest $request, $id)
     {
-        $cable = Cable::findOrFail($id)->update($request->validated());
+//        dd($request->validated());
+        Cable::findOrFail($id)->update($request->validated());
         session()->flash('cableUpdated');
-        return redirect()->back();
+        return redirect()->route('cables.edit', $id);
 
     }
 

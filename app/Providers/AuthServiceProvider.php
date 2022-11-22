@@ -33,6 +33,10 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('order-edit', function (User $user, Order $order) {
             return ($user->is_admin || $user->id==$order->user_id);
         });
+
+        Gate::define('cable-order-edit', function (User $user,Order $order) {
+            return !$order->status;
+        });
         //
     }
 }

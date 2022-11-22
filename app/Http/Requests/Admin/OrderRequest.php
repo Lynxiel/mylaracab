@@ -30,6 +30,7 @@ class OrderRequest extends FormRequest
             'comment'=>['nullable','max:200'],
             'address'=>['nullable','max:200', 'not_regex:/[^(\w)|(\x7F-\xFF)|(\s)".,]/'],
             'pay_link'=>['nullable','max:100'],
+            'delivery_cost' => ['nullable', 'integer'],
         ];
     }
 }

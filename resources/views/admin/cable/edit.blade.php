@@ -7,7 +7,7 @@
         @include('admin.partials.flashmessages')
 
         <a class="btn btn-secondary text-end" href="{{route('cables.index')}}">Назад</a>
-        <h2 class="mb-4">Редактировать кабель {{$cable->title}}</h2>
+        <h2 class="mb-4">Редактировать {{$cable->title}}</h2>
         <form action="{{route('cables.update' ,['cable'=>$cable->id])}}" method="post" enctype="multipart/form-data">
         @method('PUT')
         @csrf
