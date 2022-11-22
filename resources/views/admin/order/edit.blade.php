@@ -6,8 +6,8 @@
     <div class="px-4 py-3   container">
         @include('admin.partials.flashmessages')
         <a class="btn btn-secondary text-end mb-3" href="{{route('orders.index')}}">Назад</a>
-        <h2 class="mb-4">Редактировать заказ №{{$order->id}} от {{$order->created_at->format('d-m-y')}}
-        <span class="badge bg-primary text-end px-4">{{$order->getStatusTitle($order->status)}}</span></h2>
+        <h2 class="my-4 d-inline">Редактировать заказ №{{$order->id}} от {{$order->created_at->format('d-m-y')}}</h2>
+        <span class="badge bg-primary text-end fs-3 mb-4">{{$order->getStatusTitle($order->status)}}</span>
 
         <div class="row">
             <div class="col-12">

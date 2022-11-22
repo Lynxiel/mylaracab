@@ -58,7 +58,9 @@ class OrderController extends Controller
     public function edit($id)
     {
         $order = Order::with('cables')->with('user')->findOrFail($id);
-        $cables = Cable::where('group_id','<>', null)->get();
+        $cables = Cable::where('group_id','<>', null)
+            ->whereNotIn('id', $order->cables()->pluck('cable_id'))
+            ->get();
         return view('admin.order.edit', compact('order','cables'));
     }
 
