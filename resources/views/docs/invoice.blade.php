@@ -104,32 +104,43 @@
     @php $total = $nds = 0; $i=0;@endphp
     @foreach ($order->cables as $key => $cable)
     @php
-    $total += $cable->price * $cable->quantity;
+    $total += $cable->pivot->price * $cable->pivot->quantity*$cable->pivot->footage;
     @endphp
-
 
     <tr>
         <td align="center">{{++$i}}</td>
-        <td align="left">{{$cable->cable->title}}</td>
-        <td align="right">{{$cable->quantity}}</td>
+        <td align="left">{{$cable->title}}</td>
+        <td align="right">{{$cable->pivot->quantity*$cable->pivot->footage}}</td>
         <td align="left">м</td>
-        <td align="right">{{sprintf("%.2f", $cable->price)}}</td>
-        <td align="right">{{sprintf("%.2f",$cable->price * $cable->quantity)}}</td>
+        <td align="right">{{sprintf("%.2f", $cable->pivot->price)}}</td>
+        <td align="right">{{sprintf("%.2f",$cable->pivot->price * $cable->pivot->quantity*$cable->pivot->footage)}}</td>
     </tr>';
     @endforeach
+    @if($order->delivery_cost)
+        <tr>
+            <td align="center">{{++$i}}</td>
+            <td align="left">Доставка</td>
+            <td align="right"></td>
+            <td align="left"></td>
+            <td align="right">{{sprintf("%.2f",$order->delivery_cost)}}</td>
+            <td align="right">{{sprintf("%.2f",$order->delivery_cost)}}</td>
+        </tr>';
+
+    @endif
+
 
     </tbody>
     <tfoot>
     <tr>
         <th colspan="5">Итого:</th>
-        <th>{{sprintf("%.2f",$total)}}</th>
+        <th>{{sprintf("%.2f",$total+$order->delivery_cost)}}₽</th>
     </tr>
     <tr>
         <th colspan="5">Без НДС</th>
     </tr>
     <tr>
         <th colspan="5">Всего к оплате:</th>
-        <th>{{sprintf("%.2f",$total)}}</th>
+        <th>{{sprintf("%.2f",$total+$order->delivery_cost)}}₽</th>
     </tr>
     </tfoot>
 </table>

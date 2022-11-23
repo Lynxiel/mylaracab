@@ -20,9 +20,7 @@ class OrderController extends Controller
     public function index(string $status = Order::CREATED)
     {
         $orders = Order::with(['user','cables'])
-            //->where('status', '=' , $status)
             ->orderByDesc('created_at');
-
         $orders = $orders->paginate(20);
         return view('admin.orders',compact('orders'));
     }

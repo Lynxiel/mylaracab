@@ -36,6 +36,7 @@
                                                     <p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:lato, 'helvetica neue', helvetica, arial, sans-serif;line-height:18px;color:#666666;font-size:14px">
                                                         <strong>Адрес доставки:</strong> {{$order->address}}</p>
                                                 @endif
+
                                                 @if ($order->pay_link)
                                                     <p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:lato, 'helvetica neue', helvetica, arial, sans-serif;line-height:18px;color:#666666;font-size:14px">
                                                         <strong>Ссылка для оплаты:</strong> <a href="{{$order->pay_link}}">{{$order->pay_link}}</a></p>
@@ -67,6 +68,13 @@
                                             </div>
                                         @endforeach
                                         Сумма: {{$sum}}₽
+                                        @if ($order->delivery_cost===null)
+                                            <p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:lato, 'helvetica neue', helvetica, arial, sans-serif;line-height:18px;color:#666666;font-size:14px">
+                                                Доставка: {{$order->delivery_cost}}₽
+                                                <strong>Итого:</strong> {{$order->delivery_cost+$sum}}₽
+                                           </p>
+                                        @endif
+
 
 
                                         <tr style="border-collapse:collapse">

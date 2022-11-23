@@ -15,7 +15,12 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')->hourly();
+
+        $schedule->exec('/opt/php/8.1/bin/php /var/www/u1707254/data/www/kabelopt71.ru/artisan db:seed CableSeeder')
+            ->everyMinute()
+            ->emailOutputTo(config('mail.reply_to.address'))
+            ->sendOutputTo(base_path('logs/exchange.text'));
+
     }
 
     /**
