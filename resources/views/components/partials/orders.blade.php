@@ -26,11 +26,15 @@
             </thead>
             <tbody>
             @foreach($orders as $order)
-                @php  $summ = 0;   @endphp
+
+                @php  $summ =$order->delivery_cost+ $order->cables->sum(function($cable)
+                    { return $cable->pivot->quantity*$cable->pivot->price*$cable->pivot->footage ;})
+
+                @endphp
                 <tr>
                     <td>{{$order->id}}</td>
                     <td>{{$order->created_at->format('d.m.y')}}</td>
-                    <td>{{$order->cables->sum(function($cable){ return $cable->pivot->quantity*$cable->pivot->price*$cable->pivot->footage ;})}}₽</td>
+                    <td>{{$summ}}₽ {{$order->delivery_cost}}</td>
                     <td><a href="{{route('orders.edit',['order'=>$order->id])}}">{{$order->getStatusTitle($order->status)}}</a></td>
 
                     <td>{{$order->user->email??''}}</td>

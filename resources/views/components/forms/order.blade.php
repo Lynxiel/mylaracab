@@ -19,7 +19,10 @@
 
                 @php  $summ += $cable->pivot->quantity*$cable->pivot->footage*$cable->pivot->price;  @endphp
             @endforeach
-            <h4 class="summ mt-2 text-dark fw-bold text-end">Сумма: {{$summ}}₽</h4>
+            <h6 class="summ mt-2 text-dark fw-bold text-end">Сумма: {{$summ}}₽</h6>
+            @if($order->delivery_cost)
+                <h6 class="summ mt-0 text-dark fw-bold text-end">Итого с доставкой: {{$summ+$order->delivery_cost}}₽</h6>
+            @endif
         </div>
         <div class="col-md-3">
 

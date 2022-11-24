@@ -72,9 +72,6 @@
                 </form>
 
 
-
-
-
             </x-controls.modal>
             <form method="post" action="{{route('account.save')}}" class="mt-4">
                 @csrf
