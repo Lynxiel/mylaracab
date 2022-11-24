@@ -18,7 +18,7 @@ class CableController extends Controller
     public function index()
     {
         $cables = Cable::with('group')->where('active', '=' , 1)
-            ->orderByDesc('group_id')->get();
+            ->orderByDesc('group_id')->orderBy('title')->get();
 
         $groups = Group::all();
 

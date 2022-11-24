@@ -17,8 +17,8 @@ return new class extends Migration
         Schema::create('cables', function (Blueprint $table) {
             $table->id()->unsigned();
             $table->integer('footage')->nullable();
-            $table->string('title');
-            $table->float('instock');
+            $table->string('title')->unique();
+            $table->float('instock')->nullable();
             $table->float('price');
             $table->float('coresize')->nullable();
             $table->integer('corecount')->nullable();
