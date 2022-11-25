@@ -132,17 +132,18 @@
                             </div>
                             @enderror
                         </div>
-
-                        <div class="col-12 col-md-6 mb-3">
-                            <div class="form-check mt-2 px-0">
-                                <input  type="checkbox" value="{{$order->status+1}}" id="status" name="status">
-                                <label class="form-check-label" for="status">
-                                    {{$order->getStatusTitle($order->status+1)}}
-                                </label>
+                        @if ($order->status<\App\Models\Order::CANCELED)
+                            <div class="col-12 col-md-6 mb-3">
+                                <div class="form-check mt-2 px-0">
+                                    <input  type="checkbox" value="{{$order->status+1}}" id="status" name="status">
+                                    <label class="form-check-label" for="status">
+                                        {{$order->getStatusTitle($order->status+1)}}
+                                    </label>
+                                </div>
                             </div>
-                        </div>
+                        @endif
                         <div class="col-12">
-                            <input type="submit" class="btn btn-success w-100" value="Сохранить изменения">
+                            <input type="submit" class="btn btn-success" value="Сохранить изменения">
                         </div>
                     </div>
                 </form>

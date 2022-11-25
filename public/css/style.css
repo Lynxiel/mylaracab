@@ -110,6 +110,7 @@ footer{
     width: 40%;
     z-index: -1;
 }
+#call-us{top:10px;}
 .alert-dismissible{
     text-align: center;
 }
@@ -384,7 +385,6 @@ footer .company-contacts{
     width: 100%;
 }
 #account .btn-success, #account .btn-warning{
-    width: 100%;
 
 }
 #account input[type='number'] {

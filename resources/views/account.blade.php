@@ -123,7 +123,7 @@
                     @endforeach
                 @endif
 
-                <div class="col-12">
+                <div class="col-12 col-md-4">
                     <input type="submit" class="btn btn-success" value="Сохранить изменения">
                 </div>
 

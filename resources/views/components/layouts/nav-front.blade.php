@@ -1,7 +1,7 @@
 <div class="container">
     <div class="row w-100 mx-0 text-center main-header position-relative">
         <img id="lines" class="position-absolute top-0 start-50 translate-middle-x" src="{{asset('images/lines.svg')}}">
-        <div class="position-absolute top-0 end-0 ">
+        <div id="call-us" class="position-absolute  end-0 ">
             <p class="text-white  text-center text-md-end text-uppercase fw-bolder mb-0">Нужна помощь? Звоните</p>
             <a href="tel:+79539542016">
                 <h4 class="text-uppercase text-orange text-center text-md-end">+7 (953)-954-20-16</h4>

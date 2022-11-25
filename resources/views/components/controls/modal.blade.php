@@ -20,7 +20,7 @@
 </button>
 
 <!-- Modal -->
-<div class="modal fade {{$classes}}" id="{{$id}}" tabindex="-1" aria-labelledby="ModalLabel" aria-hidden="true">
+<div class="modal fade " id="{{$id}}" tabindex="-1" aria-labelledby="ModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             @if (isset($heading))
