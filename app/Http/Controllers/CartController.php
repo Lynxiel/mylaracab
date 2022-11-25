@@ -23,8 +23,8 @@ class CartController extends Controller
 
     public static function get() {
         $items = session()->get('cart');
-        if ($items)
-            $items = Cable::whereIN('id', $items?array_keys($items):[] )->get();
+        if ($items && count($items))
+            $items = Cable::whereIN('id', array_keys($items))->get();
         return $items;
     }
 
