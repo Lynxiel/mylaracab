@@ -23,9 +23,10 @@ class CableSeeder extends Seeder
 
         // Get kablars data
         $data = (new Exchange( new Kablars()))->get();
-        Cable::upsert($data, 'title', 'price');
+        Cable::upsert($data, 'title', ['price']);
 
     }
 
 
 }
+

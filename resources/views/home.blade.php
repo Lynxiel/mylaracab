@@ -6,6 +6,7 @@
         @include('partials.flashmessages')
     </div>
 
+
     <div class="container mt-5 groups-container">
         @foreach($groups as $group)
             @php  $summ = 0; $i=1;  @endphp

@@ -7,7 +7,7 @@ return [
 
     '1с' => [
         'file' => public_path('/exchange/elCabel.xml'),
-        'price_ratio'=>'0.9' 
+        'price_ratio'=>'0.9'
     ],
     'kablars' => [
         'file'=>'https://www.kabelarsenal.ru/price.xlsx',
