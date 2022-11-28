@@ -141,9 +141,8 @@ window.onload = function() {
         var newdata = $(data).find('.modal-content');
         $('#CartModal').find('.modal-content').empty().append(newdata);
         $('#cart-btn').replaceWith($(data).closest('button'));
-    }
+    }{}
 
 
 
 }
-
