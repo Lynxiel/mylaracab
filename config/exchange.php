@@ -12,7 +12,7 @@ return [
     'kablars' => [
         'file'=>'https://www.kabelarsenal.ru/price.xlsx',
         'ranges'=>['A5:C132','F5:H101','K5:M106','P5:R101'],
-        'price_ratio' =>'1.3'
+        'price_ratio' =>'1.2'
         ],
 
 ];

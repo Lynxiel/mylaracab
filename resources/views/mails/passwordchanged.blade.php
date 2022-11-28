@@ -20,6 +20,10 @@
                 Пароль: {{$password}}
             </p>
 
+            <p style="-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:lato, 'helvetica neue', helvetica, arial, sans-serif;line-height:18px;color:#666666;font-size:14px">
+                После успешной авторизации Вы сможете сменить пароль самостоятельно в личном кабинете.
+            </p>
+
         </td>
     </tr>
 </table>
