@@ -231,7 +231,7 @@ footer .company-contacts{
     margin: 0;
 }
 #regModal input[type=number] {
-    -moz-appearance:textfield; /* Firefox */
+    -moz-appearance:textfield;!important; /* Firefox */
 }
 .modal-header {
     border: none;
@@ -271,9 +271,9 @@ footer .company-contacts{
 }
 
 
-/*#cart-container input[type='number'] {*/
-/*    -moz-appearance:textfield!important;*/
-/*}*/
+#cart-container input[type='number'] {
+    -moz-appearance:textfield!important;
+}
 /*#cart-container input::-webkit-outer-spin-button,*/
 /*#cart-container input::-webkit-inner-spin-button {*/
 /*    -webkit-appearance: none;*/
