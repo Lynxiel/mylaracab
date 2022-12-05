@@ -20,8 +20,7 @@ class HomeController extends Controller
     public function delivery(Request $request)
     {
         $cart = CartController::get();
-        $regions = Config::get('regions');
-        return view('delivery',compact( 'cart', 'regions'));
+        return view('delivery',compact( 'cart'));
     }
 
     public function about_us(Request $request)

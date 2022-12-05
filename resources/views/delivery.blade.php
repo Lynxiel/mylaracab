@@ -7,21 +7,51 @@
     </div>
 
     <div class="container px-4 my-4 regions">
-        <h2 class=" mb-4 text-white text-uppercase ">Доставка</h2>
-        @if ($regions)
-            <div class="row text-white border-orange bg-orange rubik-bold mb-4 ">
-                <div class="col-5 text-white text-uppercase">Регион</div>
-                <div class="col-5 text-white text-uppercase">Город</div>
-                <div class="col-2 text-white text-uppercase">Стоимость</div>
+
+{{--        @if ($regions)--}}
+{{--            <div class="row text-white border-orange bg-orange rubik-bold mb-4 ">--}}
+{{--                <div class="col-5 text-white text-uppercase">Регион</div>--}}
+{{--                <div class="col-5 text-white text-uppercase">Город</div>--}}
+{{--                <div class="col-2 text-white text-uppercase">Стоимость</div>--}}
+{{--            </div>--}}
+{{--            @foreach( $regions as $region)--}}
+{{--                <div class="row text-white">--}}
+{{--                    <div class="col-5">{{$region['region']}}</div>--}}
+{{--                    <div class="col-5">{{$region['city']}}</div>--}}
+{{--                    <div class="col-2">{{$region['price']}}₽</div>--}}
+{{--                </div>--}}
+{{--            @endforeach--}}
+{{--        @endif--}}
+        <h2 class="mt-5 mb-2 text-white text-uppercase ">Самовывоз</h2>
+        <p class="text-white">Заказ можно забрать самовывозом по адресу г.Новомосковск, ул. Садовского, д.34, магазин "Электрика"</p>
+        <h2 class=" mt-5 mb-2 text-white text-uppercase ">Доставка</h2>
+        <div class="row">
+            <div class="col-12 col-sm-6">
+                <p class="text-white">
+                    Бесплатная доставка осуществляется в города:
+                </p>
+                <ul class="list-group">
+                    <li class="list-group-item  bg-dark text-white">Новомосковск</li>
+                    <li class="list-group-item  bg-dark text-white">Донской</li>
+                    <li class="list-group-item  bg-dark text-white">Узловая</li>
+                    <li class="list-group-item  bg-dark text-white">Северо-Задонск</li>
+                </ul>
             </div>
-            @foreach( $regions as $region)
-                <div class="row text-white">
-                    <div class="col-5">{{$region['region']}}</div>
-                    <div class="col-5">{{$region['city']}}</div>
-                    <div class="col-2">{{$region['price']}}₽</div>
-                </div>
-            @endforeach
-        @endif
+            <div class="col-12 col-sm-6 mt-2 mt-sm-0">
+                <p class="text-white">
+                    Доставка в другие города осуществляется через ТК:
+                </p>
+                <ul class="list-group">
+                    <li class="list-group-item  bg-dark text-white">СДЭК</li>
+                    <li class="list-group-item  bg-dark text-white">Деловые линии</li>
+                </ul>
+            </div>
+        </div>
+
+
+
+
+
 
     </div>
 
