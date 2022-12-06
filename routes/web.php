@@ -16,6 +16,8 @@ use App\Http\Controllers\Admin\OrderController as AdminOrder;
 use App\Http\Controllers\Admin\CableController as AdminCable;
 use App\Http\Controllers\Admin\CableGroupController as AdminCableGroup;
 use App\Http\Controllers\PasswordController;
+use App\Http\Controllers\SitemapController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -26,6 +28,7 @@ use App\Http\Controllers\PasswordController;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
 Route::controller(HomeController::class)->group(function(){
     Route::get('/', 'index')->name('index');
     Route::get('delivery','delivery')->name('delivery');
@@ -75,3 +78,4 @@ Route::prefix('admin')->middleware('auth.admin')->group(function () {
     Route::delete('deleteImage/{group_id}', [AdminCableGroup::class, 'deleteImage'] )->name('deleteImage');
 });
 
+Route::get('sitemap', [SitemapController::class, 'index']);
