@@ -1,4 +1,8 @@
 User-agent: *
+Allow: /
 Disallow: /account
 Disallow: /admin
+Disallow: /agreement
+Disallow: /politics
+
 Sitemap: https://kabelopt71.ru/sitemap

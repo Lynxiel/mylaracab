@@ -4,7 +4,7 @@
         <div id="call-us" class="position-absolute  end-0 ">
             <p class="text-white  text-center text-md-end text-uppercase fw-bolder mb-0">Нужна помощь? Звоните</p>
             <a href="tel:+79539542016">
-                <h4 class="text-uppercase text-orange text-center text-md-end">+7 (953)-954-20-16</h4>
+                <p class="text-uppercase text-orange text-center text-md-end fs-4">+7 (953)-954-20-16</p>
             </a>
             <div class="text-center text-md-end work-hours">
                 <small class="text-white">Пн-пт:10-19</small>
@@ -13,7 +13,7 @@
 
         </div>
         <div class="col-sm-6 col-xs-12 mt-5 mt-md-3 col-xs-12 text-center text-sm-start">
-            <a href="{{route('index')}}"> <img id="logo" class="mt-4  "  alt="КабельОпт71" src="{{asset('images/logo2.svg')}}" /></a>
+            <a href="{{route('index')}}"> <img id="logo" class="mt-5 mt-md-2"  alt="КабельОпт71" src="{{asset('images/logo2.svg')}}" /></a>
         </div>
         <div class="col-sm-6 col-xs-12 mt-sm-5 pt-sm-5">
             <h1 class="text-white rubik text-center text-sm-end mt-sm-4 mt-md-2">Оптовая продажа

@@ -1,4 +1,5 @@
-<x-layouts.header title="КабельОпт71" />
+<x-layouts.header title="КабельОпт71 - о доставке" description="Отпраляем по России, бесплатная доставка
+в Новомосковск, Узловую, Северо-Задонск, Донской" />
 <body>
     <x-layouts.nav-front :cart="$cart" />
 

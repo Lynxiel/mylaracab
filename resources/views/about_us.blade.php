@@ -1,4 +1,5 @@
-<x-layouts.header title="КабельОпт71" />
+<x-layouts.header title="КабельОпт71 - о компании"
+description = "Ведем свою деятельность по продаже электротехнического оборудования с 1993г. Кабель ГОСТ. Низкие цены."/>
 <body>
 <x-layouts.nav-front :cart="$cart" />
     <div class="content-container">
