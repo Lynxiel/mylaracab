@@ -28,11 +28,15 @@
                         <tbody>
                         @foreach($order->cables as $cable)
                             <tr>
-                                <td class="py-2">{{$i++}}</td>
+                                <td class="py-2">{{$i}}</td>
                                 <td class="py-2">{{$cable->title}}</td>
                                 <td class="py-2">{{$cable->pivot->quantity}}*{{$cable->pivot->footage}}м</td>
                                 <td class="py-2">{{sprintf("%.2f",$cable->pivot->price)}}₽</td>
-                                <td class="py-2 cable-sum" >{{sprintf("%.2f",$cable->pivot->quantity*$cable->pivot->price*$cable->pivot->footage)}}₽</td>
+                                <td class="py-2 cable-sum {{$order->discount?'text-decoration-line-through':''}}" >{{sprintf("%.2f",$order->getPivotSum($i-1))}}₽
+                                    @if($order->discount)
+                                        <span class="badge bg-success">{{$order->getPivotSum($i-1,$order->discount )}}₽ </span>
+                                    @endif
+                                </td>
                                 @can('cable-order-edit', $order)
                                     <td class="py-2 px-3">
                                         <form method="post" action="{{route('orders.pivot.detach',['order_id'=>$order->id])}}">
@@ -46,6 +50,7 @@
                                     </td>
                                 @endcan
                             </tr>
+                            @php $i++; @endphp
                         @endforeach
                         </tbody>
                     </table>
@@ -53,7 +58,6 @@
 
                 <div class="row">
                     <div class="col-12 col-sm-12 text-end">
-                        <span class="px-4 order-sum mt-3 fw-bold text-end">Сумма: {{sprintf("%.2f", $order->cableSum)}}₽</span>
                         <span class="px-4 order-sum mt-3 fw-bold  text-end">Доставка: {{sprintf("%.2f",$order->delivery_cost)}}₽</span>
                         <span class="px-4 order-sum mt-3 fw-bold  text-end">Итого: {{sprintf("%.2f", $order->totalSum)}}₽</span>
 

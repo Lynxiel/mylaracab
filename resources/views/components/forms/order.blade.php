@@ -15,7 +15,7 @@
                     <div class="col-3 col-sm-3 col-md-4 p-0 col-lg-2 text-end">{{$cable->pivot->quantity*$cable->pivot->footage}}м х {{$cable->pivot->price}}₽</div>
                     <div class="col-3 col-sm-3 col-md-2 col-lg-2 text-end {{$order->discount?'text-decoration-line-through':''}}">{{$order->getPivotSum($i-1)}}₽
                         @if($order->discount)
-                            <span class="badge bg-success">{{$order->getPivotSum($i-1,$order->discount )}}₽ </span>
+                            <span class="badge bg-success">{{ sprintf("%.2f",$order->getPivotSum($i-1,$order->discount ))}}₽ </span>
                         @endif
                     </div>
                 </div>
