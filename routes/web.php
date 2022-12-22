@@ -17,6 +17,7 @@ use App\Http\Controllers\Admin\CableController as AdminCable;
 use App\Http\Controllers\Admin\CableGroupController as AdminCableGroup;
 use App\Http\Controllers\PasswordController;
 use App\Http\Controllers\SitemapController;
+use App\Http\Controllers\Bot\PeselBotController;
 
 /*
 |--------------------------------------------------------------------------
@@ -79,3 +80,8 @@ Route::prefix('admin')->middleware('auth.admin')->group(function () {
 });
 
 Route::get('sitemap', [SitemapController::class, 'index']);
+
+Route::controller(PeselBotController::class)->group(function(){
+    Route::get('bot', 'test')->name('bot.test');
+    Route::post('bot', 'index')->name('bot.index');
+});
