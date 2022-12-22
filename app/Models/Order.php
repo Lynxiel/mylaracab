@@ -39,18 +39,27 @@ class Order extends Model
     }
 
 
-    public function getCableSumAttribute():int{
+    public function getCableSumAttribute():float{
         $sum=0;
         foreach ($this->cables as $cable){
             $sum += $cable->pivot->price*$cable->pivot->quantity*$cable->pivot->footage;
         }
-        return  ceil($sum);
+        return  $sum;
     }
 
 
-    public function getTotalSumAttribute():int{
+    public function getTotalSumAttribute():float{
         $cableSum = $this->getCableSumAttribute();
-        return ceil($cableSum - ($cableSum*($this->discount/100)) + $this->delivery_cost);
+        return $cableSum - ($cableSum*($this->discount/100)) + $this->delivery_cost;
+    }
+
+    public function getPivotSum(int $key, $discount = 0):float{
+        $cable = $this->cables->get($key)->pivot;
+        return $cable->quantity*$cable->footage*$cable->price - $cable->quantity*$cable->footage*$cable->price*($discount/100);
+    }
+
+    public  function getPivotDiscount($key):float{
+        return $this->getPivotSum($key)*($this->discount/100);
     }
 
 

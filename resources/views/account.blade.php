@@ -7,15 +7,13 @@
         @include('partials.flashmessages')
         <h2 class="text-start text-uppercase pt-4">История заказов</h2>
 
-            @php  $summ = 0; $i=1; @endphp
+            @php   $i=1; @endphp
             @if (!$orders->isEmpty())
                 <div class="d-flex justify-content-end mb-4">
                     {{ $orders->links() }}
                 </div>
                 <div class="accordion" >
                     @foreach($orders as $order)
-
-                            @php  $summ = 0;  @endphp
                     <x-controls.accordion  collapsed="{{$i==1?false:true}}" >
                         <x-slot:header>
                             <h6 class="group-title text-dark">№{{$order->id}} от {{$order->created_at->format('d.m.y')}} -

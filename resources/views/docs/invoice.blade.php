@@ -3,7 +3,7 @@
     <style>body { font-family: DejaVu Sans }</style>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <style type="text/css">
-        * {font-size: 14px;line-height: 14px;}
+        * {font-size: 12px;line-height: 14px;}
         table {margin: 0 0 15px 0;width: 100%;border-collapse: collapse;border-spacing: 0;}
         table th {padding: 5px;font-weight: bold;}
         table td {padding: 5px;}
@@ -92,61 +92,62 @@
     <thead>
     <tr>
         <th width="5%">№</th>
-        <th width="54%">Наименование товара, работ, услуг</th>
+        <th width="49%">Наименование товара, работ, услуг</th>
         <th width="8%">Коли-<br>чество</th>
         <th width="5%">Ед.<br>изм.</th>
-        <th width="14%">Цена</th>
+        <th width="9%">Цена</th>
         <th width="14%">Сумма</th>
+        @if($order->discount)
+            <th width="5%">Скидка</th>
+            <th width="5%">Сумма <br>со скидкой</th>
+        @endif
     </tr>
     </thead>
     <tbody>';
 
     @php $total = $nds = 0; $i=0;@endphp
     @foreach ($order->cables as $key => $cable)
-    @php
-    $total += $cable->pivot->price * $cable->pivot->quantity*$cable->pivot->footage;
-    @endphp
-
     <tr>
         <td align="center">{{++$i}}</td>
         <td align="left">{{$cable->title}}</td>
         <td align="right">{{$cable->pivot->quantity*$cable->pivot->footage}}</td>
         <td align="left">м</td>
         <td align="right">{{sprintf("%.2f", $cable->pivot->price)}}</td>
-        <td align="right">{{sprintf("%.2f",$cable->pivot->price * $cable->pivot->quantity*$cable->pivot->footage)}}</td>
+        <td align="right">{{sprintf("%.2f",$order->getPivotSum($i-1))}}</td>
+        @if($order->discount)
+            <td align="right">{{sprintf("%.2f",$order->getPivotDiscount($i-1))}}</td>
+            <td align="right">{{sprintf("%.2f", $order->getPivotSum($i-1, $order->discount))}}</td>
+        @endif
     </tr>';
     @endforeach
-    @if($order->delivery_cost)
-        <tr>
-            <td align="center">{{++$i}}</td>
-            <td align="left">Доставка</td>
-            <td align="right"></td>
-            <td align="left"></td>
-            <td align="right">{{sprintf("%.2f",$order->delivery_cost)}}</td>
-            <td align="right">{{sprintf("%.2f",$order->delivery_cost)}}</td>
-        </tr>';
-
-    @endif
-
 
     </tbody>
+    @php
+        if ($order->discount) $colspan = 7; else $colspan = 5;
+    @endphp
     <tfoot>
     <tr>
-        <th colspan="5">Итого:</th>
-        <th>{{sprintf("%.2f",$total+$order->delivery_cost)}}₽</th>
+        <th colspan="{{$colspan}}">Итого:</th>
+        <th>{{sprintf("%.2f", $order->totalSum - $order->delivery_cost)}}₽</th>
+    </tr>
+    @if ($order->delivery_cost)
+        <tr>
+            <th colspan="{{$colspan}}">Доставка:</th>
+            <th>{{sprintf("%.2f", $order->delivery_cost)}}₽</th>
+        </tr>
+    @endif
+    <tr>
+        <th colspan="{{$colspan}}">Без НДС</th>
     </tr>
     <tr>
-        <th colspan="5">Без НДС</th>
-    </tr>
-    <tr>
-        <th colspan="5">Всего к оплате:</th>
-        <th>{{sprintf("%.2f",$total+$order->delivery_cost)}}₽</th>
+        <th colspan="{{$colspan}}">Всего к оплате:</th>
+        <th>{{sprintf("%.2f",$order->totalSum)}}₽</th>
     </tr>
     </tfoot>
 </table>
 
 <div class="total">
-    <p>Всего наименований {{count($order->cables)}}, на сумму {{sprintf("%.2f",$total)}}</p>
+    <p>Всего наименований {{count($order->cables)}}, на сумму {{sprintf("%.2f",$order->totalSum)}}₽</p>
 </div>
 
 <div class="sign">

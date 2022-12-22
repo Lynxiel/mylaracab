@@ -10,19 +10,24 @@
 
             @foreach($order->cables as $cable )
                 <div class="row border border-1 order-cable">
-                    <div class="d-none d-sm-block col-sm-1  col-md-1 col-lg-1">{{$i++}}</div>
+                    <div class="d-none d-sm-block col-sm-1  col-md-1 col-lg-1">{{$i}}</div>
                     <div class="col-6 col-sm-5 col-md-5 col-lg-7 fw-bold ">{{$cable->title}}</div>
                     <div class="col-3 col-sm-3 col-md-4 p-0 col-lg-2 text-end">{{$cable->pivot->quantity*$cable->pivot->footage}}м х {{$cable->pivot->price}}₽</div>
-                    <div class="col-3 col-sm-3 col-md-2 col-lg-2 text-end">{{$cable->pivot->quantity*$cable->pivot->footage*$cable->pivot->price}}₽</div>
+                    <div class="col-3 col-sm-3 col-md-2 col-lg-2 text-end {{$order->discount?'text-decoration-line-through':''}}">{{$order->getPivotSum($i-1)}}₽
+                        @if($order->discount)
+                            <span class="badge bg-success">{{$order->getPivotSum($i-1,$order->discount )}}₽ </span>
+                        @endif
+                    </div>
                 </div>
 
 
-                @php  $summ += $cable->pivot->quantity*$cable->pivot->footage*$cable->pivot->price;  @endphp
+                @php $i++;  @endphp
             @endforeach
-            <h6 class="summ mt-2 text-dark fw-bold text-end">Сумма: {{$summ}}₽</h6>
-            @if($order->delivery_cost)
-                <h6 class="summ mt-0 text-dark fw-bold text-end">Итого с доставкой: {{$summ+$order->delivery_cost}}₽</h6>
-            @endif
+            <h6 class="summ mt-2 text-dark fw-bold text-end">
+                {{$order->discount?' Cкидка: '.$order->discount.'%':'' }}
+                {{$order->delivery_cost?' Доставка: '. sprintf("%.2f",$order->delivery_cost).'₽':'' }}
+            </h6>
+            <h6 class="summ mt-0 text-dark fw-bold text-end">Итого: {{sprintf("%.2f",$order->totalSum)}}₽</h6>
         </div>
         <div class="col-md-3">
 

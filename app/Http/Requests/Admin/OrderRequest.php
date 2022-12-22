@@ -31,7 +31,7 @@ class OrderRequest extends FormRequest
             'address'=>['nullable','max:200', 'not_regex:/[^(\w)|(\x7F-\xFF)|(\s)".,]/'],
             'pay_link'=>['nullable','max:100'],
             'delivery_cost' => ['nullable', 'integer'],
-            'discount' => ['nullable', 'integer', 'max:10'],
+            'discount' => ['nullable', 'integer', 'min:0', 'max:10'],
         ];
     }
 }
