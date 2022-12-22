@@ -1,7 +1,6 @@
 <x-layouts.header/>
 <x-layouts.nav-back />
 
-
 <div class=" bg-light">
     <div class="px-4 py-3   container">
         @include('admin.partials.flashmessages')
@@ -11,8 +10,7 @@
 
         <div class="row">
             <div class="col-12">
-
-                @php $sum = 0; $i=1; @endphp
+                @php  $i=1; @endphp
                 <div class="table-responsive">
                     <table class="table table-striped table-sm pivot-sync">
                         <thead>
@@ -48,7 +46,6 @@
                                     </td>
                                 @endcan
                             </tr>
-                            @php  $sum += $cable->pivot->quantity*$cable->pivot->price*$cable->pivot->footage;  @endphp
                         @endforeach
                         </tbody>
                     </table>
@@ -56,9 +53,10 @@
 
                 <div class="row">
                     <div class="col-12 col-sm-12 text-end">
-                        <span class="px-4 order-sum mt-3 fw-bold text-end">Сумма: {{sprintf("%.2f",$sum)}}₽</span>
+                        <span class="px-4 order-sum mt-3 fw-bold text-end">Сумма: {{sprintf("%.2f", $order->cableSum)}}₽</span>
                         <span class="px-4 order-sum mt-3 fw-bold  text-end">Доставка: {{sprintf("%.2f",$order->delivery_cost)}}₽</span>
-                        <span class="px-4 order-sum mt-3 fw-bold  text-end">Итого: {{sprintf("%.2f",$sum+$order->delivery_cost)}}₽</span>
+                        <span class="px-4 order-sum mt-3 fw-bold  text-end">Итого: {{sprintf("%.2f", $order->totalSum)}}₽</span>
+
                     </div>
                     <div class="col-12 col-sm-12 text-sm-end mt-2 mt-2 text-end">
                         @can('cable-order-edit', $order)
@@ -107,9 +105,18 @@
                             @enderror
                         </div>
 
-                        <div class="col-12 col-md-6 mb-3 form-floating">
-                            <x-controls.input  name="delivery_cost"  class="form-control rounded-3"  id="delivery_cost" value="{{$order->delivery_cost}}" />
-                            <label class="px-4" for="floatingInput">Стоимость доставки, ₽.</label>
+                        <div class="col-12 col-md-6 mb-3">
+                            <div class="row">
+                                <div class="col-6 form-floating">
+                                    <x-controls.input  name="delivery_cost"  class="form-control rounded-3"  id="delivery_cost" value="{{$order->delivery_cost}}" />
+                                    <label class="px-4" for="floatingInput">Стоимость доставки, ₽.</label>
+                                </div>
+                                <div class="col-6 form-floating">
+                                    <x-controls.input  name="discount"  class="form-control rounded-3"  id="discount" value="{{$order->discount}}" />
+                                    <label class="px-4" for="floatingInput">Скидка, %</label>
+                                </div>
+                            </div>
+
                         </div>
 
 

@@ -26,7 +26,7 @@ class Order extends Model
     ];
 
 
-    protected $fillable = ['comment','status', 'user_id', 'address','pay_link', 'delivery_cost'];
+    protected $fillable = ['comment','status', 'user_id', 'address','pay_link', 'delivery_cost', 'discount'];
 
     public function user(){
         return $this->BelongsTo(User::class);
@@ -36,6 +36,21 @@ class Order extends Model
 
     public function cables(){
         return $this->belongsToMany(Cable::class )->withPivot(['quantity', 'price','footage']);
+    }
+
+
+    public function getCableSumAttribute():int{
+        $sum=0;
+        foreach ($this->cables as $cable){
+            $sum += $cable->pivot->price*$cable->pivot->quantity*$cable->pivot->footage;
+        }
+        return  ceil($sum);
+    }
+
+
+    public function getTotalSumAttribute():int{
+        $cableSum = $this->getCableSumAttribute();
+        return ceil($cableSum - ($cableSum*($this->discount/100)) + $this->delivery_cost);
     }
 
 
