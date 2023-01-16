@@ -17,7 +17,7 @@ class Kernel extends ConsoleKernel
     {
 
         $schedule->exec('/opt/php/8.1/bin/php /var/www/u1707254/data/www/kabelopt71.ru/artisan db:seed CableSeeder')
-            ->everyThreeHours()
+            ->daily()
             ->emailOutputTo(config('mail.reply_to.address'))
             ->sendOutputTo(base_path('logs/exchange.text'));
 
